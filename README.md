@@ -49,13 +49,14 @@ This setup creates a "litmus test" for the Docker management tool:
 
 ### 4. Site Initializer (`ecopulse-site-initializer`)
 
-- **The Master Orchestrator**: Automates the assembly of the theme, favicon, fragments, and initial documents (like the **Veridian Manifesto**).
+- **The Master Orchestrator**: Automates the assembly of the theme, favicon, fragments, and initial documents (like the **Veridian Manifesto** and high-res imagery).
+- **Root Fragments (`/fragments/*.zip`)**: Demonstrates automated ZIP-based fragment deployment. LDM and Liferay Workspace auto-deploy these collection ZIPs into the portal upon container initialization.
 
 ---
 
 ## 🎨 Branding & Asset Guide
 
-The `assets/` directory contains the "Multi-Variant PNG Kit" used to test asset restoration:
+The `assets/` directory contains the "Multi-Variant PNG Kit" used to test asset restoration. These are also automatically included in the **Site Initializer Document Library** for immediate demo use:
 
 - **Logo**: `ecopulse-logo.svg` (The master branding).
 - **Hero Images**:

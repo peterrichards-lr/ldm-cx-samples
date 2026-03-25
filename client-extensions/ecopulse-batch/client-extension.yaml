@@ -1,0 +1,17 @@
+assemble:
+    - from: batch
+      into: batch
+ecopulse-batch:
+    name: EcoPulse Batch
+    oAuthApplicationHeadlessServer: ecopulse-batch-oahs
+    type: batch
+ecopulse-batch-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    externalReferenceCode: ecopulse-batch-oahs
+    name: EcoPulse Batch OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

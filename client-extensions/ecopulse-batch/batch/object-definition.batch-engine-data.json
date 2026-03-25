@@ -1,0 +1,80 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "ecopulse-green-initiative",
+			"label": {
+				"en_US": "Green Initiative"
+			},
+			"name": "GreenInitiative",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "gi-title",
+					"indexed": true,
+					"label": {
+						"en_US": "Title"
+					},
+					"name": "title",
+					"required": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "LongText",
+					"externalReferenceCode": "gi-description",
+					"indexed": false,
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "gi-impact-level",
+					"indexed": true,
+					"label": {
+						"en_US": "Impact Level"
+					},
+					"name": "impactLevel",
+					"required": false,
+					"system": false,
+					"type": "Integer"
+				}
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"en_US": "Green Initiatives"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/greeninitiatives",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "title"
+		}
+	]
+}

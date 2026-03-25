@@ -1,0 +1,17 @@
+assemble:
+    - from: build/vite
+      into: static
+ecopulse-grid-map:
+    cssURLs:
+        - '**/index*.css'
+    friendlyURLMapping: ecopulse-grid-map
+    htmlElementName: ecopulse-grid-map
+    instanceable: false
+    name: EcoPulse Grid Map
+    portletCategoryName: category.client-extensions
+    properties:
+        foo: bar
+    type: customElement
+    urls:
+        - 'main.js'
+    useESM: true

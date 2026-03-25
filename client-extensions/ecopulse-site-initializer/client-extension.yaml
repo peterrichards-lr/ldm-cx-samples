@@ -1,0 +1,13 @@
+ecopulse-site-initializer:
+    name: EcoPulse Site Initializer
+    oAuthApplicationHeadlessServer: ecopulse-site-initializer-oahs
+    siteExternalReferenceCode: L_GUEST
+    siteName: Guest
+    type: siteInitializer
+ecopulse-site-initializer-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: EcoPulse Site Initializer OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

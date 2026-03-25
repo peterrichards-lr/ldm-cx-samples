@@ -1,6 +1,0 @@
-sample-microservice-node:
-    name: Sample Microservice Node
-    scopes:
-        -   Liferay.Headless.Admin.User.everything
-        -   Liferay.Headless.Delivery.everything
-    type: oAuthApplicationHeadlessServer

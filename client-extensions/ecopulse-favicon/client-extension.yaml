@@ -1,0 +1,12 @@
+assemble:
+    - from: assets
+      hashify: favicon.ico
+      into: static
+    - from: assets
+      hashify: favicon.svg
+      into: static
+ecopulse-favicon:
+    externalReferenceCode: ecopulse-favicon
+    name: EcoPulse Favicon
+    type: themeFavicon
+    url: favicon.*.svg

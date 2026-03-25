@@ -1,0 +1,26 @@
+.eco-hero {
+	background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+	min-height: 400px;
+	display: flex;
+	align-items: center;
+	border-left: 8px solid #00c853;
+}
+
+.eco-hero .btn-emerald {
+	background-color: #00c853;
+	color: white;
+	border: none;
+	transition:
+		transform 0.2s ease,
+		background-color 0.2s ease;
+}
+
+.eco-hero .btn-emerald:hover {
+	background-color: #008e3a;
+	transform: translateY(-2px);
+	color: white;
+}
+
+.eco-hero .gap-3 {
+	gap: 1rem;
+}

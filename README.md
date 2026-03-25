@@ -1,94 +1,90 @@
-# Liferay Client Extension Samples (LDM)
+# 🏙️ EcoPulse: The Smart City Demo (LDM Sample Assets)
 
-This repository contains a collection of **Liferay Client Extension** samples, demonstrating how to build, deploy, and integrate external applications with Liferay DXP (2025.Q4+).
+Welcome to **EcoPulse**, a high-fidelity Liferay "Smart City" portal. This workspace is the **source-of-truth for sample assets** bundled with the [Liferay Docker Manager (LDM)](https://github.com/peterrichards-lr/liferay-docker-manager).
 
-**Note:** This repository is specifically used to build the client extensions utilized in the [Liferay Docker Manager (LDM)](https://github.com/peterrichards-lr/liferay-docker-scripts) project.
+## 🎯 The Purpose: Confidence-Driven Selling
 
-## Project Overview
+For a Sales Engineer, "Demo Risk" is the enemy. EcoPulse is designed to prove that complex, data-driven Liferay environments can be:
 
-Each sample is located in the `client-extensions/` directory and is configured as a standalone project within this Liferay Workspace. The samples include:
+1. **Reset in minutes** without manual configuration.
+2. **Version-controlled** via a single source folder.
+3. **Identical** across local laptops and cloud staging.
 
-### 1. Sample Custom Element (`sample-custom-element`)
-
-A frontend-only extension that renders a custom HTML element within Liferay.
-- **Type:** `customElement`
-- **Frontend:** Vanilla JS + CSS.
-- **Features:** Environment detection (detects if it's running inside Liferay) and interactive elements.
-
-### 2. Sample Headless Auth Node (`sample-headless-auth-node`)
-
-A Node.js backend application that demonstrates the **Client Credentials** grant flow.
-- **Type:** `oAuthApplicationHeadlessServer`
-- **Grant Type:** `client_credentials`
-- **Features:** Automatically fetches an OAuth2 access token and calls the Liferay Headless Delivery API (`/o/headless-delivery/v1.0/sites`) to list available sites.
-
-### 3. Sample Microservice Node (`sample-microservice-node`)
-
-A simple Node.js microservice prepared for Liferay Cloud or local hosting.
-- **Type:** `oAuthApplicationHeadlessServer`
-- **Features:** A lightweight Express.js server that can be scaled as a microservice and integrated with Liferay's OAuth2 framework.
-
-### 4. Sample Object Action Node (`sample-object-action-node`)
-
-A Node.js backend action that is triggered by events in **Liferay Objects** (e.g., when an entry is created or updated).
-- **Type:** `objectAction`
-- **Features:** Receives a JSON payload from Liferay containing the object entry data for server-side processing.
-
-### 5. Sample Workflow Action Node (`sample-workflow-action-node`)
-
-A Node.js backend action that is triggered by **Liferay Workflow** (e.g., when a task is moved to a specific status).
-- **Type:** `workflowAction`
-- **Features:** Receives a JSON payload from Liferay containing the workflow task details for automated backend processing.
+This repository builds the **Client Extensions**, **Objects**, and **Fragments** that LDM orchestrates into a "Perfect 10" demo.
 
 ---
 
-## Getting Started
+## 📖 The Backstory: "The Veridian Shift"
 
-### Prerequisites
-- **Blade CLI** installed.
-- **Liferay DXP 2025.Q4+** running locally.
-- **Node.js 18+** (for running backend samples locally).
+The fictional city of **Veridian** is transitioning to a 100% green energy grid. The **EcoPulse Portal** serves as the public "Digital Twin" of this infrastructure, allowing citizens to monitor grid health and submit their own sustainability initiatives.
+
+### Why this works for the LDM Tool
+
+This setup creates a "litmus test" for the Docker management tool:
+
+- **Snapshots**: Correctly restores large SQL dumps and `document_library` volumes (testing asset persistence).
+- **Objects**: Handles the "Ready" state of Liferay’s internal API engines during deployment.
+- **Client Extensions**: Configures Environment Variables and external URLs for modern, remote applications.
+- **Fragments**: Successfully pushes UI resources into a running container via Liferay APIs.
+
+---
+
+## 🛠️ The Tech Stack (LDM Orchestrated)
+
+### 1. The Theme & UI (`ecopulse-theme`, `ecopulse-spritemap`)
+
+- **Palette**: Emerald Green (`#00C853`), Tech Navy (`#1A237E`), and Innovation Blue (`#00B0FF`).
+- **Icons**: Custom SVGs for `leaf` (Sustainability), `bolt` (Energy), and `map-marker` (Grid Map).
+- **Style Book**: Brand tokens are exposed for real-time UI customization.
+
+### 2. Liferay Objects (`ecopulse-batch`)
+
+- **Entity**: `GreenInitiative` (System Name: `C_GreenInitiative`).
+- **Fields**: `Title`, `Description`, `ImpactLevel (1-100)`.
+- **Value**: Deploys the schema and seeds 20+ records automatically so the demo looks "lived-in."
+
+### 3. Client Extensions (`ecopulse-grid-map`)
+
+- **React Custom Element**: A "Live" Energy Grid Monitor that simulates real-time data pulses across five city sectors.
+
+### 4. Site Initializer (`ecopulse-site-initializer`)
+
+- **The Master Orchestrator**: Automates the assembly of the theme, favicon, fragments, and initial documents (like the **Veridian Manifesto**).
+
+---
+
+## 🎨 Branding & Asset Guide
+
+The `assets/` directory contains the "Multi-Variant PNG Kit" used to test asset restoration:
+
+- **Logo**: `ecopulse-logo.svg` (The master branding).
+- **Hero Images**:
+    - `hero-highres-[1-4].png`: High-fidelity cityscapes and wind turbines.
+    - `hero-variant-[1-4].png`: Optimized variants for testing responsive backgrounds.
+- **Asset Sheets**:
+    - `asset-sheet-[1-2].png`: Branding guides showing logo variants and palette.
+    - `asset-sheet-grey.png`: The grey-background design guide.
+
+---
+
+## 🚀 Development Workflow
 
 ### Build and Package
 
-To build all client extensions and package them for deployment:
+To build all client extensions for LDM distribution:
 
 ```bash
-blade gw clean build
+./gradlew clean build
 ```
 
-*This command generates the `.zip` packages in the `client-extensions/[extension-name]/dist/` folders.*
+### Local Deployment
 
-### Deploy to Liferay
-
-To deploy the client extensions to your local Liferay instance:
+To test against a running local Liferay instance:
 
 ```bash
-blade gw deploy
+./gradlew deploy
 ```
-
-*This will copy the configurations and assets to `bundles/osgi/client-extensions`.*
-
-### Local Development (Node.js Apps)
-
-To run a backend extension locally while developing:
-
-1. Navigate to the extension directory:
-
-   ```bash
-   cd client-extensions/sample-headless-auth-node
-   ```
-2. Install dependencies and start the server:
-
-   ```bash
-   npm install && npm start
-   ```
-3. The server will start on `http://localhost:8080`.
 
 ---
 
-## Key Configurations
-
-- **`client-extension.yaml`**: The primary configuration file that defines the extension type, scopes, and resource paths.
-- **`LCP.json`**: Required for the workspace build process as it signals Liferay Cloud readiness.
-- **`Dockerfile`**: Used to containerize the Node.js applications for deployment.
+_Built with ❤️ for Sales Engineers and the Liferay Docker Manager._

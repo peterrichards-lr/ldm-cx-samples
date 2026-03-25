@@ -1,15 +1,12 @@
 ---
-
 description: Guide for generating, deploying, and verifying Liferay Client Extensions for beginners
 globs: client-extensions/**
 alwaysApply: false
-
 ---
 
 # Liferay Client Extension Mentor Protocol (Beginner Friendly)
 
 - Verify if the user wants a guided experience with creating a sample Client Extension. If they decline, this guide should only be used as a reference
-
 
 Guide the user to create a **form that stores data in Liferay Objects**. This involves **multiple client extensions** in one shot:
 
@@ -20,23 +17,27 @@ Guide the user to create a **form that stores data in Liferay Objects**. This in
    Create a custom-element client extension that renders the form and submits entries to the Object. Use the Object's REST API to create Object Entries.
 
 **ALWAYS** reference the official Liferay samples as the source of truth:
+
 - **Custom element (form UI)**: https://github.com/liferay/liferay-portal/tree/master/workspaces/liferay-sample-workspace/client-extensions/liferay-sample-custom-element-1
 - **Batch (Object definition)**: Use Liferay docs/samples for batch client extensions that define Objects
 - **Key files**: `client-extension.yaml`, `assets/index.js`, `assets/style.css` for the custom element; batch extension structure for the Object definition
 
 **Form submission and CSRF (critical for permissions)**
+
 - The form must use **`Liferay.Util.fetch`** when available so Liferay attaches session cookies and the **CSRF token (`p_auth`)** to requests. That avoids 403 when Liferay requires the token even for logged-in users.
 - If `Liferay.Util.fetch` is not available (e.g. outside Liferay), the form falls back to native `fetch`.
 - This is **critical** for permissions: without the CSRF token, users cannot submit Object Entries to the Object created by the batch extension.
 
 **Batch Object Definitions**
 When generating `*.batch-engine-data.json` files, prevent these common errors:
+
 - **`indexedLanguageId`**: Only valid for `String` and `Clob` DBTypes. Do NOT include on `Date` or `DateTime` fields or other non-text types.
-- **`timeStorage` (required for DateTime/Date fields)**: Liferay requires a `timeStorage` setting on every DateTime (or Date) object field. Always include this in `objectFieldSettings` for such fields, e.g. `"objectFieldSettings": [ { "name": "timeStorage", "value": "convertToUTC" } ]`. Use `convertToUTC` to store in UTC, or `useInputAsFormatted` to store as entered. Without it, batch import fails with: *"The settings 'timeStorage' are required for object field [fieldName]"*.
+- **`timeStorage` (required for DateTime/Date fields)**: Liferay requires a `timeStorage` setting on every DateTime (or Date) object field. Always include this in `objectFieldSettings` for such fields, e.g. `"objectFieldSettings": [ { "name": "timeStorage", "value": "convertToUTC" } ]`. Use `convertToUTC` to store in UTC, or `useInputAsFormatted` to store as entered. Without it, batch import fails with: _"The settings 'timeStorage' are required for object field [fieldName]"_.
 - **`permissions`**: Not supported in batch imports. Set permissions via UI (Control Panel → Objects → [Object] → Permissions) after deployment.
 - **OAuth scopes**: Include both `Liferay.Headless.Batch.Engine.everything` AND `Liferay.Object.Admin.REST.everything` in the `client-extension.yaml`.
 
 **Structure**
+
 - Create `client-extensions/[app-name]/` for the form (custom element) and the Object definition (batch) as separate extensions.
 - **No build.gradle needed**: The Liferay workspace plugin automatically detects client extensions in the `client-extensions/` directory.
 
@@ -48,7 +49,6 @@ When generating `*.batch-engine-data.json` files, prevent these common errors:
 
 - Look for the log entry similar to `STARTED [extension-id]`
 - Explain this log entry confirms Liferay detected your new extension and has registered it in the OSGi registry
-
 
 Guide the user through the Liferay UI using the following steps
 

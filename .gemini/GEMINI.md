@@ -8,21 +8,19 @@ alwaysApply: true
 
 # Liferay General Rules
 
-
 Before answering technical questions, you MUST establish the environment context
+
 - Scan for `gradle.properties` in the root directory
 - Identify the value of `liferay.workspace.product`
 
-
 Based on the version identified above, apply the following logic
+
 - If Version < 7.4: Focus on traditional OSGi module development
 - If Version >= 7.4 or a Quarterly Release (Q): Steer users towards modern Liferay best practices like Client Extensions, Fragments, and Objects
     - Only suggest traditional OSGi modules if Client Extensions cannot fulfill the requirements
     - Validate any code for Client Extensions before providing it to the user
     - Reference the documentation in `liferay-learn` to understand the different types of Client Extensions available and their purposes
 - Ensure all suggested Gradle dependencies align with the `target.platform.version` defined in the project workspace
-
-
 
 The authoritative source for Liferay documentation is the [liferay-learn](https://github.com/liferay/liferay-learn) repository. Use these key paths to retrieve documentation for all aspects of development within this workspace.
 
@@ -41,7 +39,6 @@ When you need documentation not listed above, use `web_search` to query GitHub f
     - Use these samples as templates when generating new client extensions
     - Check sample `client-extension.yaml` files for valid property configurations
 
-
 - **Logs:** `bundles/tomcat/logs/`
 - **Configs/Properties:** `configs/common/` (source) or `configs/[env]/` (environment-specific)
     - Steer fresh user to use `local` environment
@@ -54,9 +51,7 @@ When you need documentation not listed above, use `web_search` to query GitHub f
 
 - **Blade:** Steer users towards `blade` as the cli tool when possible. Use `blade gw` for Gradle tasks (view available options with `blade gw tasks`). Custom code can be deployed to the running server with `blade gw deploy`. Avoid direct usage of `gradlew`.
 
-
 Liferay DXP has MCP server is available on 2025.Q4 and later. Use this as the default tool for querying content, managing objects, and executing actions within the portal. Older DXP versions have OpenAPI endpoints.
-
 
 The MCP server is behind a feature flag. Add the following to `configs/local/portal-ext.properties` before starting the server:
 
@@ -64,34 +59,31 @@ The MCP server is behind a feature flag. Add the following to `configs/local/por
 feature.flag.LPD-63311=true
 ```
 
-
-| Setting | Value |
-|---------|-------|
-| URL | `http://localhost:8080/o/mcp/sse` |
-| Transport | HTTP Server Sent Events (SSE) |
+| Setting              | Value                                |
+| -------------------- | ------------------------------------ |
+| URL                  | `http://localhost:8080/o/mcp/sse`    |
+| Transport            | HTTP Server Sent Events (SSE)        |
 | Authorization Header | `Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0` |
 
 The default credentials (`test@liferay.com:test`) are base64-encoded in the header. Update if using different credentials.
 
-
 Once connected, the AI can use Liferay-provided tools to:
+
 - Query and manage Liferay Objects
 - Retrieve site and page information
 - Interact with the content management system
 - Execute headless API operations
 
-
 To maintain a modular and scalable configuration, additional context or specialized rules should be stored in the `.workspace-rules` directory.
-
 
 1. **Create the Source:** Add your new `.md` rule file within the `.workspace-rules/` directory at the project root.
 
 1. **Symlink Management:** This project uses symlinks to ensure auto-load across different AI tools. New rules should be symlinked into the following platform-specific folders:
-    * **Cursor:** `.cursor/rules/`
-    * **Gemini CLI:** `.gemini/`
-    * **Claude Code:** `.claude/`
-    * **GitHub Copilot:** `.github`
-    * **Windsurf:** `.windsurf/rules/`
+    - **Cursor:** `.cursor/rules/`
+    - **Gemini CLI:** `.gemini/`
+    - **Claude Code:** `.claude/`
+    - **GitHub Copilot:** `.github`
+    - **Windsurf:** `.windsurf/rules/`
 
 - **General Rules:** Keep global architectural rules in `liferay-rules.md`.
 - **Feature Rules:** Use separate files in `.workspace-rules/` for specific feature sets or agent skills.

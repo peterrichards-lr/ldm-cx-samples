@@ -1,0 +1,19 @@
+{
+	"private": true,
+	"workspaces": [
+		"client-extensions/ecopulse-spritemap",
+		"client-extensions/ecopulse-grid-map"
+	],
+	"scripts": {
+		"prepare": "husky",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"husky": "^9.0.0",
+		"lint-staged": "^15.0.0",
+		"prettier": "^3.0.0"
+	},
+	"lint-staged": {
+		"**/*.{md,json,js,ts,tsx,css,scss}": "prettier --write"
+	}
+}

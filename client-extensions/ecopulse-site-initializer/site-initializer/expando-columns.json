@@ -1,0 +1,17 @@
+[
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.Group",
+		"name": "themeCSSCETExternalReferenceCode"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.Group",
+		"name": "themeFaviconCETExternalReferenceCode"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.Group",
+		"name": "themeSpritemapCETExternalReferenceCode"
+	}
+]

@@ -1,9 +1,11 @@
 {
 	"private": true,
-	"workspaces": [
-		"client-extensions/ecopulse-spritemap",
-		"client-extensions/ecopulse-grid-map"
-	],
+	"workspaces": {
+		"packages": [
+			"client-extensions/ecopulse-spritemap",
+			"client-extensions/ecopulse-grid-map"
+		]
+	},
 	"scripts": {
 		"prepare": "husky",
 		"format": "prettier --write ."

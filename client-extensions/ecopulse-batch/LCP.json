@@ -1,3 +1,10 @@
 {
-	"memory": 50
+	"cpu": 0.2,
+	"env": {
+		"LIFERAY_BATCH_OAUTH_APP_ERC": "ecopulse-batch-oahs"
+	},
+	"id": "ecopulsebatch",
+	"kind": "Job",
+	"memory": 50,
+	"scale": 1
 }

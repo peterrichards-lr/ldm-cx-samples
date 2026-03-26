@@ -1,0 +1,11 @@
+{
+	"cpu": 0.05,
+	"id": "ecopulsecustomelementvanilla",
+	"kind": "Deployment",
+	"loadBalancer": {
+		"cdn": true,
+		"targetPort": 80
+	},
+	"memory": 50,
+	"scale": 1
+}

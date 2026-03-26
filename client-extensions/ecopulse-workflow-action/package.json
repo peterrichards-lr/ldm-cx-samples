@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"express": "^4.18.2"
+	},
+	"description": "Sample Workflow Action Client Extension",
+	"main": "server.js",
+	"name": "sample-workflow-action-node",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"version": "1.0.0"
+}

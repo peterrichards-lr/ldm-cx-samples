@@ -2,6 +2,7 @@
 	"name": "Veridian EcoPulse",
 	"description": "The Digital Twin of the Veridian Smart City infrastructure, featuring the Veridian Shift initiatives.",
 	"customFields": {
+		"styleBookEntryCETExternalReferenceCode": "veridian-official",
 		"themeCSSCETExternalReferenceCode": "ecopulse-theme",
 		"themeFaviconCETExternalReferenceCode": "ecopulse-favicon",
 		"themeSpritemapCETExternalReferenceCode": "ecopulse-spritemap"

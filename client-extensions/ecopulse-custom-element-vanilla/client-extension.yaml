@@ -1,0 +1,16 @@
+assemble:
+    -   from: index.js
+        into: index.js
+    -   from: styles.css
+        into: styles.css
+ecopulse-custom-element-vanilla:
+    cssURLs:
+        -   styles.css
+    friendlyURLMapping: ecopulse-custom-element-vanilla
+    htmlElementName: ecopulse-custom-element-vanilla
+    instanceable: true
+    name: EcoPulse Custom Element Vanilla
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        -   index.js

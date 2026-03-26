@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"express": "^4.18.2"
+	},
+	"description": "Sample Node Client Extension",
+	"main": "server.js",
+	"name": "sample-etc-node",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"version": "1.0.0"
+}

@@ -1,0 +1,10 @@
+{
+	"cpu": 0.2,
+	"id": "ecopulsemicroservice",
+	"kind": "Deployment",
+	"loadBalancer": {
+		"targetPort": 8080
+	},
+	"memory": 50,
+	"scale": 1
+}

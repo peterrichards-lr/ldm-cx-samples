@@ -1,11 +1,13 @@
 assemble:
-    - from: index.js
-      into: index.js
-    - from: styles.css
-      into: styles.css
+    - from: assets/index.js
+      hashify: index.js
+      into: static
+    - from: assets/style.css
+      hashify: style.css
+      into: static
 ecopulse-custom-element-vanilla:
     cssURLs:
-        - styles.css
+        - style.*.css
     friendlyURLMapping: ecopulse-custom-element-vanilla
     htmlElementName: ecopulse-custom-element-vanilla
     instanceable: true
@@ -13,4 +15,4 @@ ecopulse-custom-element-vanilla:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - index.js
+        - index.*.js

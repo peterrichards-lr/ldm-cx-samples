@@ -1,0 +1,85 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"parameters": {
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "N-1",
+			"objectDefinitionExternalReferenceCode": "ecopulse-energy-sector",
+			"values": {
+				"sectorName": "Veridian North",
+				"operationalStatus": "operational",
+				"load": 64
+			}
+		},
+		{
+			"externalReferenceCode": "E-2",
+			"objectDefinitionExternalReferenceCode": "ecopulse-energy-sector",
+			"values": {
+				"sectorName": "East Harbor",
+				"operationalStatus": "maintenance",
+				"load": 12
+			}
+		},
+		{
+			"externalReferenceCode": "S-3",
+			"objectDefinitionExternalReferenceCode": "ecopulse-energy-sector",
+			"values": {
+				"sectorName": "Industrial South",
+				"operationalStatus": "operational",
+				"load": 88
+			}
+		},
+		{
+			"externalReferenceCode": "W-4",
+			"objectDefinitionExternalReferenceCode": "ecopulse-energy-sector",
+			"values": {
+				"sectorName": "West Residential",
+				"operationalStatus": "warning",
+				"load": 92
+			}
+		},
+		{
+			"externalReferenceCode": "C-0",
+			"objectDefinitionExternalReferenceCode": "ecopulse-energy-sector",
+			"values": {
+				"sectorName": "City Center",
+				"operationalStatus": "operational",
+				"load": 45
+			}
+		},
+		{
+			"externalReferenceCode": "gi-solar-grid",
+			"objectDefinitionExternalReferenceCode": "ecopulse-green-initiative",
+			"values": {
+				"title": "Community Solar Grid",
+				"description": "Harnessing solar power from residential rooftops.",
+				"impactLevel": 85
+			}
+		},
+		{
+			"externalReferenceCode": "gi-wind-farm",
+			"objectDefinitionExternalReferenceCode": "ecopulse-green-initiative",
+			"values": {
+				"title": "Veridian Wind Farm",
+				"description": "Offshore wind energy production expansion.",
+				"impactLevel": 92
+			}
+		},
+		{
+			"externalReferenceCode": "gi-smart-waste",
+			"objectDefinitionExternalReferenceCode": "ecopulse-green-initiative",
+			"values": {
+				"title": "Smart Waste Management",
+				"description": "Optimizing collection routes to reduce emissions.",
+				"impactLevel": 64
+			}
+		}
+	]
+}

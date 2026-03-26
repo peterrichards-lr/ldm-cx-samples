@@ -15,17 +15,17 @@ This document outlines the technical evolution of the EcoPulse Smart City demo. 
 
 ---
 
-## 🏗️ Phase 2: Live Data & Interaction (IN PROGRESS)
+## ✅ Phase 2: Live Data & Interaction (COMPLETED)
 
 **Objective**: Transition from static UI to a data-driven "Digital Twin."
 
-- **Grid Monitor (React)**: Finalize the `ecopulse-grid-map` with real-time sector load pulses.
-- **Green Initiatives (Object)**: Deploy the `C_GreenInitiative` schema via `ecopulse-batch`.
-- **Site Provisioning**: Refine the `ecopulse-site-initializer` to auto-map all 6 core extensions and fragments.
+- **Grid Monitor (React)**: Finalized the `ecopulse-grid-map` with real-time sector load pulses and live fetch from Object API.
+- **Green Initiatives (Object)**: Deployed the `C_GreenInitiative` and `C_EnergySector` schemas via `ecopulse-batch`.
+- **Site Provisioning**: Refined the `ecopulse-site-initializer` to auto-map core extensions and fragments onto a pre-configured home page.
 
 ---
 
-## 🚀 Phase 3: The "Intelligence" Layer (PLANNED)
+## ✅ Phase 3: The "Intelligence" Layer (COMPLETED)
 
 **Objective**: Showcase LDM's ability to handle multi-container logic and complex APIs.
 
@@ -33,17 +33,28 @@ This document outlines the technical evolution of the EcoPulse Smart City demo. 
 
 - **Concept**: A dedicated widget that fetches the total number of `GreenInitiative` entries via the Headless API.
 - **Logic**: Performs a client-side calculation to show "Estimated CO2 Tons Saved."
-- **Demo Value**: Tests Liferay's Headless API performance and CORS/Auth configuration.
+- **Status**: Finalized and integrated into the Home page.
 
-### 2. Remote Calculation Microservice (Node/Spring Boot)
+### 2. City of Veridian Civic Identity
 
-- **Concept**: A separate service (hosted as a Client Extension) that performs heavy data crunching.
-- **Interaction**: The React map calls this remote service instead of Liferay for specific "Advanced Metrics."
-- **Demo Value**: Tests LDM's **multi-container orchestration** (Liferay + Remote App) and environment variable injection.
+- **Concept**: Official municipal branding ("The Emerald Spire") for governmental projects.
+- **Assets**: `veridian-logo.svg`, `veridian-official.png`, and a civic asset library.
+- **Municipal Web Content**: Automated deployment of the "Veridian News" portal with official branding.
+- **Status**: Completed; integrated into the `ecopulse-site-initializer`.
 
 ---
 
-## 🌍 Phase 4: Global Verification (FUTURE)
+## 🏗️ Phase 4: Remote Intelligence & Veridican Microservices (IN PROGRESS)
+
+**Objective**: Expand the demo with distributed logic and multi-language support.
+
+- **Remote Calculation Microservice**: Implement the Node service to handle "Advanced Metrics" for the Grid Map.
+- **Global Verification**: Localize the "Veridian Manifesto" and Object labels (e.g., German, Spanish, French).
+- **Snapshot Expansion**: Expand the SQL dump to include a full "News Portal."
+
+---
+
+## 🌍 Phase 5: Enterprise Verification (FUTURE)
 
 **Objective**: Scale the demo for enterprise-level requirements.
 

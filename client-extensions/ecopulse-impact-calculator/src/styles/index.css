@@ -1,0 +1,90 @@
+:root {
+	--emerald: #00c853;
+	--navy: #1a237e;
+	--innovation-blue: #00b0ff;
+	--warning: #ffab00;
+	--danger: #ff5252;
+}
+
+.ecopulse-impact-calculator {
+	font-family:
+		'Segoe UI',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	background: white;
+	border-radius: 12px;
+	padding: 1.5rem;
+	border: 1px solid #f1f2f5;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.text-navy {
+	color: var(--navy);
+}
+.text-emerald {
+	color: var(--emerald);
+}
+.text-innovation {
+	color: var(--innovation-blue);
+}
+
+.impact-value {
+	font-size: 3.5rem;
+	font-weight: 800;
+	line-height: 1;
+	margin: 1rem 0;
+	display: block;
+	background: linear-gradient(45deg, var(--emerald), var(--innovation-blue));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.impact-unit {
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: var(--navy);
+	margin-left: 0.5rem;
+}
+
+.eco-scale-container {
+	height: 10px;
+	background: #f1f2f5;
+	border-radius: 5px;
+	margin: 1.5rem 0;
+	overflow: hidden;
+}
+
+.eco-scale-fill {
+	height: 100%;
+	background: linear-gradient(90deg, var(--emerald), var(--innovation-blue));
+	transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	margin-top: 1.5rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid #f1f2f5;
+}
+
+.stat-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.stat-label {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: #9ba3af;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.stat-value {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: var(--navy);
+}

@@ -99,6 +99,7 @@ export const Liferay = window.Liferay || {
 	Util: {
 		LocalStorage: localStorage,
 		SessionStorage: sessionStorage,
+		fetch: fetch,
 	},
 	detach: (
 		type: keyof WindowEventMap,

@@ -75,6 +75,72 @@
 			},
 			"system": false,
 			"titleObjectFieldName": "title"
+		},
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "ecopulse-energy-sector",
+			"label": {
+				"en_US": "Energy Sector"
+			},
+			"name": "EnergySector",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ecopulse-es-name",
+					"indexed": true,
+					"label": {
+						"en_US": "Sector Name"
+					},
+					"name": "sectorName",
+					"required": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ecopulse-es-operational-status",
+					"indexed": true,
+					"label": {
+						"en_US": "Operational Status"
+					},
+					"name": "operationalStatus",
+					"required": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "ecopulse-es-load",
+					"indexed": true,
+					"label": {
+						"en_US": "Current Load"
+					},
+					"name": "load",
+					"required": false,
+					"system": false,
+					"type": "Integer"
+				}
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"en_US": "Energy Sectors"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/energysectors",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "sectorName"
 		}
 	]
 }

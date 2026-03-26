@@ -1,0 +1,15 @@
+assemble:
+    - from: build/vite
+      into: static
+ecopulse-impact-calculator:
+    cssURLs:
+        - '**/index*.css'
+    friendlyURLMapping: ecopulse-impact-calculator
+    htmlElementName: ecopulse-impact-calculator
+    instanceable: false
+    name: EcoPulse Impact Calculator
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - 'main.js'
+    useESM: true

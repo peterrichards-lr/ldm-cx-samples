@@ -1,17 +1,72 @@
 import React, { useEffect, useState } from 'react';
+import { Liferay } from './services/liferay';
 
-const SECTORS = [
-	{ id: 'N-1', name: 'Veridian North', status: 'operational', load: 64 },
-	{ id: 'E-2', name: 'East Harbor', status: 'maintenance', load: 12 },
-	{ id: 'S-3', name: 'Industrial South', status: 'operational', load: 88 },
-	{ id: 'W-4', name: 'West Residential', status: 'warning', load: 92 },
-	{ id: 'C-0', name: 'City Center', status: 'operational', load: 45 },
+type Sector = {
+	externalReferenceCode: string;
+	sectorName: string;
+	operationalStatus: 'operational' | 'maintenance' | 'warning';
+	load: number;
+};
+
+const DEFAULT_SECTORS: Sector[] = [
+	{
+		externalReferenceCode: 'N-1',
+		load: 64,
+		operationalStatus: 'operational',
+		sectorName: 'Veridian North',
+	},
+	{
+		externalReferenceCode: 'E-2',
+		load: 12,
+		operationalStatus: 'maintenance',
+		sectorName: 'East Harbor',
+	},
+	{
+		externalReferenceCode: 'S-3',
+		load: 88,
+		operationalStatus: 'operational',
+		sectorName: 'Industrial South',
+	},
+	{
+		externalReferenceCode: 'W-4',
+		load: 92,
+		operationalStatus: 'warning',
+		sectorName: 'West Residential',
+	},
+	{
+		externalReferenceCode: 'C-0',
+		load: 45,
+		operationalStatus: 'operational',
+		sectorName: 'City Center',
+	},
 ];
 
 function App() {
-	const [sectors, setSectors] = useState(SECTORS);
+	const [sectors, setSectors] = useState<Sector[]>(DEFAULT_SECTORS);
+	const [isLive, setIsLive] = useState(false);
 
-	// Simulate "live" data pulses
+	// Fetch live data from Liferay Object API if available
+	useEffect(() => {
+		const fetchSectors = async () => {
+			if (!window.Liferay || !window.Liferay.authToken) return;
+
+			try {
+				const response = await Liferay.Util.fetch('/o/c/energysectors');
+				const data = await response.json();
+
+				if (data.items && data.items.length > 0) {
+					setSectors(data.items);
+					setIsLive(true);
+				}
+			} catch (error) {
+				console.error('Error fetching energy sectors:', error);
+			}
+		};
+
+		fetchSectors();
+	}, []);
+
+	// Simulate "live" data pulses for visual feedback
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setSectors((prev) =>
@@ -34,26 +89,30 @@ function App() {
 					<span className="innovation-pulse mr-2"></span>
 					Energy Grid Monitor
 				</h2>
-				<div className="badge badge-soft-emerald px-3 py-2">
-					LIVE: 98.2% HEALTH
+				<div
+					className={`badge badge-soft-${isLive ? 'emerald' : 'secondary'} px-3 py-2`}
+				>
+					{isLive ? 'LIVE' : 'SIMULATED'}: 98.2% HEALTH
 				</div>
 			</div>
 
 			<div className="grid-container">
 				{sectors.map((sector) => (
 					<div
-						key={sector.id}
-						className={`grid-node status-${sector.status}`}
+						className={`grid-node status-${sector.operationalStatus}`}
+						key={sector.externalReferenceCode}
 					>
 						<div className="node-header d-flex justify-content-between">
-							<span className="node-id">{sector.id}</span>
+							<span className="node-id">
+								{sector.externalReferenceCode}
+							</span>
 							<span
-								className={`status-dot dot-${sector.status}`}
+								className={`status-dot dot-${sector.operationalStatus}`}
 							></span>
 						</div>
 						<div className="node-body py-2">
 							<div className="node-name small font-weight-bold text-navy">
-								{sector.name}
+								{sector.sectorName}
 							</div>
 							<div className="node-load mt-2">
 								<div

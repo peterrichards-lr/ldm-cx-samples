@@ -45,8 +45,8 @@ The `ecopulse-site-initializer` is the source-of-truth for the demo's initial st
 - **Documents**: High-res assets must be placed in `site-initializer/documents/group/`.
 - **Wiring**: The `site-initializer.json` must explicitly link to the `ecopulse-theme`, `ecopulse-favicon`, and `ecopulse-spritemap` ERCs.
 
-## 4. Development Workflow
+## 5. Liferay Objects & Reserved Names
 
-- **Linting**: Prettier is enforced via Husky pre-commit hooks.
-- **Packaging**: Use `./gradlew clean build` to generate the LDM-ready ZIPs in `dist/` folders.
-- **Verification**: Always check the generated `build/liferay-client-extension-build/LCP.json` to ensure source overrides were applied correctly.
+- **Status & Type**: `status` and `type` are reserved keywords in Liferay Objects. Use `operationalStatus` or `categoryType` instead.
+- **Identifier**: Prefer using `externalReferenceCode` as the primary identifier for records (e.g., 'N-1', 'gi-solar-grid') instead of a custom `id` or `sectorId` field to avoid confusion with internal Liferay IDs.
+- **Reserved List**: Always check the [Liferay Reserved Field Names](https://learn.liferay.com/w/dxp/low-code/objects/creating-and-managing-objects/fields/adding-fields-to-objects#reserved-field-names) before defining a schema.

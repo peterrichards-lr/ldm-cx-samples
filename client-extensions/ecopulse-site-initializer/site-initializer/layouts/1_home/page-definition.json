@@ -1,0 +1,46 @@
+{
+	"friendlyURL": "/home",
+	"name": "Home",
+	"pageDefinition": {
+		"pageElement": {
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "eco-hero"
+					},
+					"type": "fragment"
+				},
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "grid-monitor"
+					},
+					"type": "fragment"
+				},
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "impact-calculator"
+					},
+					"type": "fragment"
+				},
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "initiative-card"
+					},
+					"type": "fragment"
+				}
+			],
+			"type": "root"
+		},
+		"settings": {
+			"theme": {
+				"themeExternalReferenceCode": "ecopulse-theme"
+			}
+		}
+	},
+	"parentLayoutExternalReferenceCode": "",
+	"type": "content"
+}

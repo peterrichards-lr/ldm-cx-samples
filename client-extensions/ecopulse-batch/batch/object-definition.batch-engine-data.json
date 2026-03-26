@@ -16,9 +16,13 @@
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
+			"enableWorkflow": true,
 			"externalReferenceCode": "ecopulse-green-initiative",
 			"label": {
-				"en_US": "Green Initiative"
+				"de_DE": "Grüne Initiative",
+				"en_US": "Green Initiative",
+				"es_ES": "Iniciativa Verde",
+				"fr_FR": "Initiative Verte"
 			},
 			"name": "GreenInitiative",
 			"objectFields": [
@@ -28,7 +32,10 @@
 					"externalReferenceCode": "gi-title",
 					"indexed": true,
 					"label": {
-						"en_US": "Title"
+						"de_DE": "Titel",
+						"en_US": "Title",
+						"es_ES": "Título",
+						"fr_FR": "Titre"
 					},
 					"name": "title",
 					"required": true,
@@ -41,7 +48,10 @@
 					"externalReferenceCode": "gi-description",
 					"indexed": false,
 					"label": {
-						"en_US": "Description"
+						"de_DE": "Beschreibung",
+						"en_US": "Description",
+						"es_ES": "Descripción",
+						"fr_FR": "Description"
 					},
 					"name": "description",
 					"required": false,
@@ -54,7 +64,10 @@
 					"externalReferenceCode": "gi-impact-level",
 					"indexed": true,
 					"label": {
-						"en_US": "Impact Level"
+						"de_DE": "Einfluss-Level",
+						"en_US": "Impact Level",
+						"es_ES": "Nivel de Impacto",
+						"fr_FR": "Niveau d'Impact"
 					},
 					"name": "impactLevel",
 					"required": false,
@@ -64,7 +77,10 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Green Initiatives"
+				"de_DE": "Grüne Initiativen",
+				"en_US": "Green Initiatives",
+				"es_ES": "Iniciativas Verdes",
+				"fr_FR": "Initiatives Vertes"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/greeninitiatives",
@@ -82,9 +98,13 @@
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
+			"enableWorkflow": true,
 			"externalReferenceCode": "ecopulse-energy-sector",
 			"label": {
-				"en_US": "Energy Sector"
+				"de_DE": "Energiesektor",
+				"en_US": "Energy Sector",
+				"es_ES": "Sector de Energía",
+				"fr_FR": "Secteur Énergétique"
 			},
 			"name": "EnergySector",
 			"objectFields": [
@@ -94,7 +114,10 @@
 					"externalReferenceCode": "ecopulse-es-name",
 					"indexed": true,
 					"label": {
-						"en_US": "Sector Name"
+						"de_DE": "Sektor-Name",
+						"en_US": "Sector Name",
+						"es_ES": "Nombre del Sector",
+						"fr_FR": "Nom du Secteur"
 					},
 					"name": "sectorName",
 					"required": true,
@@ -107,7 +130,10 @@
 					"externalReferenceCode": "ecopulse-es-operational-status",
 					"indexed": true,
 					"label": {
-						"en_US": "Operational Status"
+						"de_DE": "Betriebsstatus",
+						"en_US": "Operational Status",
+						"es_ES": "Estado Operativo",
+						"fr_FR": "État Opérationnel"
 					},
 					"name": "operationalStatus",
 					"required": false,
@@ -120,7 +146,10 @@
 					"externalReferenceCode": "ecopulse-es-load",
 					"indexed": true,
 					"label": {
-						"en_US": "Current Load"
+						"de_DE": "Aktuelle Last",
+						"en_US": "Current Load",
+						"es_ES": "Carga Actual",
+						"fr_FR": "Charge Actuelle"
 					},
 					"name": "load",
 					"required": false,
@@ -130,7 +159,10 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Energy Sectors"
+				"de_DE": "Energiesektoren",
+				"en_US": "Energy Sectors",
+				"es_ES": "Sectores de Energía",
+				"fr_FR": "Secteurs Énergétiques"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/energysectors",

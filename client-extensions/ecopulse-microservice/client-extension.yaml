@@ -1,6 +1,7 @@
-sample-microservice-node:
-    name: Sample Microservice Node
+ecopulse-microservice:
+    name: EcoPulse Remote Intelligence
+    type: oAuthApplicationHeadlessServer
     scopes:
         - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Delivery.everything
-    type: oAuthApplicationHeadlessServer
+        - Liferay.Object.Admin.REST.everything

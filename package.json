@@ -3,10 +3,10 @@
 	"workspaces": {
 		"packages": [
 			"client-extensions/ecopulse-workflow-action",
+			"client-extensions/ecopulse-impact-calculator",
 			"client-extensions/ecopulse-spritemap",
 			"client-extensions/ecopulse-headless-auth",
 			"client-extensions/ecopulse-grid-map",
-			"client-extensions/ecopulse-impact-calculator",
 			"client-extensions/ecopulse-object-action",
 			"client-extensions/ecopulse-microservice"
 		]

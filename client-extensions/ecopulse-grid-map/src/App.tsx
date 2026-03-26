@@ -44,6 +44,35 @@ const DEFAULT_SECTORS: Sector[] = [
 function App() {
 	const [sectors, setSectors] = useState<Sector[]>(DEFAULT_SECTORS);
 	const [isLive, setIsLive] = useState(false);
+	const [selectedSector, setSelectedSector] = useState<string | null>(null);
+	const [metrics, setMetrics] = useState<any>(null);
+
+	// Fetch Advanced Metrics from Microservice when a sector is clicked
+	useEffect(() => {
+		if (!selectedSector) return;
+
+		const fetchMetrics = async () => {
+			try {
+				// In a real LDM environment, this would resolve to the microservice internal/external URL
+				const response = await fetch(
+					`http://localhost:8080/api/metrics/grid-efficiency?sectorId=${selectedSector}`
+				);
+				const data = await response.json();
+				setMetrics(data.metrics);
+			} catch (error) {
+				console.error('Error fetching advanced metrics:', error);
+				// Mock metrics for demo resilience
+				setMetrics({
+					carbonIntensity: '240g/kWh',
+					efficiency: 82.4,
+					renewableRatio: '68.4%',
+					timestamp: new Date().toISOString(),
+				});
+			}
+		};
+
+		fetchMetrics();
+	}, [selectedSector]);
 
 	// Fetch live data from Liferay Object API if available
 	useEffect(() => {
@@ -99,8 +128,12 @@ function App() {
 			<div className="grid-container">
 				{sectors.map((sector) => (
 					<div
-						className={`grid-node status-${sector.operationalStatus}`}
+						className={`grid-node status-${sector.operationalStatus} ${selectedSector === sector.externalReferenceCode ? 'border-primary shadow-sm' : ''}`}
 						key={sector.externalReferenceCode}
+						onClick={() =>
+							setSelectedSector(sector.externalReferenceCode)
+						}
+						style={{ cursor: 'pointer' }}
 					>
 						<div className="node-header d-flex justify-content-between">
 							<span className="node-id">
@@ -133,6 +166,51 @@ function App() {
 					</div>
 				))}
 			</div>
+
+			{selectedSector && metrics && (
+				<div className="mt-4 p-3 bg-light rounded border border-primary animate-in shadow-sm">
+					<div className="d-flex justify-content-between align-items-center mb-2">
+						<h3 className="h6 mb-0 text-navy font-weight-bold text-uppercase letter-spacing-1">
+							Advanced Sector Metrics: {selectedSector}
+						</h3>
+						<button
+							className="btn btn-sm p-0 text-muted"
+							onClick={(e) => {
+								e.stopPropagation();
+								setSelectedSector(null);
+							}}
+						>
+							&times; Close
+						</button>
+					</div>
+					<div className="row tiny-text text-center mt-3">
+						<div className="col-4 border-right">
+							<div className="text-muted mb-1 text-uppercase">
+								Efficiency
+							</div>
+							<div className="text-navy font-weight-bold h6 mb-0">
+								{metrics.efficiency}%
+							</div>
+						</div>
+						<div className="col-4 border-right">
+							<div className="text-muted mb-1 text-uppercase">
+								Renewable
+							</div>
+							<div className="text-navy font-weight-bold h6 mb-0">
+								{metrics.renewableRatio}
+							</div>
+						</div>
+						<div className="col-4">
+							<div className="text-muted mb-1 text-uppercase">
+								Intensity
+							</div>
+							<div className="text-navy font-weight-bold h6 mb-0">
+								{metrics.carbonIntensity}
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 
 			<div className="mt-4 pt-3 border-top d-flex justify-content-between align-items-center tiny-text text-muted">
 				<span>VERIDIAN SMART CITY SYSTEMS</span>

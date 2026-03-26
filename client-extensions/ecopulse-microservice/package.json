@@ -4,7 +4,7 @@
 	},
 	"description": "Sample Node Client Extension",
 	"main": "server.js",
-	"name": "sample-etc-node",
+	"name": "ecopulse-microservice",
 	"scripts": {
 		"start": "node server.js"
 	},

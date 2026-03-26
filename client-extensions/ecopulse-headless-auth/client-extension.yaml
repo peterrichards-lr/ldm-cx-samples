@@ -1,6 +1,6 @@
 sample-headless-auth-node:
     name: Sample Headless Auth Node
     scopes:
-        -   Liferay.Headless.Admin.User.everything
-        -   Liferay.Headless.Delivery.everything
+        - Liferay.Headless.Admin.User.everything
+        - Liferay.Headless.Delivery.everything
     type: oAuthApplicationHeadlessServer

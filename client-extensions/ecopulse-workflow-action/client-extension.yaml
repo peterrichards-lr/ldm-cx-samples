@@ -6,5 +6,5 @@ sample-workflow-action-node:
 sample-workflow-action-node-oauth-application:
     name: Sample Workflow Action Node OAuth Application
     scopes:
-        -   Liferay.Headless.Admin.User.everything
+        - Liferay.Headless.Admin.User.everything
     type: oAuthApplicationHeadlessServer

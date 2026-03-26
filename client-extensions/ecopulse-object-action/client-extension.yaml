@@ -6,5 +6,5 @@ sample-object-action-node:
 sample-object-action-node-oauth-application:
     name: Sample Object Action Node OAuth Application
     scopes:
-        -   Liferay.Headless.Admin.User.everything
+        - Liferay.Headless.Admin.User.everything
     type: oAuthApplicationHeadlessServer

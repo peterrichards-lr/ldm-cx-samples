@@ -2,8 +2,12 @@
 	"private": true,
 	"workspaces": {
 		"packages": [
+			"client-extensions/ecopulse-workflow-action",
 			"client-extensions/ecopulse-spritemap",
-			"client-extensions/ecopulse-grid-map"
+			"client-extensions/ecopulse-headless-auth",
+			"client-extensions/ecopulse-grid-map",
+			"client-extensions/ecopulse-object-action",
+			"client-extensions/ecopulse-microservice"
 		]
 	},
 	"scripts": {

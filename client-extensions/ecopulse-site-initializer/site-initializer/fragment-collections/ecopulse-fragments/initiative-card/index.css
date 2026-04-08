@@ -5,21 +5,21 @@
 }
 
 .initiative-card .border-top-emerald {
-	border-top: 4px solid #00c853;
+	border-top: 4px solid var(--primary, #00c853);
 }
 
 .initiative-card .badge-soft-emerald {
-	background-color: #e8f5e9;
-	color: #2e7d32;
+	background-color: var(--secondary-l1, #e8f5e9);
+	color: var(--primary-d2, #2e7d32);
 	letter-spacing: 1px;
 }
 
 .initiative-card .text-navy {
-	color: #1a237e;
+	color: var(--secondary, #1a237e);
 }
 
 .initiative-card .text-emerald {
-	color: #00c853;
+	color: var(--primary, #00c853);
 }
 
 .initiative-card.transition-hover {

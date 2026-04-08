@@ -1,5 +1,6 @@
 {
-	"description": "EcoPulse Object Entry Card",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
 	"name": "Initiative Card",
-	"type": "content"
+	"type": "component"
 }

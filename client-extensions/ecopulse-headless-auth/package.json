@@ -5,7 +5,7 @@
 	},
 	"description": "Sample Headless Auth Client Extension",
 	"main": "server.js",
-	"name": "sample-headless-auth-node",
+	"name": "ecopulse-headless-auth",
 	"scripts": {
 		"start": "node server.js"
 	},

@@ -12,7 +12,7 @@ class SampleCustomElement extends HTMLElement {
           ${liferayInfo}
         </div>
         <button id="click-me">Click for Interaction</button>
-        <div id="message" style="margin-top: 10px;"></div>
+        <div id="message"></div>
       </div>
     `;
 
@@ -23,6 +23,9 @@ class SampleCustomElement extends HTMLElement {
 	}
 }
 
-if (!customElements.get('sample-custom-element')) {
-	customElements.define('sample-custom-element', SampleCustomElement);
+if (!customElements.get('ecopulse-custom-element-vanilla')) {
+	customElements.define(
+		'ecopulse-custom-element-vanilla',
+		SampleCustomElement
+	);
 }

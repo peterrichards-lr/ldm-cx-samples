@@ -57,7 +57,6 @@
 						},
 						{
 							"defaultValue": "system-ui, -apple-system, sans-serif",
-							"editorType": "FontFamily",
 							"label": "headings-font-family",
 							"mappings": [
 								{

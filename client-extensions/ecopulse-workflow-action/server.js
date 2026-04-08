@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
-const port = 8080;
+const port = 3004;
 
 app.use(express.json());
+
+app.get('/ready', (req, res) => {
+	res.json({ status: 'READY' });
+});
 
 app.post('/workflow-action', (req, res) => {
 	console.log('Received Workflow Action payload:');
@@ -15,6 +19,6 @@ app.post('/workflow-action', (req, res) => {
 
 app.listen(port, () => {
 	console.log(
-		`Sample Workflow Action extension listening at http://localhost:${port}`
+		`EcoPulse Workflow Action extension listening at http://localhost:${port}`
 	);
 });

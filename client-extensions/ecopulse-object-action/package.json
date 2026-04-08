@@ -4,7 +4,7 @@
 	},
 	"description": "Sample Object Action Client Extension",
 	"main": "server.js",
-	"name": "sample-object-action-node",
+	"name": "ecopulse-object-action",
 	"scripts": {
 		"start": "node server.js"
 	},

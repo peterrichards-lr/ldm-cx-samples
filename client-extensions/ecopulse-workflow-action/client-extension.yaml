@@ -1,10 +1,20 @@
-sample-workflow-action-node:
-    name: Sample Workflow Action Node
-    oAuth2ApplicationExternalReferenceCode: sample-workflow-action-node-oauth-application
+assemble:
+    - from: .
+      include:
+        - package.json
+        - server.js
+      into: .
+ecopulse-workflow-action:
+    .serviceAddress: localhost:3004
+    .serviceScheme: http
+    name: EcoPulse Workflow Action Node
+    oAuth2ApplicationExternalReferenceCode: ecopulse-workflow-action-oahs
     resourcePath: /workflow-action
     type: workflowAction
-sample-workflow-action-node-oauth-application:
-    name: Sample Workflow Action Node OAuth Application
+ecopulse-workflow-action-oahs:
+    .serviceAddress: localhost:3004
+    .serviceScheme: http
+    name: EcoPulse Workflow Action OAuth Application
     scopes:
         - Liferay.Headless.Admin.User.everything
     type: oAuthApplicationHeadlessServer

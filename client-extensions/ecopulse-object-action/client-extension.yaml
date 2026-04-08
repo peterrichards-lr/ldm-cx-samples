@@ -1,10 +1,20 @@
-sample-object-action-node:
-    name: Sample Object Action Node
-    oAuth2ApplicationExternalReferenceCode: sample-object-action-node-oauth-application
+assemble:
+    - from: .
+      include:
+        - package.json
+        - server.js
+      into: .
+ecopulse-object-action:
+    .serviceAddress: localhost:3003
+    .serviceScheme: http
+    name: EcoPulse Object Action Node
+    oAuth2ApplicationExternalReferenceCode: ecopulse-object-action-oahs
     resourcePath: /object-action
     type: objectAction
-sample-object-action-node-oauth-application:
-    name: Sample Object Action Node OAuth Application
+ecopulse-object-action-oahs:
+    .serviceAddress: localhost:3003
+    .serviceScheme: http
+    name: EcoPulse Object Action OAuth Application
     scopes:
         - Liferay.Headless.Admin.User.everything
     type: oAuthApplicationHeadlessServer

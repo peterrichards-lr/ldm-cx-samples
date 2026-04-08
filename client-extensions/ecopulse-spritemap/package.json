@@ -6,7 +6,7 @@
 	"devDependencies": {
 		"@clayui/css": "^3.159.0"
 	},
-	"name": "@liferay/liferay-sample-theme-spritemap-2",
+	"name": "ecopulse-spritemap",
 	"scripts": {
 		"build": "node ./buildSpritemap.js"
 	},

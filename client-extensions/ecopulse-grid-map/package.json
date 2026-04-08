@@ -10,7 +10,7 @@
 		"typescript": "5.7.2",
 		"vite": "4.0.0"
 	},
-	"name": "liferay-sample-custom-element-6",
+	"name": "ecopulse-grid-map",
 	"private": true,
 	"scripts": {
 		"build": "tsc -b && vite build",

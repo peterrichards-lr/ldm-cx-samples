@@ -1,6 +1,7 @@
 {
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
-	"name": "Grid Monitor",
+	"jsPath": "index.js",
+	"name": "Responsive Menu",
 	"type": "component"
 }

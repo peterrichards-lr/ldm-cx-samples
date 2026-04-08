@@ -1,5 +1,6 @@
 {
-	"description": "EcoPulse CO2 Impact Calculator",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
 	"name": "Impact Calculator",
-	"type": "content"
+	"type": "component"
 }

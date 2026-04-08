@@ -18,13 +18,15 @@ Align all client extensions, fragments, and documentation with the "Veridian Shi
 Rename the following directories in `client-extensions/`:
 
 - `01-liferay-sample-batch` -> `ecopulse-batch`
-- `02-liferay-sample-etc-node` -> `ecopulse-node`
+- `02-liferay-sample-etc-node` -> `ecopulse-microservice`
 - `03-liferay-sample-theme-css-4` -> `ecopulse-theme`
 - `04-liferay-sample-theme-spritemap-2` -> `ecopulse-spritemap`
 - `05-liferay-sample-theme-favicon` -> `ecopulse-favicon`
 - `06-liferay-sample-custom-element-6` -> `ecopulse-grid-map`
-- `07-liferay-sample-etc-frontend` -> `ecopulse-frontend-utils`
+- `07-liferay-sample-etc-node` -> `ecopulse-headless-auth`
 - `08-liferay-sample-site-initializer` -> `ecopulse-site-initializer`
+- `09-liferay-sample-object-action` -> `ecopulse-object-action`
+- `10-liferay-sample-workflow-action` -> `ecopulse-workflow-action`
 
 ### 2. Update Client Extension Metadata
 

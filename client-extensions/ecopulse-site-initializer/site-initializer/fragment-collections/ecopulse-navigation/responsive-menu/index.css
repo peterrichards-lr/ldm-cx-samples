@@ -1,0 +1,7 @@
+.eco-nav .btn-outline-emerald {
+	border-color: var(--primary, #00c853);
+	color: var(--primary, #00c853);
+}
+.eco-nav .nav-link:hover {
+	color: var(--primary, #00c853) !important;
+}

@@ -55,7 +55,7 @@ function App() {
 			try {
 				// In a real LDM environment, this would resolve to the microservice internal/external URL
 				const response = await fetch(
-					`http://localhost:8080/api/metrics/grid-efficiency?sectorId=${selectedSector}`
+					`http://localhost:3001/api/metrics/grid-efficiency?sectorId=${selectedSector}`
 				);
 				const data = await response.json();
 				setMetrics(data.metrics);
@@ -133,7 +133,6 @@ function App() {
 						onClick={() =>
 							setSelectedSector(sector.externalReferenceCode)
 						}
-						style={{ cursor: 'pointer' }}
 					>
 						<div className="node-header d-flex justify-content-between">
 							<span className="node-id">
@@ -148,10 +147,7 @@ function App() {
 								{sector.sectorName}
 							</div>
 							<div className="node-load mt-2">
-								<div
-									className="progress"
-									style={{ height: '4px' }}
-								>
+								<div className="progress">
 									<div
 										className={`progress-bar ${sector.load > 90 ? 'bg-danger' : 'bg-innovation'}`}
 										style={{ width: `${sector.load}%` }}

@@ -4,7 +4,7 @@
 	},
 	"description": "Sample Workflow Action Client Extension",
 	"main": "server.js",
-	"name": "sample-workflow-action-node",
+	"name": "ecopulse-workflow-action",
 	"scripts": {
 		"start": "node server.js"
 	},

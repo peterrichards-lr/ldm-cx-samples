@@ -107,7 +107,12 @@ function App() {
 			</div>
 
 			<div className="mt-4 text-center d-flex align-items-center justify-content-center gap-2 small text-muted font-italic">
-				<img src="/documents/group/eco-pulse.svg" height="18" />
+				<img
+					alt="EcoPulse Logo"
+					height="18"
+					src="/documents/group/eco-pulse.svg"
+					title="EcoPulse Smart City Systems"
+				/>
 				Powered by Veridian Intelligence Layer
 			</div>
 		</div>

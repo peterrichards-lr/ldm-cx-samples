@@ -15,7 +15,7 @@ To ensure compatibility with the **Liferay Docker Manager (LDM)** and real Lifer
 ### Port Mapping
 
 - **Frontend (Caddy)**: `targetPort: 80`.
-- **Backend (Node.js/Spring Boot)**: `targetPort: 8080`.
+- Backend (Node.js): `targetPort: 3001-3004`.
   _Note: Ensure the Dockerfile EXPOSE matches the LCP targetPort._
 
 ### Memory Management

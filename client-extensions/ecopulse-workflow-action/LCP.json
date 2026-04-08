@@ -3,7 +3,7 @@
 	"id": "ecopulseworkflowaction",
 	"kind": "Deployment",
 	"loadBalancer": {
-		"targetPort": 8080
+		"targetPort": 3004
 	},
 	"memory": 50,
 	"scale": 1

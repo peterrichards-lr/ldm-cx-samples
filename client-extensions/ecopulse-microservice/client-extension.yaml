@@ -1,4 +1,12 @@
+assemble:
+    - from: .
+      include:
+        - package.json
+        - server.js
+      into: .
 ecopulse-microservice:
+    .serviceAddress: localhost:3001
+    .serviceScheme: http
     name: EcoPulse Remote Intelligence
     type: oAuthApplicationHeadlessServer
     scopes:

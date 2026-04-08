@@ -16,9 +16,6 @@ class LiferaySampleCustomElement extends HTMLElement {
 	}
 }
 
-if (!customElements.get('liferay-sample-custom-element-6')) {
-	customElements.define(
-		'liferay-sample-custom-element-6',
-		LiferaySampleCustomElement
-	);
+if (!customElements.get('ecopulse-grid-map')) {
+	customElements.define('ecopulse-grid-map', LiferaySampleCustomElement);
 }

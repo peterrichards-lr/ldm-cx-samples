@@ -7,5 +7,9 @@
 }
 
 .sample-container h1 {
-	color: #007bff;
+	color: var(--primary, #00c853);
+}
+
+#message {
+	margin-top: 10px;
 }

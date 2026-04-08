@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8080;
+const port = 3001;
 
 // Enable CORS for frontend interaction
 app.use((req, res, next) => {
@@ -14,6 +14,10 @@ app.use((req, res, next) => {
 
 app.get('/health', (req, res) => {
 	res.json({ status: 'UP', service: 'EcoPulse Remote Intelligence' });
+});
+
+app.get('/ready', (req, res) => {
+	res.json({ status: 'READY' });
 });
 
 /**

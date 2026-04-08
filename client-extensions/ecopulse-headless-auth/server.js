@@ -1,7 +1,11 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
-const port = 8080;
+const port = 3002;
+
+app.get('/ready', (req, res) => {
+	res.json({ status: 'READY' });
+});
 
 // Environment variables injected by Liferay/LDM
 const liferayHost =
@@ -64,6 +68,6 @@ app.get('/', async (req, res) => {
 
 app.listen(port, () => {
 	console.log(
-		`Sample Headless Auth extension listening at http://localhost:${port}`
+		`EcoPulse Headless Auth extension listening at http://localhost:${port}`
 	);
 });

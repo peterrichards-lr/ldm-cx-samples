@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
-const port = 8080;
+const port = 3003;
 
 app.use(express.json());
+
+app.get('/ready', (req, res) => {
+	res.json({ status: 'READY' });
+});
 
 app.post('/object-action', (req, res) => {
 	console.log('Received Object Action payload:');
@@ -15,6 +19,6 @@ app.post('/object-action', (req, res) => {
 
 app.listen(port, () => {
 	console.log(
-		`Sample Object Action extension listening at http://localhost:${port}`
+		`EcoPulse Object Action extension listening at http://localhost:${port}`
 	);
 });

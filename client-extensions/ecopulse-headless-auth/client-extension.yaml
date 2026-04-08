@@ -1,5 +1,13 @@
-sample-headless-auth-node:
-    name: Sample Headless Auth Node
+assemble:
+    - from: .
+      include:
+        - package.json
+        - server.js
+      into: .
+ecopulse-headless-auth:
+    .serviceAddress: localhost:3002
+    .serviceScheme: http
+    name: EcoPulse Headless Auth
     scopes:
         - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Delivery.everything

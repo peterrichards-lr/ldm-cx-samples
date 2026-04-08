@@ -16,7 +16,6 @@
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
-			"enableWorkflow": true,
 			"externalReferenceCode": "ecopulse-green-initiative",
 			"label": {
 				"de_DE": "Grüne Initiative",
@@ -98,7 +97,6 @@
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
-			"enableWorkflow": true,
 			"externalReferenceCode": "ecopulse-energy-sector",
 			"label": {
 				"de_DE": "Energiesektor",

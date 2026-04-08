@@ -1,9 +1,9 @@
 :root {
-	--emerald: #00c853;
-	--navy: #1a237e;
-	--innovation-blue: #00b0ff;
-	--warning: #ffab00;
-	--danger: #ff5252;
+	--emerald: var(--primary, #00c853);
+	--navy: var(--secondary, #1a237e);
+	--innovation-blue: var(--info, #00b0ff);
+	--warning: var(--warning, #ffab00);
+	--danger: var(--danger, #ff5252);
 }
 
 .ecopulse-grid-monitor {
@@ -72,6 +72,10 @@
 .dot-warning {
 	background-color: var(--warning);
 	box-shadow: 0 0 8px var(--warning);
+}
+
+.progress {
+	height: 4px;
 }
 
 .bg-innovation {

@@ -1,5 +1,6 @@
 {
-	"description": "Veridian Shift Hero Banner",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
 	"name": "Eco Hero",
-	"type": "content"
+	"type": "component"
 }

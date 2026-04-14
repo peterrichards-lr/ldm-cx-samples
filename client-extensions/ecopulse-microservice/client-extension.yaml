@@ -1,8 +1,8 @@
 assemble:
     - from: .
       include:
-        - package.json
-        - server.js
+          - package.json
+          - server.js
       into: .
 ecopulse-microservice:
     .serviceAddress: localhost:3001

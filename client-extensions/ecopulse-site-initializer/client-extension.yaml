@@ -2,7 +2,7 @@ ecopulse-site-initializer:
     name: EcoPulse Site Initializer
     oAuthApplicationHeadlessServer: ecopulse-site-initializer-oahs
     siteExternalReferenceCode: L_GUEST
-    siteName: Guest
+    siteName: EcoPulse Smart City
     type: siteInitializer
 ecopulse-site-initializer-oahs:
     .serviceAddress: localhost:8080

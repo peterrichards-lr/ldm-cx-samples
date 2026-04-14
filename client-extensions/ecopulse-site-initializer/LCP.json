@@ -6,5 +6,12 @@
 	"id": "ecopulsesiteinitializer",
 	"kind": "Job",
 	"memory": 50,
-	"scale": 1
+	"scale": 1,
+	"dependencies": [
+		"ecopulsebatch",
+		"ecopulsegridmap",
+		"ecopulsetheme",
+		"ecopulsefavicon",
+		"ecopulsespritemap"
+	]
 }

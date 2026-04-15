@@ -1,8 +1,8 @@
 veridian-site-initializer:
     name: Veridian Site Initializer
     oAuthApplicationHeadlessServer: veridian-site-initializer-oahs
-    siteExternalReferenceCode: veridian-site
-    siteName: City of Veridian
+    siteExternalReferenceCode: L_GUEST
+    siteName: Guest
     type: siteInitializer
 veridian-site-initializer-oahs:
     .serviceAddress: localhost:8080

@@ -39,7 +39,7 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 
 - **`ecopulse-batch`**: Deploys localized `GreenInitiative` and `EnergySector` schemas with multi-language seed data.
 - **`ecopulse-site-initializer`**: Orchestrates the "EcoPulse Smart City" initiative site.
-- **`veridian-site-initializer`**: Orchestrates the "City of Veridian" municipal portal.
+- **`veridian-site-initializer`**: Orchestrates the "City of Veridian" municipal portal (applied to the default **L_GUEST** site).
 
 ---
 

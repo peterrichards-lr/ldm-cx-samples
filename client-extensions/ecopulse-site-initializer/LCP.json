@@ -3,15 +3,8 @@
 	"env": {
 		"LIFERAY_BATCH_OAUTH_APP_ERC": "ecopulse-site-initializer-oahs"
 	},
-	"id": "ecopulsesiteinitializer",
+	"id": "ecopulsesiteinitializerv7",
 	"kind": "Job",
 	"memory": 50,
-	"scale": 1,
-	"dependencies": [
-		"ecopulsebatch",
-		"ecopulsegridmap",
-		"ecopulsetheme",
-		"ecopulsefavicon",
-		"ecopulsespritemap"
-	]
+	"scale": 1
 }

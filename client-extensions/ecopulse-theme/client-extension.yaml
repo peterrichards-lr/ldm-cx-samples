@@ -1,8 +1,3 @@
-assemble:
-    - from: build/buildTheme/img
-      into: static/img
-    - from: build/buildTheme/images
-      into: static/images
 ecopulse-theme:
     externalReferenceCode: ecopulse-theme
     clayRTLURL: css/clay_rtl.css

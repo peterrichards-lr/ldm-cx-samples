@@ -2,6 +2,9 @@
 	"externalReferenceCode": "ecopulse-home",
 	"friendlyURL": "/home",
 	"name": "Home",
+	"name_i18n": {
+		"en_US": "Home"
+	},
 	"pageDefinition": {
 		"pageElement": {
 			"pageElements": [

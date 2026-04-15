@@ -51,8 +51,35 @@ The `ecopulse-site-initializer` is the source-of-truth for the demo's initial st
 - **Packaging**: Use `./gradlew clean build` to generate the LDM-ready ZIPs in `dist/` folders.
 - **Verification**: Always check the generated `build/liferay-client-extension-build/LCP.json` to ensure source overrides were applied correctly.
 
-## 5. Liferay Objects & Reserved Names
+## 6. Site Initializer (Liferay 7.4) Standards
 
-- **Status & Type**: `status` and `type` are reserved keywords in Liferay Objects. Use `operationalStatus` or `categoryType` instead.
-- **Identifier**: Prefer using `externalReferenceCode` as the primary identifier for records (e.g., 'N-1', 'gi-solar-grid') instead of a custom `id` or `sectorId` field to avoid confusion with internal Liferay IDs.
-- **Reserved List**: Always check the [Liferay Reserved Field Names](https://learn.liferay.com/w/dxp/low-code/objects/creating-and-managing-objects/fields/adding-fields-to-objects#reserved-field-names) before defining a schema.
+To ensure reliable site initialization and avoid common deployment failures:
+
+### Directory Structure (Strict)
+
+- **Documents**: Must be in `site-initializer/documents/group/`.
+- **Fragments**: Must be in `site-initializer/fragments/group/[collection-erc]/[fragment-erc]/`.
+- **Journal Articles**: Must be in `site-initializer/journal-articles/`. Each article consists of a `[name].json` (metadata) and `[name].xml` (content).
+- **Layouts**: Must be in `site-initializer/layouts/[order]_[name]/`. Use `page.json` for content pages.
+
+### Metadata & IDs
+
+- **ERC & Article ID**: Always provide both `externalReferenceCode` and `articleId` in journal articles to prevent `DuplicateArticleIdException`.
+- **Versioning**: If a site initialization fails or hangs, increment the site's `externalReferenceCode` (e.g., `ecopulse-site-v9`) and the extension's `id` in `LCP.json` to force a clean start.
+- **Page Metadata**: Use `page.json` instead of `page-definition.json` for content pages, and always include `name_i18n` for localization.
+
+### Content Formatting
+
+- **Journal Content**: Must be wrapped in Liferay DDM XML format inside the `.xml` file (e.g., `<root><dynamic-element name="content" type="text_area"><dynamic-content language-id="en_US"><![CDATA[...]]></dynamic-content></dynamic-element></root>`).
+- **Asset References**: Use the ERC token syntax: `src="[$DL_FILE_ENTRY_EXTERNAL_REFERENCE_CODE:filename.png$]"`.
+
+## 7. Theme Development (Clay & SASS)
+
+- **Branding Enforcement**: When overriding Clay variables in `_clay_variables.scss`, remove the `!default` flag to ensure they explicitly override Liferay defaults.
+- **Source Files**: Always provide `clay.scss` and `main.scss` in `src/css/` to let the Liferay Gradle plugin handle assembly. Do not use manual `assemble` blocks in `client-extension.yaml` for CSS files.
+- **Explicit Styles**: Add explicit CSS overrides in `main.scss` for common elements like `.btn-primary` and `.btn-secondary` to guarantee branding consistency across all fragments.
+
+## 8. OSGi & LCP Dependency Management
+
+- **Require-Bundle Conflicts**: Do not list other client extensions in the `dependencies` array of `LCP.json` for Site Initializers or Themes. This can trigger incorrect `Require-Bundle` headers in the generated OSGi manifest, leading to unresolved requirement errors.
+- **Manual Deployment**: If `blade gw deploy` fails to update a client extension, manually copy the generated ZIP from `dist/` to `bundles/osgi/client-extensions/` and check the logs for "STOPPED" and "STARTED" confirmation.

@@ -2,5 +2,6 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"name": "Impact Calculator",
+	"externalReferenceCode": "impact-calculator",
 	"type": "component"
 }

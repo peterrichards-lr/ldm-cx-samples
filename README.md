@@ -35,7 +35,17 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 ### 🚀 Data & Site Provisioning
 
 - **`ecopulse-batch`**: Deploys localized `GreenInitiative` and `EnergySector` schemas with multi-language seed data.
-- **`ecopulse-site-initializer`**: The "master orchestrator" that assembles the theme, civic identity (City of Veridian), fragments, and the "Veridian News" portal.
+- **`ecopulse-site-initializer`**: The "master orchestrator" that assembles the theme, civic identity (City of Veridian), standardized fragment collections, and the versioned "Veridian News" portal.
+
+---
+
+## 📐 Implementation Standards
+
+To ensure demo reliability, all assets follow strict Liferay 7.4 conventions:
+
+- **Site Initializer**: Uses versioned `externalReferenceCode` paths and standardized `group/` folder structures for fragments and documents.
+- **Theme**: Leverages Clay SASS variables with explicit overrides to guarantee **Veridian Shift** palette enforcement.
+- **Metadata**: Unified ERC and Article ID management to prevent collision-based deployment failures.
 
 ---
 

@@ -1,6 +1,7 @@
 {
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
-	"name": "Eco Hero",
+	"name": "Grid Monitor",
+	"externalReferenceCode": "grid-monitor",
 	"type": "component"
 }

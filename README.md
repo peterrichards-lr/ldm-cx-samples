@@ -14,7 +14,7 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 
 ---
 
-## 🏗️ The Tech Stack (15 LDM Orchestrated Extensions)
+## 🏗️ The Tech Stack (16 LDM Orchestrated Extensions)
 
 ### 🎨 Branding & UI
 
@@ -38,7 +38,8 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 ### 🚀 Data & Site Provisioning
 
 - **`ecopulse-batch`**: Deploys localized `GreenInitiative` and `EnergySector` schemas with multi-language seed data.
-- **`ecopulse-site-initializer`**: The "master orchestrator" that assembles the theme, civic identity (City of Veridian), standardized fragment collections, and the versioned "Veridian News" portal.
+- **`ecopulse-site-initializer`**: Orchestrates the "EcoPulse Smart City" initiative site.
+- **`veridian-site-initializer`**: Orchestrates the "City of Veridian" municipal portal.
 
 ---
 

@@ -58,9 +58,10 @@ To ensure reliable site initialization and avoid common deployment failures:
 ### Directory Structure (Strict)
 
 - **Documents**: Must be in `site-initializer/documents/group/`.
-- **Fragments**: Must be in `site-initializer/fragments/group/[collection-erc]/[fragment-erc]/`.
+- **Fragments**: Must be in `site-initializer/fragment-collections/[collection-erc]/[fragment-erc]/`.
 - **Journal Articles**: Must be in `site-initializer/journal-articles/`. Each article consists of a `[name].json` (metadata) and `[name].xml` (content).
 - **Layouts**: Must be in `site-initializer/layouts/[order]_[name]/`. Use `page.json` for content pages.
+- **Style Books**: Each entity-specific site initializer must provide its own unique Style Book folder in `site-initializer/style-books/[brand-erc]-style-book/`.
 
 ### Metadata & IDs
 

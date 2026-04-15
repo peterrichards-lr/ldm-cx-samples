@@ -1,0 +1,17 @@
+.grid-monitor-fragment-container {
+	border-left: 5px solid var(--secondary, #1a237e);
+	padding-left: 1.5rem;
+}
+
+.grid-monitor-fragment-container .text-navy {
+	color: var(--secondary, #1a237e);
+}
+
+.grid-monitor-fragment-container .border-innovation {
+	border-left: 4px solid var(--info, #00b0ff) !important;
+}
+
+.grid-monitor-fragment-container ecopulse-grid-map {
+	display: block;
+	min-height: 200px;
+}

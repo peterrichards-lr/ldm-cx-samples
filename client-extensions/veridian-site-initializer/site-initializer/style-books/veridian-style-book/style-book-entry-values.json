@@ -1,0 +1,22 @@
+[
+	{
+		"frontendTokenName": "fontSizeH1",
+		"value": "4.5rem"
+	},
+	{
+		"frontendTokenName": "fontFamilyHeadings",
+		"value": "Georgia, 'Times New Roman', serif"
+	},
+	{
+		"frontendTokenName": "fontWeightHeadings",
+		"value": "700"
+	},
+	{
+		"frontendTokenName": "colorBrandPrimary",
+		"value": "#1A237E"
+	},
+	{
+		"frontendTokenName": "colorBrandSecondary",
+		"value": "#78909C"
+	}
+]

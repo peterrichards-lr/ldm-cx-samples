@@ -1,0 +1,7 @@
+{
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"name": "Grid Monitor",
+	"externalReferenceCode": "grid-monitor",
+	"type": "component"
+}

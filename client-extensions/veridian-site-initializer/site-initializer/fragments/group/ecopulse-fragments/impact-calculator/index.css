@@ -1,0 +1,8 @@
+.impact-calculator-fragment {
+	padding: 1rem 0;
+}
+
+.impact-calculator-fragment ecopulse-impact-calculator {
+	display: block;
+	min-height: 300px;
+}

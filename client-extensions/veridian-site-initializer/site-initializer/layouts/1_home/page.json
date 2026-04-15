@@ -1,0 +1,36 @@
+{
+	"externalReferenceCode": "veridian-home",
+	"friendlyURL": "/home",
+	"name": "Home",
+	"name_i18n": {
+		"en_US": "Home"
+	},
+	"pageDefinition": {
+		"pageElement": {
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "eco-hero"
+					},
+					"type": "fragment"
+				},
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "initiative-card"
+					},
+					"type": "fragment"
+				}
+			],
+			"type": "root"
+		},
+		"settings": {
+			"theme": {
+				"themeExternalReferenceCode": "veridian-brand"
+			}
+		}
+	},
+	"parentLayoutExternalReferenceCode": "",
+	"type": "content"
+}

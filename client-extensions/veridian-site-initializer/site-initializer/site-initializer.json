@@ -1,0 +1,9 @@
+{
+	"description": "City of Veridian Municipal Portal",
+	"name": "City of Veridian",
+	"siteExternalReferenceCode": "veridian-site",
+	"siteName": "City of Veridian",
+	"themeCSSCETExternalReferenceCode": "veridian-brand",
+	"themeFaviconCETExternalReferenceCode": "veridian-favicon",
+	"themeSpritemapCETExternalReferenceCode": "ecopulse-spritemap"
+}

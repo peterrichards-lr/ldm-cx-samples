@@ -1,0 +1,10 @@
+{
+	"cpu": 0.2,
+	"env": {
+		"LIFERAY_BATCH_OAUTH_APP_ERC": "veridian-site-initializer-oahs"
+	},
+	"id": "veridiansiteinitializer",
+	"kind": "Job",
+	"memory": 50,
+	"scale": 1
+}

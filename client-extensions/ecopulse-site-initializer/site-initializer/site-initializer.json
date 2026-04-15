@@ -1,8 +1,8 @@
 {
 	"description": "Veridian EcoPulse Smart City Demo Environment",
 	"name": "EcoPulse Smart City",
-	"siteExternalReferenceCode": "ecopulse-site-v9",
-	"siteName": "EcoPulse Smart City v9",
+	"siteExternalReferenceCode": "ecopulse-site",
+	"siteName": "EcoPulse Smart City",
 	"themeCSSCETExternalReferenceCode": "ecopulse-brand",
 	"themeFaviconCETExternalReferenceCode": "ecopulse-favicon",
 	"themeSpritemapCETExternalReferenceCode": "ecopulse-spritemap"

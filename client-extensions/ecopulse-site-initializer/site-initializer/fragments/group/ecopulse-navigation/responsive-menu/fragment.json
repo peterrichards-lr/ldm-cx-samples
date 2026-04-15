@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Responsive Menu",
+	"externalReferenceCode": "responsive-menu",
+	"type": "component"
+}

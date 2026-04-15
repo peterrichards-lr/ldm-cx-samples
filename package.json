@@ -17,7 +17,8 @@
 			"client-extensions/ecopulse-theme",
 			"client-extensions/ecopulse-workflow-action",
 			"client-extensions/veridian-brand",
-			"client-extensions/veridian-favicon"
+			"client-extensions/veridian-favicon",
+			"client-extensions/veridian-site-initializer"
 		]
 	},
 	"scripts": {

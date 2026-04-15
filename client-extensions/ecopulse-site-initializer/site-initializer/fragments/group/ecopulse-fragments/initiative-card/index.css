@@ -1,0 +1,32 @@
+.initiative-card {
+	border-radius: 1rem;
+	overflow: hidden;
+	height: 100%;
+}
+
+.initiative-card .border-top-emerald {
+	border-top: 4px solid var(--primary, #00c853);
+}
+
+.initiative-card .badge-soft-emerald {
+	background-color: var(--secondary-l1, #e8f5e9);
+	color: var(--primary-d2, #2e7d32);
+	letter-spacing: 1px;
+}
+
+.initiative-card .text-navy {
+	color: var(--secondary, #1a237e);
+}
+
+.initiative-card .text-emerald {
+	color: var(--primary, #00c853);
+}
+
+.initiative-card.transition-hover {
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.initiative-card.transition-hover:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}

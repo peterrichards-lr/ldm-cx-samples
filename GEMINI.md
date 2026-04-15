@@ -75,16 +75,16 @@ To ensure reliable site initialization and avoid common deployment failures:
 
 ## 7. Theme & Brand Development (Clay & SASS)
 
-### Brand Source of Truth
+### Brand Separation Architecture
 
-- **`ecopulse-brand`**: This **globalCSS** extension is the source of truth for all branding variables (`--ecopulse-*`).
-- **Syncing**: Any new branding colors or tokens should first be added to `ecopulse-brand/assets/css/brand.css` and then mirrored in `ecopulse-theme/src/css/main.scss` if required for theme-specific logic.
+- **Shared Core**: All shared SASS logic, component styles, and Clay variables reside in `client-extensions/common-theme-assets/src/css/`.
+- **Syncing**: Because the Liferay CSS builder requires all imported SASS files to be in the local `src/css` directory, any changes to the shared core must be copied to both `ecopulse-brand/src/css/` and `veridian-brand/src/css/` before building.
+- **Entity Themes**: `ecopulse-brand` and `veridian-brand` are **themeCSS** extensions that provide the specific branding variables and core components for their respective entities.
 
 ### Branding Enforcement
 
-- **Variables**: When overriding Clay variables in `_clay_variables.scss`, remove the `!default` flag to ensure they explicitly override Liferay defaults.
-- **Source Files**: Always provide `clay.scss` and `main.scss` in `src/css/` to let the Liferay Gradle plugin handle assembly. Do not use manual `assemble` blocks in `client-extension.yaml` for CSS files.
-- **Explicit Styles**: Add explicit CSS overrides in `main.scss` for common elements like `.btn-primary` and `.btn-secondary` to guarantee branding consistency across all fragments.
+- **Variables**: Use semantic mappings (`$brand-primary`, `$brand-secondary`) in `_core.scss` to ensure component styles automatically adapt to the active brand.
+- **Explicit Styles**: Component-specific overrides (e.g., `.ecopulse-card`, `.btn-brand`) should be defined in the shared core but use CSS variables for color values.
 
 ## 8. OSGi & LCP Dependency Management
 

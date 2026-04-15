@@ -2,6 +2,7 @@
 	"private": true,
 	"workspaces": {
 		"packages": [
+			"client-extensions/common-theme-assets",
 			"client-extensions/ecopulse-batch",
 			"client-extensions/ecopulse-brand",
 			"client-extensions/ecopulse-custom-element-vanilla",
@@ -14,7 +15,8 @@
 			"client-extensions/ecopulse-site-initializer",
 			"client-extensions/ecopulse-spritemap",
 			"client-extensions/ecopulse-theme",
-			"client-extensions/ecopulse-workflow-action"
+			"client-extensions/ecopulse-workflow-action",
+			"client-extensions/veridian-brand"
 		]
 	},
 	"scripts": {

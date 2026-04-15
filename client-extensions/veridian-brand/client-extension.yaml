@@ -1,5 +1,5 @@
-ecopulse-brand:
-    name: EcoPulse Brand Theme
+veridian-brand:
+    name: Veridian Civic Brand Theme
     type: themeCSS
     clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css

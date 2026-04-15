@@ -14,12 +14,13 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 
 ---
 
-## 🏗️ The Tech Stack (13 LDM Orchestrated Extensions)
+## 🏗️ The Tech Stack (14 LDM Orchestrated Extensions)
 
 ### 🎨 Branding & UI
 
-- **`ecopulse-brand`**: Centralized **globalCSS** providing shared variables and utility classes.
-- **`ecopulse-theme`**: Foundational CSS and **Style Book** definition for the Veridian Shift.
+- **`ecopulse-theme`**: Shared foundational CSS and component logic (the "Engine").
+- **`ecopulse-brand`**: Entity-specific **themeCSS** for the EcoPulse data/grid visual identity.
+- **`veridian-brand`**: Entity-specific **themeCSS** for the City of Veridian civic identity.
 - **`ecopulse-spritemap`**: Custom SVG iconography (`leaf`, `bolt`, `map-marker`).
 - **`ecopulse-favicon`**: Professional SVG branding for the browser tab.
 - **`ecopulse-custom-element-vanilla`**: A lightweight, frontend-only custom element.
@@ -45,7 +46,7 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 To ensure demo reliability, all assets follow strict Liferay 7.4 conventions:
 
 - **Site Initializer**: Uses versioned `externalReferenceCode` paths and standardized `group/` folder structures for fragments and documents.
-- **Theme**: Leverages Clay SASS variables with explicit overrides to guarantee **Veridian Shift** palette enforcement.
+- **Brand Separation**: Entities (Veridian, EcoPulse) share the `ecopulse-theme` core but use dedicated **themeCSS** extensions to control their unique branding via SASS variable overrides.
 - **Metadata**: Unified ERC and Article ID management to prevent collision-based deployment failures.
 
 ---

@@ -1,0 +1,15 @@
+{
+	"name": "Veridian Main Navigation",
+	"navigationMenuItems": [
+		{
+			"label": "Home",
+			"type": "URL",
+			"url": "/"
+		},
+		{
+			"label": "Liferay Official",
+			"type": "URL",
+			"url": "https://www.liferay.com"
+		}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"name": "Main Navigation",
+	"navigationMenuItems": [
+		{
+			"label": "Home",
+			"type": "URL",
+			"url": "/"
+		},
+		{
+			"label": "Liferay Docker Manager",
+			"type": "URL",
+			"url": "https://github.com/peterrichards-lr/liferay-docker-manager"
+		}
+	]
+}

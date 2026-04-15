@@ -2,13 +2,19 @@
 	"private": true,
 	"workspaces": {
 		"packages": [
-			"client-extensions/ecopulse-workflow-action",
-			"client-extensions/ecopulse-impact-calculator",
-			"client-extensions/ecopulse-spritemap",
-			"client-extensions/ecopulse-headless-auth",
+			"client-extensions/ecopulse-batch",
+			"client-extensions/ecopulse-brand",
+			"client-extensions/ecopulse-custom-element-vanilla",
+			"client-extensions/ecopulse-favicon",
 			"client-extensions/ecopulse-grid-map",
+			"client-extensions/ecopulse-headless-auth",
+			"client-extensions/ecopulse-impact-calculator",
+			"client-extensions/ecopulse-microservice",
 			"client-extensions/ecopulse-object-action",
-			"client-extensions/ecopulse-microservice"
+			"client-extensions/ecopulse-site-initializer",
+			"client-extensions/ecopulse-spritemap",
+			"client-extensions/ecopulse-theme",
+			"client-extensions/ecopulse-workflow-action"
 		]
 	},
 	"scripts": {

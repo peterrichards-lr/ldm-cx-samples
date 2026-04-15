@@ -1,0 +1,4 @@
+ecopulse-brand:
+    name: EcoPulse Brand Styles
+    type: globalCSS
+    url: css/brand.css

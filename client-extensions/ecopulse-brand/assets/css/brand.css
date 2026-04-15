@@ -1,0 +1,100 @@
+:root {
+	/* EcoPulse Core Palette */
+	--ecopulse-emerald: #00c853;
+	--ecopulse-navy: #1a237e;
+	--ecopulse-blue: #00b0ff;
+
+	/* Semantic Assignments */
+	--ecopulse-primary: var(--ecopulse-emerald);
+	--ecopulse-secondary: var(--ecopulse-navy);
+	--ecopulse-accent: var(--ecopulse-blue);
+
+	/* Functional Colors */
+	--ecopulse-success: #00e676;
+	--ecopulse-info: #00b0ff;
+	--ecopulse-warning: #ffd600;
+	--ecopulse-danger: #ff5252;
+	--ecopulse-light: #f5f7fa;
+	--ecopulse-dark: #212121;
+}
+
+/* Brand Backgrounds */
+.bg-ecopulse-emerald {
+	background-color: var(--ecopulse-emerald) !important;
+	color: #fff !important;
+}
+.bg-ecopulse-navy {
+	background-color: var(--ecopulse-navy) !important;
+	color: #fff !important;
+}
+.bg-ecopulse-blue {
+	background-color: var(--ecopulse-blue) !important;
+	color: #fff !important;
+}
+
+/* Brand Text */
+.text-ecopulse-emerald {
+	color: var(--ecopulse-emerald) !important;
+}
+.text-ecopulse-navy {
+	color: var(--ecopulse-navy) !important;
+}
+.text-ecopulse-blue {
+	color: var(--ecopulse-blue) !important;
+}
+
+/* Brand Borders */
+.border-ecopulse-emerald {
+	border-color: var(--ecopulse-emerald) !important;
+}
+.border-ecopulse-navy {
+	border-color: var(--ecopulse-navy) !important;
+}
+
+/* EcoPulse Specific Component Enhancements */
+.ecopulse-card {
+	border-radius: 16px;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	box-shadow: 0 8px 24px rgba(26, 35, 126, 0.08);
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+	background: #fff;
+	overflow: hidden;
+}
+
+.ecopulse-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 12px 32px rgba(26, 35, 126, 0.12);
+}
+
+.ecopulse-stat-value {
+	font-size: 2.5rem;
+	font-weight: 800;
+	color: var(--ecopulse-navy);
+	letter-spacing: -0.02em;
+}
+
+.ecopulse-stat-label {
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: var(--ecopulse-emerald);
+	letter-spacing: 0.05em;
+}
+
+.ecopulse-btn-emerald {
+	background-color: var(--ecopulse-emerald);
+	color: #fff;
+	border: none;
+	padding: 0.75rem 1.5rem;
+	border-radius: 8px;
+	font-weight: 600;
+	transition: background-color 0.2s;
+}
+
+.ecopulse-btn-emerald:hover {
+	background-color: #00a83b;
+	color: #fff;
+	text-decoration: none;
+}

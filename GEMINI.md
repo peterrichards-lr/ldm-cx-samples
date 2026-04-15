@@ -73,9 +73,16 @@ To ensure reliable site initialization and avoid common deployment failures:
 - **Journal Content**: Must be wrapped in Liferay DDM XML format inside the `.xml` file (e.g., `<root><dynamic-element name="content" type="text_area"><dynamic-content language-id="en_US"><![CDATA[...]]></dynamic-content></dynamic-element></root>`).
 - **Asset References**: Use the ERC token syntax: `src="[$DL_FILE_ENTRY_EXTERNAL_REFERENCE_CODE:filename.png$]"`.
 
-## 7. Theme Development (Clay & SASS)
+## 7. Theme & Brand Development (Clay & SASS)
 
-- **Branding Enforcement**: When overriding Clay variables in `_clay_variables.scss`, remove the `!default` flag to ensure they explicitly override Liferay defaults.
+### Brand Source of Truth
+
+- **`ecopulse-brand`**: This **globalCSS** extension is the source of truth for all branding variables (`--ecopulse-*`).
+- **Syncing**: Any new branding colors or tokens should first be added to `ecopulse-brand/assets/css/brand.css` and then mirrored in `ecopulse-theme/src/css/main.scss` if required for theme-specific logic.
+
+### Branding Enforcement
+
+- **Variables**: When overriding Clay variables in `_clay_variables.scss`, remove the `!default` flag to ensure they explicitly override Liferay defaults.
 - **Source Files**: Always provide `clay.scss` and `main.scss` in `src/css/` to let the Liferay Gradle plugin handle assembly. Do not use manual `assemble` blocks in `client-extension.yaml` for CSS files.
 - **Explicit Styles**: Add explicit CSS overrides in `main.scss` for common elements like `.btn-primary` and `.btn-secondary` to guarantee branding consistency across all fragments.
 

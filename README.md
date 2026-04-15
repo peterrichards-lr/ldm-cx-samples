@@ -14,10 +14,11 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 
 ---
 
-## 🏗️ The Tech Stack (12 LDM Orchestrated Extensions)
+## 🏗️ The Tech Stack (13 LDM Orchestrated Extensions)
 
 ### 🎨 Branding & UI
 
+- **`ecopulse-brand`**: Centralized **globalCSS** providing shared variables and utility classes.
 - **`ecopulse-theme`**: Foundational CSS and **Style Book** definition for the Veridian Shift.
 - **`ecopulse-spritemap`**: Custom SVG iconography (`leaf`, `bolt`, `map-marker`).
 - **`ecopulse-favicon`**: Professional SVG branding for the browser tab.

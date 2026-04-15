@@ -14,15 +14,16 @@ This repository builds the **Client Extensions**, **Objects**, and **Fragments**
 
 ---
 
-## 🏗️ The Tech Stack (14 LDM Orchestrated Extensions)
+## 🏗️ The Tech Stack (15 LDM Orchestrated Extensions)
 
 ### 🎨 Branding & UI
 
 - **`ecopulse-theme`**: Shared foundational CSS and component logic (the "Engine").
 - **`ecopulse-brand`**: Entity-specific **themeCSS** for the EcoPulse data/grid visual identity.
 - **`veridian-brand`**: Entity-specific **themeCSS** for the City of Veridian civic identity.
+- **`ecopulse-favicon`**: Professional SVG branding for the EcoPulse browser tab.
+- **`veridian-favicon`**: Professional SVG branding for the City of Veridian browser tab.
 - **`ecopulse-spritemap`**: Custom SVG iconography (`leaf`, `bolt`, `map-marker`).
-- **`ecopulse-favicon`**: Professional SVG branding for the browser tab.
 - **`ecopulse-custom-element-vanilla`**: A lightweight, frontend-only custom element.
 
 ### 📊 Intelligence & Logic

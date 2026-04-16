@@ -5,6 +5,12 @@
 	"loadBalancer": {
 		"targetPort": 3003
 	},
+	"ports": [
+		{
+			"external": true,
+			"port": 3003
+		}
+	],
 	"memory": 50,
 	"scale": 1
 }

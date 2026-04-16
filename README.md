@@ -58,8 +58,8 @@ To ensure demo reliability, all assets follow strict Liferay 7.4 conventions:
 All extensions include a full **`LCP.json`** compliant with Liferay Cloud standards:
 
 - **Jobs** (Batch, Initializer): Optimized to **50MB**.
-- **Deployments** (Theme, React Apps): Configured with `targetPort: 80`.
-- Backend Nodes: Configured with `targetPort: 3001-3004`.
+- **Deployments** (Theme, React Apps): Configured with `targetPort: 80` and explicit `ports` array mapping (`external: true`).
+- Backend Nodes: Configured with `targetPort: 3001-3004` and explicit `ports` array mapping (`external: true`).
 
 ---
 

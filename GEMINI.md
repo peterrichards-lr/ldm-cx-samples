@@ -16,6 +16,7 @@ To ensure compatibility with the **Liferay Docker Manager (LDM)** and real Lifer
 
 - **Frontend (Caddy)**: `targetPort: 80`.
 - Backend (Node.js): `targetPort: 3001-3004`.
+- **LDM Validation**: All Deployments with a `loadBalancer` must include an explicit `ports` array with `external: true` matching the `targetPort`.
   _Note: Ensure the Dockerfile EXPOSE matches the LCP targetPort._
 
 ### Memory Management

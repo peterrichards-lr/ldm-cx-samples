@@ -119,6 +119,12 @@ To move beyond static content, the demo environment utilizes Liferay's advanced 
 - **Discovery Experiences**: Store Search Blueprints in `site-initializer/search/blueprints/[blueprint-name].json`.
 - **Purpose**: Use these to create targeted search results (e.g., boosting high-impact initiatives) without modifying the global search index.
 
+### Asset List Entries (Collections)
+
+- **Dynamic Data Sets**: Store Collections in `site-initializer/asset-list-entries/[erc].json`.
+- **Filtering**: Use dynamic queries to filter Objects (e.g., filtering `GreenInitiative` by `impactLevel > 5`).
+- **Synergy**: Link these collections to fragments (like sliders or grids) within layout definitions.
+
 ### Object Relationships
 
 - **Inter-connected Data**: Define relationships between Liferay Objects in `ecopulse-batch/batch/object-definition.batch-engine-data.json`.

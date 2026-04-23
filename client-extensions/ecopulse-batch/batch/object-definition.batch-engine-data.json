@@ -74,6 +74,18 @@
 					"type": "Integer"
 				}
 			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "gi-to-energy-sector",
+					"label": {
+						"en_US": "Target Energy Sector"
+					},
+					"name": "targetEnergySector",
+					"objectDefinitionExternalReferenceCode": "ecopulse-energy-sector",
+					"type": "oneToMany"
+				}
+			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
 				"de_DE": "Grüne Initiativen",

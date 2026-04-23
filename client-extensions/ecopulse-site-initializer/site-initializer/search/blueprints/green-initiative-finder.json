@@ -1,0 +1,18 @@
+{
+	"description_i18n": {
+		"en_US": "Prioritize high-impact green initiatives in search results."
+	},
+	"externalReferenceCode": "ecopulse-gi-finder",
+	"searchBlueprintConfigurations": [
+		{
+			"config": {
+				"boost": 10,
+				"field": "gi-impact-level"
+			},
+			"handlerName": "MatchField"
+		}
+	],
+	"title_i18n": {
+		"en_US": "Green Initiative Finder"
+	}
+}

@@ -109,3 +109,22 @@ To ensure fragments and site content are modular and maintainable, all site init
 ### Synergy
 
 - Site initializers should explicitly link to the corresponding `themeCSS` and `themeFavicon` extensions in `site-initializer.json` using their ERCs.
+
+## 10. Advanced Orchestration & Discovery (Phase 2)
+
+To move beyond static content, the demo environment utilizes Liferay's advanced discovery and relationship features.
+
+### Search Blueprints
+
+- **Discovery Experiences**: Store Search Blueprints in `site-initializer/search/blueprints/[blueprint-name].json`.
+- **Purpose**: Use these to create targeted search results (e.g., boosting high-impact initiatives) without modifying the global search index.
+
+### Object Relationships
+
+- **Inter-connected Data**: Define relationships between Liferay Objects in `ecopulse-batch/batch/object-definition.batch-engine-data.json`.
+- **Naming**: Use descriptive relationship names (e.g., `sectorInitiatives`) and ensure both sides of the relationship are clearly defined in the JSON.
+
+### Display Page Templates
+
+- **Automated Pages**: Use `site-initializer/display-page-templates/` to define layouts for Liferay Objects.
+- **Dynamic Wiring**: Templates must map Object fields to fragment slots (e.g., mapping `Energy Sector: name` to a heading fragment).

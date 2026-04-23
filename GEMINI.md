@@ -90,7 +90,22 @@ To ensure reliable site initialization and avoid common deployment failures:
 - **Variables**: Use semantic mappings (`$brand-primary`, `$brand-secondary`) in `_core.scss` to ensure component styles automatically adapt to the active brand.
 - **Explicit Styles**: Component-specific overrides (e.g., `.ecopulse-card`, `.btn-brand`) should be defined in the shared core but use CSS variables for color values.
 
-## 8. OSGi & LCP Dependency Management
+## 9. Liferay Meridian (Low-Code) Standards
 
-- **Require-Bundle Conflicts**: Do not list other client extensions in the `dependencies` array of `LCP.json` for Site Initializers or Themes. This can trigger incorrect `Require-Bundle` headers in the generated OSGi manifest, leading to unresolved requirement errors.
-- **Manual Deployment**: If `blade gw deploy` fails to update a client extension, manually copy the generated ZIP from `dist/` to `bundles/osgi/client-extensions/` and check the logs for "STOPPED" and "STARTED" confirmation.
+To ensure fragments and site content are modular and maintainable, all site initializers must follow the Meridian "Low-Code" patterns.
+
+### Fragment Collection Structure
+
+- **Standard Path**: Fragments MUST be placed in `site-initializer/fragments/group/[collection-erc]/[fragment-erc]/`.
+- **Packaging**: Each fragment must contain `fragment.json` (metadata), `index.html` (structure), and `index.css` (style).
+- **Clay Integration**: Prefer Clay CSS utility classes (e.g., `container-fluid`, `mb-5`, `btn-primary`) over custom CSS to ensure native look-and-feel.
+
+### Site Orchestration & Wiring
+
+- **Asset Referencing**: Use the DDM token syntax for all document references in Journal Articles: `src="[$DL_FILE_ENTRY_EXTERNAL_REFERENCE_CODE:filename.png$]"`.
+- **Style Book Alignment**: Every brand-specific site initializer must provide its own unique Style Book in `site-initializer/style-books/[brand-erc]-style-book/`.
+- **ERC Consistency**: All fragments and collections must use the brand-specific prefix (e.g., `ecopulse-`, `veridian-`) for their `externalReferenceCode`.
+
+### Synergy
+
+- Site initializers should explicitly link to the corresponding `themeCSS` and `themeFavicon` extensions in `site-initializer.json` using their ERCs.

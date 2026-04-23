@@ -1,0 +1,7 @@
+{
+	"css": "",
+	"description": "Details for a specific energy sector.",
+	"html": "<div class=\"energy-sector-details container my-5 p-5 bg-light rounded-lg shadow\">\n\t<div class=\"row\">\n\t\t<div class=\"col-lg-8\">\n\t\t\t<h2 class=\"display-4 text-navy\">${configuration.sectorName}</h2>\n\t\t\t<p class=\"lead text-muted\">Operational Status: <span class=\"badge badge-pill badge-primary\">${configuration.status}</span></p>\n\t\t\t<hr class=\"my-4\">\n\t\t\t<p>Welcome to the detailed view of the ${configuration.sectorName} energy grid. This sector is currently operating at <strong class=\"text-innovation\">${configuration.currentLoad}% capacity</strong>.</p>\n\t\t</div>\n\t\t<div class=\"col-lg-4 text-center d-flex flex-column justify-content-center\">\n\t\t\t<div class=\"load-indicator py-4 px-2 rounded-circle border border-primary mx-auto\" style=\"width: 150px; height: 150px;\">\n\t\t\t\t<h3 class=\"m-0\">${configuration.currentLoad}%</h3>\n\t\t\t\t<small class=\"text-uppercase font-weight-bold\">Grid Load</small>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>",
+	"js": "",
+	"name": "Energy Sector Details"
+}

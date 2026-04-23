@@ -60,7 +60,8 @@
 			"values": {
 				"title": "Community Solar Grid",
 				"description": "Harnessing solar power from residential rooftops.",
-				"impactLevel": 85
+				"impactLevel": 85,
+				"r_targetEnergySector_c_energySectorId": "S-3"
 			}
 		},
 		{
@@ -69,7 +70,8 @@
 			"values": {
 				"title": "Veridian Wind Farm",
 				"description": "Offshore wind energy production expansion.",
-				"impactLevel": 92
+				"impactLevel": 92,
+				"r_targetEnergySector_c_energySectorId": "N-1"
 			}
 		},
 		{
@@ -78,7 +80,28 @@
 			"values": {
 				"title": "Smart Waste Management",
 				"description": "Optimizing collection routes to reduce emissions.",
-				"impactLevel": 64
+				"impactLevel": 64,
+				"r_targetEnergySector_c_energySectorId": "C-0"
+			}
+		},
+		{
+			"externalReferenceCode": "gi-hydro-harness",
+			"objectDefinitionExternalReferenceCode": "ecopulse-green-initiative",
+			"values": {
+				"title": "Harbor Hydro-Harness",
+				"description": "Tidal wave energy conversion system.",
+				"impactLevel": 78,
+				"r_targetEnergySector_c_energySectorId": "E-2"
+			}
+		},
+		{
+			"externalReferenceCode": "gi-ev-charging",
+			"objectDefinitionExternalReferenceCode": "ecopulse-green-initiative",
+			"values": {
+				"title": "Residential EV Network",
+				"description": "Smart charging grid for the western suburbs.",
+				"impactLevel": 45,
+				"r_targetEnergySector_c_energySectorId": "W-4"
 			}
 		}
 	]

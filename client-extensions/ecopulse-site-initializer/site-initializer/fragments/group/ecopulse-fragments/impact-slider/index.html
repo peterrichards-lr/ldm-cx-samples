@@ -1,0 +1,32 @@
+<div class="impact-slider container-fluid my-5">
+	<h2 class="text-center mb-5 display-4 text-brand-primary">${configuration.title}</h2>
+	
+	<div class="row" id="slider-row">
+		<lfr-editable id="slider-content" type="collection">
+			<div class="col-md-4 mb-4">
+				<div class="card h-100 shadow-sm border-0 border-top border-brand-primary border-3">
+					<div class="card-body p-4">
+						<h5 class="card-title font-weight-bold text-navy">[Title]</h5>
+						<p class="card-text text-muted small">[Description]</p>
+						
+						<div class="mt-4">
+							<div class="d-flex justify-content-between mb-1">
+								<span class="text-xs font-weight-bold">Impact Rating</span>
+								<span class="text-xs font-weight-bold text-success">[Impact Level]%</span>
+							</div>
+							<div class="progress rounded-pill" style="height: 8px;">
+								<div class="progress-bar bg-success rounded-pill" 
+									 role="progressbar" 
+									 style="width: 75%" 
+									 aria-valuenow="75" 
+									 aria-valuemin="0" 
+									 aria-valuemax="100">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</lfr-editable>
+	</div>
+</div>

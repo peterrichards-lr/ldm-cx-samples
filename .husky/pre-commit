@@ -1,1 +1,7 @@
+# Load nvm if it exists to ensure npx is found in GUI/IDE environments
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  \. "$NVM_DIR/nvm.sh"
+fi
+
 npx lint-staged

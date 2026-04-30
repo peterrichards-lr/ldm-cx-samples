@@ -1,0 +1,31 @@
+{
+	"assetListEntryConfigurations": [
+		{
+			"assetListEntryQuery": {
+				"allAssetTypes": false,
+				"assetEntryTypeAndSubTypeConfigurations": [
+					{
+						"assetEntryType": "com.liferay.object.model.ObjectDefinition#ecopulse-green-initiative"
+					}
+				],
+				"queryConfigurations": [
+					{
+						"config": {
+							"operator": "greaterThan",
+							"value": 5
+						},
+						"handlerName": "MatchField",
+						"properties": {
+							"field": "impactLevel"
+						}
+					}
+				]
+			},
+			"handlerName": "Dynamic"
+		}
+	],
+	"externalReferenceCode": "ecopulse-high-impact-initiatives",
+	"title_i18n": {
+		"en_US": "High Impact Initiatives"
+	}
+}

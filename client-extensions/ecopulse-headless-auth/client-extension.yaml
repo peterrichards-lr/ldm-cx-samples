@@ -9,6 +9,5 @@ ecopulse-headless-auth:
     .serviceScheme: http
     name: EcoPulse Headless Auth
     scopes:
-        - Liferay.Headless.Admin.User.everything
-        - Liferay.Headless.Delivery.everything
+        - Liferay.Headless.Delivery.everything.read
     type: oAuthApplicationHeadlessServer

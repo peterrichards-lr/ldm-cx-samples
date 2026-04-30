@@ -1,0 +1,45 @@
+{
+	"externalReferenceCode": "ecopulse-energy-sector-template",
+	"name": "Energy Sector Display Page",
+	"name_i18n": {
+		"en_US": "Energy Sector Display Page"
+	},
+	"pageDefinition": {
+		"pageElement": {
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "eco-hero"
+					},
+					"mapping": {
+						"title": {
+							"objectFieldName": "sectorName"
+						}
+					},
+					"type": "fragment"
+				},
+				{
+					"definition": {
+						"fragmentCollectionKey": "ecopulse-fragments",
+						"fragmentKey": "energy-sector-details"
+					},
+					"mapping": {
+						"currentLoad": {
+							"objectFieldName": "load"
+						},
+						"sectorName": {
+							"objectFieldName": "sectorName"
+						},
+						"status": {
+							"objectFieldName": "operationalStatus"
+						}
+					},
+					"type": "fragment"
+				}
+			],
+			"type": "root"
+		}
+	},
+	"type": "display-page"
+}

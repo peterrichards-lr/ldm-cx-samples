@@ -16,5 +16,5 @@ ecopulse-object-action-oahs:
     .serviceScheme: http
     name: EcoPulse Object Action OAuth Application
     scopes:
-        - Liferay.Headless.Admin.User.everything
+        - Liferay.Object.Admin.REST.everything.read
     type: oAuthApplicationHeadlessServer

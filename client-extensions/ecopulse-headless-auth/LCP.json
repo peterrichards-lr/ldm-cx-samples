@@ -12,5 +12,27 @@
 		}
 	],
 	"memory": 50,
-	"scale": 1
+	"scale": 1,
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 3002
+		},
+		"initialDelaySeconds": 5,
+		"periodSeconds": 10,
+		"timeoutSeconds": 4,
+		"failureThreshold": 3,
+		"successThreshold": 1
+	},
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 3002
+		},
+		"initialDelaySeconds": 10,
+		"periodSeconds": 10,
+		"timeoutSeconds": 4,
+		"failureThreshold": 3,
+		"successThreshold": 1
+	}
 }

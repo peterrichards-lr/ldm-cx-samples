@@ -1,0 +1,7 @@
+{
+	"css": "",
+	"description": "A slider for high-impact initiatives.",
+	"html": "<div class=\"impact-slider container-fluid mb-5\">\n\t<h2 class=\"text-center mb-4\">${configuration.title}</h2>\n\t<div class=\"row\">\n\t\t<lfr-editable id=\"slider-content\" type=\"collection\">\n\t\t\t<div class=\"col-md-4 mb-3\">\n\t\t\t\t<div class=\"card\">\n\t\t\t\t\t<div class=\"card-body\">\n\t\t\t\t\t\t<h5 class=\"card-title\">[Title]</h5>\n\t\t\t\t\t\t<p class=\"card-text\">[Description]</p>\n\t\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t\t\t<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 75%\" aria-valuenow=\"75\" aria-valuemin=\"0\" aria-valuemax=\"100\">Impact Level</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</lfr-editable>\n\t</div>\n</div>",
+	"js": "",
+	"name": "Impact Slider"
+}

@@ -69,3 +69,7 @@ fi
 
 echo "✅ All validations passed!"
 echo "🎉 E2E Tests Completed Successfully!"
+
+echo "🧹 Cleaning up test workspace..."
+cd "$TEST_WORKSPACE/.."
+rm -rf "$TEST_WORKSPACE"

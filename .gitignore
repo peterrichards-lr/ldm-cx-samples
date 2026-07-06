@@ -28,3 +28,9 @@ test-results
 /.vscode
 .env
 /.gemini
+e2e-workspace/
+*.ldmp
+*.ldmp.sha256
+samples_latest.ldmp
+samples_latest.ldmp.sha256
+

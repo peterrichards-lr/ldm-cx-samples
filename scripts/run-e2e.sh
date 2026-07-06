@@ -45,7 +45,7 @@ mkdir -p "$TEST_WORKSPACE"
 cd "$TEST_WORKSPACE"
 
 # Initialize with the built-in LDM binary from the virtual environment
-"$LDM_DIR/.venv/bin/ldm" init e2e-test -y --samples --tag-latest --host-name sample.local
+"$LDM_DIR/.venv/bin/ldm" init e2e-test -y --samples --tag-latest --host-name sample.local --no-ssl
 
 echo "🔍 Verifying extraction in the initialized workspace..."
 cd e2e-test

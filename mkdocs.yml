@@ -1,0 +1,19 @@
+site_name: EcoPulse Smart City Demo (LDM Samples)
+site_description: Documentation for the official Liferay Docker Manager samples repository.
+theme:
+  name: material
+  palette:
+    primary: teal
+    accent: deep orange
+
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Quick Start: tutorials/quick_start.md
+  - How-To:
+      - Add a new Client Extension: how-to/add_client_extension.md
+  - Reference:
+      - LCP & Docker Configuration: reference/configuration.md
+  - Explanation:
+      - Architecture: explanation/architecture.md
+      - Roadmap: explanation/roadmap.md

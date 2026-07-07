@@ -40,7 +40,7 @@ cp ldm-cx-samples.ldmp ~/.ldm/references/samples/samples_latest.ldmp
 # 5. Initialize a test project using LDM
 echo "🏗️ Initializing test project with --samples..."
 TEST_WORKSPACE="$(pwd)/e2e-workspace"
-rm -rf "$TEST_WORKSPACE"
+sudo rm -rf "$TEST_WORKSPACE"
 mkdir -p "$TEST_WORKSPACE"
 cd "$TEST_WORKSPACE"
 
@@ -72,4 +72,4 @@ echo "🎉 E2E Tests Completed Successfully!"
 
 echo "🧹 Cleaning up test workspace..."
 cd "$TEST_WORKSPACE/.."
-rm -rf "$TEST_WORKSPACE"
+sudo rm -rf "$TEST_WORKSPACE"

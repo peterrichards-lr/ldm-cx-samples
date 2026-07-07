@@ -41,7 +41,11 @@ const DEFAULT_SECTORS: Sector[] = [
 	},
 ];
 
-function App() {
+interface AppProps {
+	microserviceUrl?: string;
+}
+
+const App: React.FC<AppProps> = ({ microserviceUrl = 'http://localhost:3001' }) => {
 	const [sectors, setSectors] = useState<Sector[]>(DEFAULT_SECTORS);
 	const [isLive, setIsLive] = useState(false);
 	const [selectedSector, setSelectedSector] = useState<string | null>(null);
@@ -53,9 +57,9 @@ function App() {
 
 		const fetchMetrics = async () => {
 			try {
-				// In a real LDM environment, this would resolve to the microservice internal/external URL
+				// In a real LDM environment, this resolves dynamically via fragment-overrides.json
 				const response = await fetch(
-					`http://localhost:3001/api/metrics/grid-efficiency?sectorId=${selectedSector}`
+					`${microserviceUrl}/api/metrics/grid-efficiency?sectorId=${selectedSector}`
 				);
 				const data = await response.json();
 				setMetrics(data.metrics);

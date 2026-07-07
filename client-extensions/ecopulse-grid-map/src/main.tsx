@@ -12,7 +12,8 @@ import './styles/index.css';
 
 class LiferaySampleCustomElement extends HTMLElement {
 	connectedCallback() {
-		createRoot(this).render(<App />);
+		const microserviceUrl = this.getAttribute('microserviceurl') || 'http://localhost:3001';
+		createRoot(this).render(<App microserviceUrl={microserviceUrl} />);
 	}
 }
 

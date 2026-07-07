@@ -1,0 +1,5 @@
+{
+    "grid-monitor": {
+        "microserviceUrl": "${LIFERAY_EXTERNAL_URL_CLIENT_EXTENSION_ECOPULSE_MICROSERVICE}"
+    }
+}

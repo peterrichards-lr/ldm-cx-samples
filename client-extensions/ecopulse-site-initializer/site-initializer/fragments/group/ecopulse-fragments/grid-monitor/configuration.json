@@ -1,0 +1,15 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "http://localhost:3001",
+          "label": "Microservice URL",
+          "name": "microserviceUrl",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

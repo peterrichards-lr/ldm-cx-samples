@@ -10,7 +10,7 @@ ecopulse-grid-map:
     name: EcoPulse Grid Map
     portletCategoryName: category.client-extensions
     properties:
-        foo: bar
+        microserviceUrl: http://localhost:3001
     type: customElement
     urls:
         - 'main.js'

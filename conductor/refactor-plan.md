@@ -60,3 +60,7 @@ In `ecopulse-batch/batch/object-definition.batch-engine-data.json`:
 2. **Deploy**: Verify all 8 extensions deploy as `ecopulse-*`.
 3. **Objects**: Verify `GreenInitiative` object is created via Batch.
 4. **README**: Ensure all links to LDM are correct.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

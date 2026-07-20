@@ -35,3 +35,7 @@ Demonstrate multi-container orchestration and cross-extension communication by p
 
 1. **Local Test**: Run the service locally and verify `curl http://localhost:3001/api/metrics/grid-efficiency`.
 2. **LDM Sync**: Verify that LDM correctly maps port 3001 and provides the internal URL to the frontend.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

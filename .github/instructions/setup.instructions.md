@@ -34,3 +34,7 @@ If the server fails to start or behaves unexpectedly, use `web_search` to query 
 
 - Search: `site:github.com/liferay/liferay-learn [error message or topic]`
 - Common issues are documented in `docs/dxp/latest/en/installation-and-upgrades/` within the liferay-learn repository
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

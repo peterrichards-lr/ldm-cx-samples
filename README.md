@@ -11,3 +11,7 @@ Please refer to the [docs/](./docs/) directory or view the compiled MkDocs site 
 ---
 
 _Built with ❤️ for Sales Engineers and the Liferay Docker Manager._
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

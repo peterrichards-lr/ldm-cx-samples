@@ -17,3 +17,7 @@ When contributing a new Client Extension to the `ldm-cx-samples` repository, ens
 
 4. If your extension is a backend node/microservice, assign a unique port in your `LCP.json` between `3005-3099` (e.g. `3005`).
 5. Run `./gradlew build` locally and verify that it compiles successfully without any warnings.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

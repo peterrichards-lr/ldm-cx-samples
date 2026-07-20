@@ -35,3 +35,7 @@ Prove that EcoPulse can handle complex business processes and global requirement
 1. **Workflow Test**: Submit a `GreenInitiative` and verify it triggers the automated "Machine Review" step.
 2. **Language Test**: Switch the Liferay portal language and verify the manifesto and object fields translate correctly.
 3. **Build Validation**: Run a full `./gradlew build` to ensure the final v1.0.0 snapshot is consistent.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

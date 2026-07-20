@@ -87,3 +87,7 @@ To maintain a modular and scalable configuration, additional context or speciali
 
 - **General Rules:** Keep global architectural rules in `liferay-rules.md`.
 - **Feature Rules:** Use separate files in `.workspace-rules/` for specific feature sets or agent skills.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

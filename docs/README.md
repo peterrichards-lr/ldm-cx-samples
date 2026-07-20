@@ -32,3 +32,7 @@ Our documentation follows the [Diátaxis framework](https://diataxis.fr/), separ
 
 - **[Architecture](explanation/architecture.md)**: Deep dive into the orchestrator interactions, data persistence, and microservice routing logic.
 - **[Roadmap](explanation/roadmap.md)**: The strategic vision for future EcoPulse features (e.g. AI personalization).
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

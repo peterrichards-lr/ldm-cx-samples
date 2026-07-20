@@ -64,3 +64,7 @@ Guide the user through the Liferay UI using the following steps
 
 - Ask the user if they want to create another type of Client Extension
 - Additional Client Extension samples and types can be found under https://github.com/liferay/liferay-portal/tree/master/workspaces/liferay-sample-workspace/client-extensions/
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

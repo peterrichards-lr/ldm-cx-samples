@@ -17,3 +17,7 @@ Welcome to the EcoPulse Smart City Demo orchestration. This folder contains the 
 ## Active Tracks
 
 - No active tracks.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

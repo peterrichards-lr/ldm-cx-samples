@@ -40,3 +40,7 @@ The project utilizes the Liferay Meridian pattern for site orchestration and fra
 - **Site Initializer**: Modular recursive structure in `site-initializer/` for Fragments, Documents, and Style Books.
 - **Fragments**: Standardized `group` collections using Clay CSS for a native Liferay UI.
 - **Dynamic Wiring**: Content assets are linked via ERC tokens, ensuring zero-configuration deployment across environments.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

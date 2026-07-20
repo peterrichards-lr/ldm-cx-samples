@@ -80,3 +80,7 @@ _Example (for ecopulse-microservice):_
 1.  Run a complete build in the project root: `blade gw clean build`
 2.  Inspect the generated `LCP.json` files in the `build/liferay-client-extension-build/` directories to ensure the `ports` array successfully carried over from the source overrides.
 3.  Run the Liferay Docker Manager (LDM) validation to confirm the warning "loadBalancer defined but no ports are marked as 'external: true'" is no longer present for any of the client extensions.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

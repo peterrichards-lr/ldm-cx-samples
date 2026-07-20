@@ -38,3 +38,7 @@ Provide a dynamic, visually impressive "Total CO2 Saved" counter that fetches da
 1. **Data Accuracy**: Manually add a `GreenInitiative` entry and verify the counter increments.
 2. **LDM Deployment**: Verify the new extension is correctly orchestrated by the LDM tool.
 3. **API Resilience**: Ensure the widget handles "empty" states or API timeouts gracefully.
+
+<!-- markdownlint-disable MD049 -->
+---
+*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*

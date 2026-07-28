@@ -110,18 +110,26 @@ if [ -d "${FILES_STAGING}/deploy" ]; then
   done
 fi
 
-cat <<EOF > "${STAGING_DIR}/meta"
-tag=${LIFERAY_TAG}
-db_type=${DB_TYPE}
-github_repository=${GIT_REPO}
-includes_database=false
-includes_volume_assets=true
-includes_client_extensions=true
-includes_osgi_modules=true
-client_extensions=${cx_list}
-osgi_modules=${modules_list}
-active_services=liferay
-EOF
+python3 -c "
+import json
+import sys
+
+data = {
+    'tag': '${LIFERAY_TAG}',
+    'db_type': '${DB_TYPE}',
+    'github_repository': '${GIT_REPO}',
+    'includes_database': False,
+    'includes_volume_assets': True,
+    'includes_client_extensions': True,
+    'includes_osgi_modules': True,
+    'client_extensions': sys.argv[1].split(',') if sys.argv[1] else [],
+    'osgi_modules': sys.argv[2].split(',') if sys.argv[2] else [],
+    'active_services': 'liferay'
+}
+
+with open('${STAGING_DIR}/meta', 'w', encoding='utf-8') as f:
+    json.dump(data, f, indent=4)
+" "${cx_list}" "${modules_list}"
 
 rm -rf "${FILES_STAGING}"
 

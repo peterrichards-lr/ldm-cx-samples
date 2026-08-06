@@ -25,6 +25,12 @@ cd "$LDM_DIR"
 git fetch origin feat/ldmp-samples-migration 2>/dev/null || true
 git checkout feat/ldmp-samples-migration 2>/dev/null || git checkout master
 
+# We don't control the state of the cloned repo's checked-in tree, so don't
+# assume .venv is absent - a stray tracked file/symlink/dir at that path
+# (e.g. an accidentally-committed local venv symlink upstream) makes
+# `python3 -m venv .venv` fail with [Errno 17] File exists. `rm -rf` on a
+# symlink only removes the link itself, not its target, so this is safe.
+rm -rf .venv
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .

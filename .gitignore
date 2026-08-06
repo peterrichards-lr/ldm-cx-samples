@@ -35,3 +35,9 @@ samples_latest.ldmp
 samples_latest.ldmp.sha256
 
 site/
+
+# Local job-runner / audit debug artifacts (should never be committed - see #11)
+audit.txt
+job_log.txt
+jobs.json
+logs.zip

@@ -88,6 +88,10 @@ To maintain a modular and scalable configuration, additional context or speciali
 - **General Rules:** Keep global architectural rules in `liferay-rules.md`.
 - **Feature Rules:** Use separate files in `.workspace-rules/` for specific feature sets or agent skills.
 
+## Repo-Specific Conventions (EcoPulse/Veridian Samples)
+
+The above covers general Liferay workspace conventions, applicable to any Liferay project. For conventions specific to *this repo's* sample assets — EcoPulse/Veridian brand & theme rules, site-initializer structure, Liferay Cloud (`LCP.json`) packaging, Meridian low-code orchestration, and this repo's build/release process — see [`.agents/AGENTS.md`](../.agents/AGENTS.md) and its skill files under `.agents/skills/`. These two rule sets are complementary, not competing: this file wins on Liferay platform fundamentals, `.agents/AGENTS.md` wins on this repo's own asset/build conventions. A genuine conflict between them is a bug — file it as `tech-debt`.
+
 <!-- markdownlint-disable MD049 -->
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+*Last Updated: 2026-08-06* | *Last Reviewed: 2026-08-06*

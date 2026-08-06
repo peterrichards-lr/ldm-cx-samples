@@ -25,12 +25,13 @@ Based on the version identified above, apply the following logic
 The authoritative source for Liferay documentation is the [liferay-learn](https://github.com/liferay/liferay-learn) repository. Use these key paths to retrieve documentation for all aspects of development within this workspace.
 
 Examples:
-| Topic | Path in liferay-learn |
-|-------|----------------------|
-| Client Extensions Overview | `docs/dxp/latest/en/liferay-development/client-extensions.md` |
+
+| Topic                            | Path in liferay-learn                                                                                                  |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Client Extensions Overview       | `docs/dxp/latest/en/liferay-development/client-extensions.md`                                                          |
 | Custom Element Client Extensions | `docs/dxp/latest/en/liferay-development/customizing-liferays-look-and-feel/using-a-custom-element-client-extension.md` |
-| Objects | `docs/dxp/latest/en/liferay-development/objects.md` |
-| Fragments | `docs/dxp/latest/en/site-building/developer-guide/developing-page-fragments.md` |
+| Objects                          | `docs/dxp/latest/en/liferay-development/objects.md`                                                                    |
+| Fragments                        | `docs/dxp/latest/en/site-building/developer-guide/developing-page-fragments.md`                                        |
 
 When you need documentation not listed above, use `web_search` to query GitHub for specific liferay-learn content (e.g., `site:github.com/liferay/liferay-learn [topic]`).
 
@@ -88,6 +89,12 @@ To maintain a modular and scalable configuration, additional context or speciali
 - **General Rules:** Keep global architectural rules in `liferay-rules.md`.
 - **Feature Rules:** Use separate files in `.workspace-rules/` for specific feature sets or agent skills.
 
+## Repo-Specific Conventions (EcoPulse/Veridian Samples)
+
+The above covers general Liferay workspace conventions, applicable to any Liferay project. For conventions specific to _this repo's_ sample assets — EcoPulse/Veridian brand & theme rules, site-initializer structure, Liferay Cloud (`LCP.json`) packaging, Meridian low-code orchestration, and this repo's build/release process — see [`.agents/AGENTS.md`](../../.agents/AGENTS.md) and its skill files under `.agents/skills/`. These two rule sets are complementary, not competing: this file wins on Liferay platform fundamentals, `.agents/AGENTS.md` wins on this repo's own asset/build conventions. A genuine conflict between them is a bug — file it as `tech-debt`.
+
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-08-06_ | _Last Reviewed: 2026-08-06_

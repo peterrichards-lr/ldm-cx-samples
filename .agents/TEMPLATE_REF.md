@@ -8,8 +8,8 @@ This repo's AI-agent governance files (`.agents/AGENTS.md`, `.gemini/gemini.md`,
 
 ## Known drift as of this check
 
-- [#11](https://github.com/peterrichards-lr/ldm-cx-samples/issues/11) — a bulk commit stamped fresh "Last Reviewed" footers onto ~19 unrelated files bundled with an unrelated fix, plus accidentally committed debug artifacts. `ai-agent-template` fixed the underlying cause of this class of bug in its PR #16 (append-only timestamp injection instead of rewrite-on-touch).
-- [#12](https://github.com/peterrichards-lr/ldm-cx-samples/issues/12) — `.agents/AGENTS.md` (modular) and `.gemini/gemini.md` + `.claude/CLAUDE.md` (monolithic, never pruned) are two non-reconciled instruction systems despite a commit claiming to "migrate" from one to the other.
+- [#11](https://github.com/peterrichards-lr/ldm-cx-samples/issues/11) — a bulk commit stamped fresh "Last Reviewed" footers onto ~19 unrelated files bundled with an unrelated fix, plus accidentally committed debug artifacts. Fixed in PR #14: debug artifacts removed and gitignored, `[bypass limit]` convention retired via `CONTRIBUTING.md`. **Correction to this file's earlier note**: `ai-agent-template`'s `append_timestamps.py` was verified append-only-from-day-one (no PR #16 fix for a rewrite-on-touch bug exists there — that premise was mistaken). Our own `scripts/append_timestamps.py` was independently verified to already be append-only-if-missing too, so no script fix was needed on either side.
+- [#12](https://github.com/peterrichards-lr/ldm-cx-samples/issues/12) — `.agents/AGENTS.md` (modular) and `.gemini/GEMINI.md` + `.claude/CLAUDE.md` (monolithic, never pruned) were two non-reconciled instruction systems despite a commit claiming to "migrate" from one to the other. Fixed by reconciling in place (documenting coexistence + precedence) rather than pruning: `AGENTS.md` now states it's additive/repo-specific and defers to the general rules on Liferay platform fundamentals; the general rules files (and all their mirrors in `.cursor/`, `.windsurf/`, `.github/`, `.workspace-rules/`) now cross-reference `AGENTS.md` back. Also added the `release-management` skill `AGENTS.md` claimed to require but never had. **Correction to this file's earlier note**: `ai-agent-template` does not actually have a "thin pointer" `CLAUDE.md`/`GEMINI.md` pattern to copy (it has no `CLAUDE.md` at all, and its `GEMINI.md` only delegates specific sections, not the whole file) — this repo's fix was designed directly for its own structure rather than ported.
 
 ## Skills available in the reference repo (for comparison; not all apply here)
 
@@ -23,4 +23,4 @@ Update the "Last checked" date and the drift list above whenever this comparison
 
 ---
 
-_Last Updated: 2026-08-05_ | _Last Reviewed: 2026-08-05_
+_Last Updated: 2026-08-06_ | _Last Reviewed: 2026-08-06_

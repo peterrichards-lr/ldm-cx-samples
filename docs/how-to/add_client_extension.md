@@ -1,6 +1,6 @@
 # ➕ Adding a new Client Extension
 
-When contributing a new Client Extension to the `ldm-cx-samples` repository, ensure it strictly adheres to the Liferay 7.4 Client Extension standards.
+When contributing a new Client Extension to the `ldm-cx-samples` repository, ensure it strictly adheres to the Liferay DXP 2026.q1 LTS Client Extension standards.
 
 ## Steps
 
@@ -16,8 +16,11 @@ When contributing a new Client Extension to the `ldm-cx-samples` repository, ens
     ```
 
 4. If your extension is a backend node/microservice, assign a unique port in your `LCP.json` between `3005-3099` (e.g. `3005`).
-5. Run `./gradlew build` locally and verify that it compiles successfully without any warnings.
+5. If your extension has a `Dockerfile`, base it on a supported Node LTS image (currently `node:22-slim`, matching CI), and add a `.dockerignore` containing `node_modules`, `build`, `dist` and `.env`. This stops host-compiled native binaries from being copied into the image.
+6. Run `./gradlew build` locally and verify that it compiles successfully without any warnings.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_

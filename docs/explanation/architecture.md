@@ -27,7 +27,7 @@
 
 ## 📐 Implementation Standards
 
-To ensure demo reliability, all assets follow strict Liferay 7.4 conventions:
+To ensure demo reliability, all assets follow strict Liferay DXP 2026.q1 LTS conventions:
 
 - **Site Initializer**: Uses versioned `externalReferenceCode` paths and standardized `group/` folder structures for fragments and documents.
 - **Brand Separation**: Entities (Veridian, EcoPulse) share the `ecopulse-theme` core but use dedicated **themeCSS** extensions to control their unique branding via SASS variable overrides.
@@ -42,5 +42,7 @@ The project utilizes the Liferay Meridian pattern for site orchestration and fra
 - **Dynamic Wiring**: Content assets are linked via ERC tokens, ensuring zero-configuration deployment across environments.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_

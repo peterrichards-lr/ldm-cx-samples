@@ -1,7 +1,8 @@
 ---
 name: site-initializer
-description: Activate this skill whenever modifying site initializers, adding documents, or configuring Liferay 7.4 site structures.
+description: Activate this skill whenever modifying site initializers, adding documents, or configuring Liferay DXP site structures.
 ---
+
 # Site Orchestration
 
 The `ecopulse-site-initializer` is the source-of-truth for the demo's initial state.
@@ -9,7 +10,7 @@ The `ecopulse-site-initializer` is the source-of-truth for the demo's initial st
 - **Documents**: High-res assets must be placed in `site-initializer/documents/group/`.
 - **Wiring**: The `site-initializer.json` must explicitly link to the `ecopulse-theme`, `ecopulse-favicon`, and `ecopulse-spritemap` ERCs.
 
-# Site Initializer (Liferay 7.4) Standards
+# Site Initializer (Liferay DXP 2026.q1 LTS) Standards
 
 To ensure reliable site initialization and avoid common deployment failures:
 
@@ -35,5 +36,7 @@ To ensure reliable site initialization and avoid common deployment failures:
 - **Asset References**: Use the ERC token syntax: `src="[$DL_FILE_ENTRY_EXTERNAL_REFERENCE_CODE:filename.png$]"`.
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_

@@ -5,7 +5,7 @@ set -e
 
 PROJECT_ID="ldm-cx-samples"
 GIT_REPO="peterrichards-lr/ldm-cx-samples"
-LIFERAY_TAG="2026.q1.4-lts"
+LIFERAY_TAG="2026.q1.14-lts"
 DB_TYPE="postgresql"
 
 echo "📦 Packaging LDM Environment for: ${PROJECT_ID}"

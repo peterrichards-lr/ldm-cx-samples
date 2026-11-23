@@ -20,7 +20,7 @@ This file serves as a routing index to prevent cognitive overload. Before execut
   _Activate this skill whenever packaging extensions, running builds, or verifying pre-commit hooks._
 
 - **[Release Management](./skills/release-management/SKILL.md)**
-  _Activate this skill whenever a PR is merging to `main`, or you need to explain/adjust how `.ldmp` releases are cut._
+  _Activate this skill whenever cutting a release (pushing a `v*` tag), merging to `main`, or explaining/adjusting how `.ldmp` releases are built._
 
 ## Relationship to the general Liferay rules (`.claude/CLAUDE.md` / `.gemini/GEMINI.md`)
 
@@ -43,4 +43,4 @@ After implementing any code change, the agent MUST review the project documentat
 
 ---
 
-_Last Updated: 2026-08-06_ | _Last Reviewed: 2026-08-06_
+_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_

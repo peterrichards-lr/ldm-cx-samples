@@ -1,5 +1,3 @@
-## Check GETTING_STARTED.md#platform.bndrun for more information.
-
 -distro: ${targetPlatformDistro};x-whitelist=osgi.wiring.host
 -resolve.effective: active
 -runprovidedcapabilities:\

@@ -11,7 +11,7 @@ This file serves as a routing index to prevent cognitive overload. Before execut
   _Activate this skill whenever working on UI components, SASS styles, Clay CSS, or brand consistency._
 
 - **[Site Initializer & Orchestration](./skills/site-initializer/SKILL.md)**
-  _Activate this skill whenever modifying site initializers, adding documents, or configuring Liferay 7.4 site structures._
+  _Activate this skill whenever modifying site initializers, adding documents, or configuring Liferay DXP site structures._
 
 - **[Meridian Low-Code & Advanced Orchestration](./skills/meridian-orchestration/SKILL.md)**
   _Activate this skill whenever developing fragments, search blueprints, collections, or object relationships._

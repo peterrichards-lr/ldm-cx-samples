@@ -6,7 +6,8 @@ from pathlib import Path
 from datetime import datetime
 
 IGNORE_DIRS = {".venv", "node_modules", ".smoke_venv", ".git", ".gradle", "build", ".agents"}
-FOOTER_REGEX = re.compile(r"\*Last Updated: ([\d\-]+)\* \| \*Last Reviewed: ([\d\-]+)\*")
+# Accepts *...* and _..._ emphasis: Prettier (pre-commit) rewrites the former to the latter.
+FOOTER_REGEX = re.compile(r"([*_])Last Updated: ([\d\-]+)\1 \| ([*_])Last Reviewed: ([\d\-]+)\3")
 
 def check_file(file_path: Path, max_review_days: int, max_update_days: int, max_gap_days: int) -> bool:
     with file_path.open('r', encoding='utf-8') as f:
@@ -17,7 +18,7 @@ def check_file(file_path: Path, max_review_days: int, max_update_days: int, max_
         print(f"ERROR: {file_path} is missing the required timestamp footer.")
         return False
 
-    updated_str, reviewed_str = match.groups()
+    _, updated_str, _, reviewed_str = match.groups()
     try:
         updated_date = datetime.strptime(updated_str, "%Y-%m-%d")
         reviewed_date = datetime.strptime(reviewed_str, "%Y-%m-%d")

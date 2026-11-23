@@ -1,7 +1,6 @@
 ---
-description: Guide for generating, deploying, and verifying Liferay Client Extensions for beginners
-globs: client-extensions/**
-alwaysApply: false
+name: guided-client-extension
+description: Activate this skill when a user wants a guided, beginner-friendly walkthrough of creating a client extension (batch Object definition + custom-element form), or as a reference for that pattern.
 ---
 
 # Liferay Client Extension Mentor Protocol (Beginner Friendly)
@@ -66,5 +65,7 @@ Guide the user through the Liferay UI using the following steps
 - Additional Client Extension samples and types can be found under https://github.com/liferay/liferay-portal/tree/master/workspaces/liferay-sample-workspace/client-extensions/
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_

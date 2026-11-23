@@ -3,7 +3,20 @@
 # Tests the LDM .ldmp samples packaging and initialization workflow.
 set -e
 
-echo "🚀 Starting E2E Test for LDM Samples Migration"
+# Pinned LDM release to test against. Bump it deliberately, as a reviewed
+# change, so an LDM regression can't silently break this repo's CI.
+# Override for a one-off run with: LDM_VERSION=v2.27.0 ./scripts/run-e2e.sh
+LDM_VERSION="${LDM_VERSION:-v2.26.15}"
+
+# Liferay tag for the test project, taken from the workspace product so the
+# two can't drift (e.g. dxp-2026.q1.14-lts -> 2026.q1.14-lts).
+LIFERAY_TAG="$(sed -n 's/^liferay\.workspace\.product=dxp-//p' gradle.properties)"
+if [ -z "$LIFERAY_TAG" ]; then
+    echo "❌ ERROR: could not read liferay.workspace.product from gradle.properties"
+    exit 1
+fi
+
+echo "🚀 Starting E2E Test for LDM Samples (LDM ${LDM_VERSION}, Liferay ${LIFERAY_TAG})"
 
 # 1. Build Client Extensions (if not already built)
 echo "🔨 Building client extensions..."
@@ -18,12 +31,8 @@ chmod +x scripts/package-ldmp.sh
 echo "⚙️ Setting up Liferay Docker Manager..."
 LDM_DIR="/tmp/ldm-e2e-repo"
 rm -rf "$LDM_DIR"
-git clone https://github.com/peterrichards-lr/liferay-docker-manager.git "$LDM_DIR"
+git clone --depth 1 --branch "$LDM_VERSION" https://github.com/peterrichards-lr/liferay-docker-manager.git "$LDM_DIR"
 cd "$LDM_DIR"
-
-# Try to use the feature branch if it exists, otherwise fallback to master
-git fetch origin feat/ldmp-samples-migration 2>/dev/null || true
-git checkout feat/ldmp-samples-migration 2>/dev/null || git checkout master
 
 # We don't control the state of the cloned repo's checked-in tree, so don't
 # assume .venv is absent - a stray tracked file/symlink/dir at that path
@@ -53,7 +62,7 @@ cd "$TEST_WORKSPACE"
 # Initialize with the built-in LDM binary from the virtual environment
 # Ensure liferay-net exists for global proxy routing (required by latest LDM architecture)
 docker network create liferay-net || true
-"$LDM_DIR/.venv/bin/ldm" init e2e-test -y --samples --tag-latest --host-name sample.local --no-ssl
+"$LDM_DIR/.venv/bin/ldm" init e2e-test -y --samples --tag "$LIFERAY_TAG" --host-name sample.local --no-ssl
 
 echo "🔍 Verifying extraction in the initialized workspace..."
 cd e2e-test

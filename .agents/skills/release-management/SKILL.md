@@ -34,7 +34,7 @@ Run the workflow manually (`workflow_dispatch`) with the required `release_tag` 
 
 ### If you're touching this pipeline
 
-- `scripts/run-e2e.sh` runs the same `package-ldmp.sh` against a locally cloned `liferay-docker-manager`, to catch packaging regressions before they reach a release. Run it (or rely on CI's `E2E Tests` workflow) before changing `package-ldmp.sh`'s staging logic. It uses Docker, so ask the maintainer before running it locally.
+- `scripts/run-e2e.sh` runs the same `package-ldmp.sh` against a pinned LDM release (`LDM_VERSION`, default set in the script), to catch packaging regressions before they reach a release. Its Liferay tag comes from `liferay.workspace.product` in `gradle.properties`. CI also runs it weekly. When LDM releases a version this repo should support, bump `LDM_VERSION` in its own PR. Run it (or rely on CI's `E2E Tests` workflow) before changing `package-ldmp.sh`'s staging logic. It uses Docker, so ask the maintainer before running it locally.
 - The `.ldmp` and `.ldmp.sha256` files are build output. Never commit them; they're only ever published as release assets.
 - The plan is to replace `package-ldmp.sh` with `ldm package --stateless` once LDM supports it (#17, LDM #2493). Until then, keep the current package layout: LDM v2.26.x reads a top-level `files.tar.gz`.
 

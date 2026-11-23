@@ -1,0 +1,20 @@
+---
+description: Redirect to the canonical AGENTS.md
+globs:
+alwaysApply: true
+---
+
+# Cursor Agent Redirect
+
+> [!IMPORTANT]
+> **This file exists solely for Cursor auto-discovery.**
+> The canonical AI agent context for this repository is [`AGENTS.md`](../../AGENTS.md).
+> All rules, conventions and skills are maintained there as the single source of truth.
+>
+> **Do not duplicate context here.** Read and follow `AGENTS.md` instead.
+
+<!-- markdownlint-disable MD049 -->
+
+---
+
+*Last Updated: 2026-11-23* | *Last Reviewed: 2026-11-23*

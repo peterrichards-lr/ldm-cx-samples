@@ -1,9 +1,6 @@
 ---
-
-description: Initial setup guide for users brand new to Liferay Workspace
-globs: *
-alwaysApply: true
-
+name: workspace-setup
+description: Activate this skill when a user is new to Liferay Workspace or needs to initialise or start the local Liferay server (blade init / server init / server start).
 ---
 
 # Liferay Workspace Setup Guide
@@ -36,5 +33,7 @@ If the server fails to start or behaves unexpectedly, use `web_search` to query 
 - Common issues are documented in `docs/dxp/latest/en/installation-and-upgrades/` within the liferay-learn repository
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_

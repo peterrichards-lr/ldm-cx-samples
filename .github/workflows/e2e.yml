@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+  # Weekly, so drift against the pinned LDM and Liferay releases shows up
+  # even when nothing is merged here. Mondays 06:00 UTC.
+  schedule:
+    - cron: '0 6 * * 1'
 
 jobs:
   test:

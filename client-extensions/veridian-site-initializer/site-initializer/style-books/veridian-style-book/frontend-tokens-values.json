@@ -1,0 +1,14 @@
+{
+	"h1FontSize": {
+		"cssVariableMapping": "h1-font-size",
+		"value": "4.5rem"
+	},
+	"primaryColor": {
+		"cssVariableMapping": "primary",
+		"value": "#1A237E"
+	},
+	"secondaryColor": {
+		"cssVariableMapping": "secondary",
+		"value": "#78909C"
+	}
+}

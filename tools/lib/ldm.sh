@@ -1,11 +1,11 @@
 #!/bin/bash
-# scripts/lib/ldm.sh
+# tools/lib/ldm.sh
 # Shared LDM pin and installer for build-ldmp.sh and run-e2e.sh. Source it;
 # don't run it.
 
 # The LDM release that builds and tests the .ldmp. Bump it deliberately, as a
 # reviewed change, so an LDM regression can't silently break this repo.
-# Override for a one-off run with: LDM_VERSION=v2.27.0 ./scripts/run-e2e.sh
+# Override for a one-off run with: LDM_VERSION=v2.27.0 ./tools/run-e2e.sh
 LDM_VERSION="${LDM_VERSION:-v2.26.16-pre.1}"
 LDM_REPO="peterrichards-lr/liferay-docker-manager"
 

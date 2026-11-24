@@ -1,5 +1,5 @@
 #!/bin/bash
-# scripts/build-ldmp.sh
+# tools/build-ldmp.sh
 # Builds ldm-cx-samples.ldmp (+ .sha256) in the repo root with LDM itself:
 # `ldm package --stateless` (LDM-#2493), an assets-only package that LDM
 # deploys onto a vanilla instance. Used by the release workflow and by
@@ -13,9 +13,13 @@
 # Expects the client extensions to be built already (./gradlew clean build).
 set -euo pipefail
 
+# This repo keeps its tooling in tools/, never scripts/: LDM copies a
+# workspace's scripts/ into the project, Liferay runs everything in it before
+# the portal starts, and `ldm package` ships it to every user.
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-# shellcheck source=scripts/lib/ldm.sh
-source "${REPO_ROOT}/scripts/lib/ldm.sh"
+# shellcheck source=tools/lib/ldm.sh
+source "${REPO_ROOT}/tools/lib/ldm.sh"
 
 PROJECT_ID="ldm-cx-samples"
 GIT_REPO="peterrichards-lr/ldm-cx-samples"
@@ -40,8 +44,24 @@ fi
 echo "📦 Packaging ${PROJECT_ID} with LDM ${LDM_VERSION} (Liferay ${LIFERAY_TAG})"
 cd "$WORK_DIR"
 
+# On failure, keep the evidence before the stack goes away. CI uploads
+# LDM_DIAG_DIR as an artifact.
+DIAG_DIR="${LDM_DIAG_DIR:-${WORK_DIR}/diagnostics}"
 cleanup() {
+    local status=$?
+    if [ "$status" -ne 0 ]; then
+        echo "⚠️ Build failed (exit ${status}); collecting diagnostics in ${DIAG_DIR}"
+        mkdir -p "$DIAG_DIR"
+        docker inspect -f '{{.State.ExitCode}} {{.State.Error}} OOMKilled={{.State.OOMKilled}}' \
+            "$PROJECT_ID" > "${DIAG_DIR}/liferay-state.txt" 2>&1 || true
+        docker logs --tail 500 "$PROJECT_ID" > "${DIAG_DIR}/liferay.log" 2>&1 || true
+        cp "${WORK_DIR}/${PROJECT_ID}/docker-compose.yml" "$DIAG_DIR/" 2>/dev/null || true
+        ls -laR "${WORK_DIR}/${PROJECT_ID}/scripts" "${WORK_DIR}/${PROJECT_ID}/deploy" \
+            > "${DIAG_DIR}/project-dirs.txt" 2>&1 || true
+        tail -n 100 "${DIAG_DIR}/liferay.log" || true
+    fi
     ldm down "$PROJECT_ID" --non-interactive || true
+    return "$status"
 }
 trap cleanup EXIT
 

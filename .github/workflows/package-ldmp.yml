@@ -55,14 +55,23 @@ jobs:
           df -h /
 
       # Builds with `ldm package --stateless` on the LDM release pinned in
-      # scripts/lib/ldm.sh. The activation key is for this CI boot only; LDM
+      # tools/lib/ldm.sh. The activation key is for this CI boot only; LDM
       # strips licences from the package (LDM-#2443).
       - name: Build LDM Package
         env:
           LIFERAY_ACTIVATION_KEY_XML: ${{ secrets.LIFERAY_ACTIVATION_KEY_XML }}
+          LDM_DIAG_DIR: ${{ runner.temp }}/ldm-diagnostics
         run: |
           docker network create liferay-net || true
-          ./scripts/build-ldmp.sh
+          ./tools/build-ldmp.sh
+
+      - name: Upload diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ldm-diagnostics
+          path: ${{ runner.temp }}/ldm-diagnostics
+          if-no-files-found: ignore
 
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2

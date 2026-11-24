@@ -1,15 +1,15 @@
 #!/bin/bash
-# scripts/run-e2e.sh
-# Builds the .ldmp exactly as a release does (scripts/build-ldmp.sh), checks
+# tools/run-e2e.sh
+# Builds the .ldmp exactly as a release does (tools/build-ldmp.sh), checks
 # its contents, then seeds a fresh LDM project from it with --samples.
 #
 # Needs Docker and LIFERAY_ACTIVATION_KEY_XML (see build-ldmp.sh). Uses the
-# LDM release pinned in scripts/lib/ldm.sh.
+# LDM release pinned in tools/lib/ldm.sh.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-# shellcheck source=scripts/lib/ldm.sh
-source "${REPO_ROOT}/scripts/lib/ldm.sh"
+# shellcheck source=tools/lib/ldm.sh
+source "${REPO_ROOT}/tools/lib/ldm.sh"
 cd "$REPO_ROOT"
 
 PACKAGE="ldm-cx-samples.ldmp"
@@ -28,7 +28,7 @@ echo "🔨 Building client extensions..."
 # 2. Install the pinned LDM and build the package with it.
 LDM_BIN_DIR="$(mktemp -d)"
 install_ldm "$LDM_BIN_DIR"
-./scripts/build-ldmp.sh
+./tools/build-ldmp.sh
 
 # 3. Check the package statically.
 echo "🔍 Checking package contents..."
@@ -64,7 +64,8 @@ for want in \
     grep -Eq "$want" <<<"$PAYLOAD" || fail "package is missing ${want}"
 done
 
-# Never ship runtime state or a licence. Site initializers are LCP `kind: Job`,
+# Never ship runtime state, a licence, or a scripts/ tree: Liferay runs every
+# script in /mnt/liferay/scripts before the portal starts, on the user's machine. Site initializers are LCP `kind: Job`,
 # so their expanded folder ships descriptors only and the images travel once,
 # inside the zip (LDM-#2493 fix in v2.26.16-pre.1).
 for banned in \
@@ -74,6 +75,7 @@ for banned in \
     '(^|/)routes/' \
     'activation-key[^/]*\.xml$' \
     '\.lpkg$' \
+    '^(\./)?scripts/' \
     'client-extensions/[^/]*site-initializer/.*\.png$'; do
     if grep -Eq "$banned" <<<"$PAYLOAD"; then
         fail "package contains ${banned}"

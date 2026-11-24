@@ -1,0 +1,30 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": []
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"favIcon": {
+			"externalReferenceCode": "LXC:veridian-favicon"
+		},
+		"themeCSSClientExtension": {
+			"externalReferenceCode": "LXC:veridian-brand"
+		},
+		"themeSpritemapClientExtension": {
+			"externalReferenceCode": "LXC:ecopulse-spritemap"
+		},
+		"styleBook": {
+			"key": "veridian-style-book"
+		}
+	},
+	"version": 1.1
+}

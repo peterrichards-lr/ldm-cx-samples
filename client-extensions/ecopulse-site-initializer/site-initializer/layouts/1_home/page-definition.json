@@ -45,14 +45,8 @@
 		"type": "Root"
 	},
 	"settings": {
-		"favIcon": {
-			"externalReferenceCode": "LXC:ecopulse-favicon"
-		},
-		"themeCSSClientExtension": {
-			"externalReferenceCode": "LXC:ecopulse-brand"
-		},
-		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "LXC:ecopulse-spritemap"
+		"masterPage": {
+			"key": "ecopulse"
 		}
 	},
 	"version": 1.1

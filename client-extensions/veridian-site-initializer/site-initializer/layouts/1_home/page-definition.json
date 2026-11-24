@@ -25,14 +25,8 @@
 		"type": "Root"
 	},
 	"settings": {
-		"favIcon": {
-			"externalReferenceCode": "LXC:veridian-favicon"
-		},
-		"themeCSSClientExtension": {
-			"externalReferenceCode": "LXC:veridian-brand"
-		},
-		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "LXC:ecopulse-spritemap"
+		"masterPage": {
+			"key": "veridian"
 		}
 	},
 	"version": 1.1

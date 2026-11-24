@@ -1,0 +1,30 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": []
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"favIcon": {
+			"externalReferenceCode": "LXC:ecopulse-favicon"
+		},
+		"themeCSSClientExtension": {
+			"externalReferenceCode": "LXC:ecopulse-brand"
+		},
+		"themeSpritemapClientExtension": {
+			"externalReferenceCode": "LXC:ecopulse-spritemap"
+		},
+		"styleBook": {
+			"key": "ecopulse-style-book"
+		}
+	},
+	"version": 1.1
+}

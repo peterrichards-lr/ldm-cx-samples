@@ -151,16 +151,17 @@ print("    settings:", json.dumps(pd.get("settings"), sort_keys=True))
 print("    top-level elements:", [e.get("type") for e in (pd.get("pageElement") or {}).get("pageElements", [])])
 if "status" in d or "title" not in d: print("    raw:", json.dumps(d)[:400])' || true
         echo "  Master pages in the site:"
-        api "layoutpagetemplate.layoutpagetemplateentry/get-master-layout-page-template-entries?groupId=${group_id}" |
+        curl -sS -u "$AUTH" "${BASE_URL}/o/headless-admin-site/v1.0/sites/${erc}/master-pages?pageSize=50" |
             python3 -c 'import json,sys
 try:
     d=json.load(sys.stdin)
 except Exception as e:
     print("    (unreadable:", e, ")"); sys.exit()
-if isinstance(d, dict): print("    raw:", json.dumps(d)[:400]); sys.exit()
-for e in d:
-    print("    name=%s key=%s erc=%s status=%s plid=%s" % (e.get("name"), e.get("layoutPageTemplateEntryKey"), e.get("externalReferenceCode"), e.get("status"), e.get("plid")))
-if not d: print("    (none)")' || true
+items=d.get("items")
+if items is None: print("    raw:", json.dumps(d)[:400]); sys.exit()
+for e in items:
+    print("    " + json.dumps({k: e.get(k) for k in ("name", "key", "externalReferenceCode")}))
+if not items: print("    (none)")' || true
     fi
 }
 check_site ecopulse-site ecopulse-brand

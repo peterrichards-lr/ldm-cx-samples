@@ -46,13 +46,13 @@
 	},
 	"settings": {
 		"favIcon": {
-			"externalReferenceCode": "ecopulse-favicon"
+			"externalReferenceCode": "LXC:ecopulse-favicon"
 		},
 		"themeCSSClientExtension": {
-			"externalReferenceCode": "ecopulse-brand"
+			"externalReferenceCode": "LXC:ecopulse-brand"
 		},
 		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "ecopulse-spritemap"
+			"externalReferenceCode": "LXC:ecopulse-spritemap"
 		}
 	},
 	"version": 1.1

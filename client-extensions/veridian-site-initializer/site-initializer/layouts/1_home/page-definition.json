@@ -26,13 +26,13 @@
 	},
 	"settings": {
 		"favIcon": {
-			"externalReferenceCode": "veridian-favicon"
+			"externalReferenceCode": "LXC:veridian-favicon"
 		},
 		"themeCSSClientExtension": {
-			"externalReferenceCode": "veridian-brand"
+			"externalReferenceCode": "LXC:veridian-brand"
 		},
 		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "ecopulse-spritemap"
+			"externalReferenceCode": "LXC:ecopulse-spritemap"
 		}
 	},
 	"version": 1.1

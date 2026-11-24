@@ -25,6 +25,7 @@ PROJECT_ID="ldm-cx-samples"
 GIT_REPO="peterrichards-lr/ldm-cx-samples"
 PACKAGE="${REPO_ROOT}/${PROJECT_ID}.ldmp"
 WORK_DIR="${LDM_BUILD_DIR:-$(mktemp -d)}"
+mkdir -p "$WORK_DIR"
 
 if ! compgen -G "${REPO_ROOT}/client-extensions/*/dist/*.zip" >/dev/null; then
     echo "❌ ERROR: no built client extensions; run ./gradlew clean build first."

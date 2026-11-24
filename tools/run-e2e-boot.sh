@@ -137,6 +137,19 @@ for g in json.load(open(sys.argv[1])):
         fail "site ${erc}: /web${friendly}/home does not use the ${theme} theme CSS"
         echo "  Stylesheets on /web${friendly}/home:"
         grep -oE '<link[^>]*stylesheet[^>]*>' <<< "$html" | grep -oE 'href="[^"]*"' | sed 's/^/    /' || true
+        echo "  Fragments rendered: $(grep -oE 'eco-hero|initiative-card|grid-monitor' <<< "$html" | sort -u | tr '\n' ' ')"
+        echo "  Home page as Liferay sees it (headless-delivery):"
+        curl -sS -u "$AUTH" "${BASE_URL}/o/headless-delivery/v1.0/sites/${group_id}/site-pages/home" |
+            python3 -c 'import json,sys
+try:
+    d=json.load(sys.stdin)
+except Exception as e:
+    print("    (unreadable:", e, ")"); sys.exit()
+pd=d.get("pageDefinition") or {}
+print("    title:", d.get("title"), "| plid/id:", d.get("id"))
+print("    settings:", json.dumps(pd.get("settings"), sort_keys=True))
+print("    top-level elements:", [e.get("type") for e in (pd.get("pageElement") or {}).get("pageElements", [])])
+if "status" in d or "title" not in d: print("    raw:", json.dumps(d)[:400])' || true
     fi
 }
 check_site ecopulse-site ecopulse-brand

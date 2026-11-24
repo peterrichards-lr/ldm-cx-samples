@@ -79,9 +79,15 @@ done
 echo "📏 Package size: $(du -h "$PACKAGE" | cut -f1)"
 
 # 4. Seed a new project from the package, as `ldm run --samples` does.
-echo "📥 Mocking downloaded samples cache..."
-mkdir -p ~/.ldm/references/samples
-cp "$PACKAGE" ~/.ldm/references/samples/samples_latest.ldmp
+# A copied-in cache would be replaced by the published release (LDM-#2491), so
+# point LDM at an extracted samples root instead: LDM_SAMPLES_PATH takes
+# priority over the cache and never downloads. It wants files.tar.gz extracted,
+# with the package's meta at the top (read for tag, db_type and package_kind).
+echo "📥 Extracting the package as the samples root..."
+SAMPLES_ROOT="$(mktemp -d)"
+tar -xzf "${INSPECT_DIR}/files.tar.gz" -C "$SAMPLES_ROOT"
+cp "${INSPECT_DIR}/meta" "${SAMPLES_ROOT}/meta"
+export LDM_SAMPLES_PATH="$SAMPLES_ROOT"
 
 echo "🏗️ Initializing test project with --samples..."
 TEST_WORKSPACE="${REPO_ROOT}/e2e-workspace"
@@ -104,7 +110,7 @@ done
 
 echo "🧹 Cleaning up test workspace..."
 cd "$REPO_ROOT"
-sudo rm -rf "$TEST_WORKSPACE" "$INSPECT_DIR"
+sudo rm -rf "$TEST_WORKSPACE" "$INSPECT_DIR" "$SAMPLES_ROOT"
 
 if [ "$FAILED" -ne 0 ]; then
     echo "❌ E2E tests failed."

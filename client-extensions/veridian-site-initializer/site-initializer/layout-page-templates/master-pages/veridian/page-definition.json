@@ -14,13 +14,16 @@
 	},
 	"settings": {
 		"favIcon": {
-			"externalReferenceCode": "LXC:veridian-favicon"
+			"externalReferenceCode": "LXC:veridian-favicon",
+			"name": "Veridian Civic Favicon"
 		},
 		"themeCSSClientExtension": {
-			"externalReferenceCode": "LXC:veridian-brand"
+			"externalReferenceCode": "LXC:veridian-brand",
+			"name": "Veridian Civic Brand Theme"
 		},
 		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "LXC:ecopulse-spritemap"
+			"externalReferenceCode": "LXC:ecopulse-spritemap",
+			"name": "EcoPulse Spritemap"
 		},
 		"styleBook": {
 			"key": "veridian-style-book"

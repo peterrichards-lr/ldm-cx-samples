@@ -14,13 +14,16 @@
 	},
 	"settings": {
 		"favIcon": {
-			"externalReferenceCode": "LXC:ecopulse-favicon"
+			"externalReferenceCode": "LXC:ecopulse-favicon",
+			"name": "EcoPulse Favicon"
 		},
 		"themeCSSClientExtension": {
-			"externalReferenceCode": "LXC:ecopulse-brand"
+			"externalReferenceCode": "LXC:ecopulse-brand",
+			"name": "EcoPulse Brand Theme"
 		},
 		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "LXC:ecopulse-spritemap"
+			"externalReferenceCode": "LXC:ecopulse-spritemap",
+			"name": "EcoPulse Spritemap"
 		},
 		"styleBook": {
 			"key": "ecopulse-style-book"

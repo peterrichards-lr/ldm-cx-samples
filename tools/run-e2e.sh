@@ -69,7 +69,10 @@ for want in \
 done
 
 # Never ship runtime state, a licence, or a scripts/ tree: Liferay runs every
-# script in /mnt/liferay/scripts before the portal starts, on the user's machine. Site initializers are LCP `kind: Job`,
+# script in /mnt/liferay/scripts before the portal starts, on the user's machine.
+# Zips belong in osgi/client-extensions, .ldm/deferred-client-extensions or
+# deploy/, never loose in client-extensions/ (a stray build-dir
+# site-initializer.zip once added ~50 MB; fixed in LDM v2.26.16-pre.2). Site initializers are LCP `kind: Job`,
 # so their expanded folder ships descriptors only and the images travel once,
 # inside the zip (LDM-#2493 fix in v2.26.16-pre.1).
 for banned in \
@@ -80,7 +83,8 @@ for banned in \
     'activation-key[^/]*\.xml$' \
     '\.lpkg$' \
     '^(\./)?scripts/.+[^/]$' \
-    'client-extensions/[^/]*site-initializer/.*\.png$'; do
+    'client-extensions/[^/]*site-initializer/.*\.png$' \
+    '^(\./)?client-extensions/[^/]+\.zip$'; do
     if grep -Eq "$banned" <<<"$PAYLOAD"; then
         fail "package contains ${banned}"
     fi

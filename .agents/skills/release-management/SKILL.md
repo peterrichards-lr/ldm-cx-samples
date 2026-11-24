@@ -25,7 +25,7 @@ Cut a release only with the maintainer's agreement.
 
 3. The tag push triggers the workflow:
     - **Build**: `./gradlew clean build` compiles every client extension.
-    - **Package**: `tools/build-ldmp.sh` installs the LDM release pinned in `tools/lib/ldm.sh` (the verified release binary, not pip), links the workspace into an LDM project, stages the `LIFERAY_ACTIVATION_KEY_XML` secret into its `deploy/`, boots Liferay until every deployable (including the deferred site initializers) is in, then runs `ldm package --stateless`. The result is an assets-only package (`package_kind: stateless`, LDM-#2493) that LDM deploys onto a vanilla instance; LDM strips licences from it (LDM-#2443).
+    - **Package**: `tools/build-ldmp.sh` installs the LDM release pinned in `tools/lib/ldm.sh` (the verified release binary, not pip), links the built workspace into an LDM project with `ldm link --no-run`, then runs `ldm package --stateless`. Liferay is never started, so no licence is involved, and Liferay's auto-deploy can't empty `deploy/` before packaging. The result is an assets-only package (`package_kind: stateless`, LDM-#2493) that LDM deploys onto a vanilla instance, with the site initializers held in `.ldm/deferred-client-extensions/` until Liferay is healthy.
     - **Publish**: `softprops/action-gh-release` creates a GitHub Release on the tag and uploads `ldm-cx-samples.ldmp` and `ldm-cx-samples.ldmp.sha256` as release assets.
 
 ### Re-attaching a package to an existing tag
@@ -34,7 +34,7 @@ Run the workflow manually (`workflow_dispatch`) with the required `release_tag` 
 
 ### If you're touching this pipeline
 
-- `tools/run-e2e.sh` builds the package with the same `build-ldmp.sh`, checks its contents (top-level `files.tar.gz` and `meta`, the fragment zips and `.ldm/fragment-overrides.json`, no runtime state or licence), then seeds a project with `ldm init --samples`. CI runs it on every PR and weekly. It boots Liferay with Docker, so ask the maintainer before running it locally.
+- `tools/run-e2e.sh` builds the package with the same `build-ldmp.sh`, checks its contents (top-level `files.tar.gz` and `meta`, the fragment zips and `.ldm/fragment-overrides.json`, no runtime state or licence), then seeds a project with `ldm init --samples` (via `LDM_SAMPLES_PATH`). CI runs it on every PR and weekly. The seeding step uses Docker, so ask the maintainer before running it locally.
 - The LDM pin (`LDM_VERSION`) lives in `tools/lib/ldm.sh` and is shared by both scripts. When LDM releases a version this repo should support, bump it in its own PR.
 - The `.ldmp` and `.ldmp.sha256` files are build output. Never commit them; they're only ever published as release assets.
 - Keep a top-level `files.tar.gz` in the package: LDM v2.26.x reads only that member.

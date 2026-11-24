@@ -3,8 +3,8 @@
 # Builds the .ldmp exactly as a release does (tools/build-ldmp.sh), checks
 # its contents, then seeds a fresh LDM project from it with --samples.
 #
-# Needs Docker and LIFERAY_ACTIVATION_KEY_XML (see build-ldmp.sh). Uses the
-# LDM release pinned in tools/lib/ldm.sh.
+# Needs Docker for `ldm init --samples`; packaging itself never starts Liferay
+# and needs no licence. Uses the LDM release pinned in tools/lib/ldm.sh.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -79,7 +79,7 @@ for banned in \
     '(^|/)routes/' \
     'activation-key[^/]*\.xml$' \
     '\.lpkg$' \
-    '^(\./)?scripts/' \
+    '^(\./)?scripts/.+[^/]$' \
     'client-extensions/[^/]*site-initializer/.*\.png$'; do
     if grep -Eq "$banned" <<<"$PAYLOAD"; then
         fail "package contains ${banned}"
@@ -109,11 +109,14 @@ ldm init e2e-test -y --samples --host-name sample.local --no-ssl
 echo "🔍 Verifying the seeded project..."
 cd e2e-test
 echo "📋 Seeded project:"
-find . -maxdepth 3 -not -path './data/*' -not -path '*/node_modules/*' | sort | head -150
+find . -maxdepth 3 -not -path './data/*' -not -path './bundles/*' -not -path '*/node_modules/*' \
+    -not -path './client-extensions/*/*' | sort
 # Site initializers may be held back until first boot (LDM-#1779), so accept
 # either location.
 for cx in ecopulse-theme veridian-site-initializer; do
-    if ! ls osgi/client-extensions/"${cx}"*.zip .ldm/deferred-client-extensions/"${cx}"*.zip >/dev/null 2>&1; then
+    # One match in either place is enough (`ls a b` fails if either is absent).
+    if ! compgen -G "osgi/client-extensions/${cx}*.zip" >/dev/null &&
+        ! compgen -G ".ldm/deferred-client-extensions/${cx}*.zip" >/dev/null; then
         fail "${cx} ZIP was not hydrated into the project"
     fi
 done

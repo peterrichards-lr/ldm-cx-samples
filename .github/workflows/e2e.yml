@@ -43,18 +43,5 @@ jobs:
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
           df -h /
 
-      # Boots Liferay to build the package, so it needs the CI activation key.
-      # Pull requests from forks get no secrets and fail here by design.
       - name: Execute E2E Tests
-        env:
-          LIFERAY_ACTIVATION_KEY_XML: ${{ secrets.LIFERAY_ACTIVATION_KEY_XML }}
-          LDM_DIAG_DIR: ${{ runner.temp }}/ldm-diagnostics
         run: ./tools/run-e2e.sh
-
-      - name: Upload diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ldm-diagnostics
-          path: ${{ runner.temp }}/ldm-diagnostics
-          if-no-files-found: ignore

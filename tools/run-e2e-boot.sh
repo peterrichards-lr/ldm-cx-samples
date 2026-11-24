@@ -12,7 +12,8 @@
 # ./gradlew clean build to have run). Set LDMP=/path/to/ldm-cx-samples.ldmp to
 # boot an existing package instead, e.g. a published release.
 #
-# Credentials for the API checks: LIFERAY_USER / LIFERAY_PASSWORD
+# The host name (LDM_HOST_NAME, default sample.local) must resolve to this
+# machine. Credentials for the API checks: LIFERAY_USER / LIFERAY_PASSWORD
 # (default test@liferay.com / test).
 set -euo pipefail
 
@@ -21,7 +22,10 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "${REPO_ROOT}/tools/lib/ldm.sh"
 
 PROJECT_ID="e2e-boot"
-BASE_URL="${LIFERAY_URL:-http://localhost:8080}"
+# `--samples` requires a custom host name; with --no-ssl Liferay is served at
+# http://<host>:8080, so the host must resolve here (CI adds it to /etc/hosts).
+HOST_NAME="${LDM_HOST_NAME:-sample.local}"
+BASE_URL="${LIFERAY_URL:-http://${HOST_NAME}:8080}"
 AUTH="${LIFERAY_USER:-test@liferay.com}:${LIFERAY_PASSWORD:-test}"
 WORK_DIR="$(mktemp -d)"
 DIAG_DIR="${LDM_DIAG_DIR:-${WORK_DIR}/diagnostics}"
@@ -35,6 +39,11 @@ fail() {
 if [ -z "${LIFERAY_ACTIVATION_KEY_XML:-}" ]; then
     echo "❌ ERROR: LIFERAY_ACTIVATION_KEY_XML is not set. An unlicensed portal never"
     echo "   deploys the site initializers, so there would be nothing to check."
+    exit 1
+fi
+
+if ! getent hosts "$HOST_NAME" >/dev/null 2>&1 && ! ping -c1 -t1 "$HOST_NAME" >/dev/null 2>&1; then
+    echo "❌ ERROR: ${HOST_NAME} does not resolve; add '127.0.0.1 ${HOST_NAME}' to /etc/hosts."
     exit 1
 fi
 
@@ -83,7 +92,7 @@ trap cleanup EXIT
 #    (the site initializers deploy only once Liferay is healthy).
 cd "$WORK_DIR"
 docker network create liferay-net >/dev/null 2>&1 || true
-ldm init "$PROJECT_ID" -y --samples --no-ssl
+ldm init "$PROJECT_ID" -y --samples --host-name "$HOST_NAME" --no-ssl
 mkdir -p "${PROJECT_DIR}/deploy"
 printf '%s' "$LIFERAY_ACTIVATION_KEY_XML" > "${PROJECT_DIR}/deploy/activation-key.xml"
 ldm -y run "$PROJECT_ID" --fast-login

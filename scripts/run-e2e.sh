@@ -64,14 +64,17 @@ for want in \
     grep -Eq "$want" <<<"$PAYLOAD" || fail "package is missing ${want}"
 done
 
-# Never ship runtime state or a licence.
+# Never ship runtime state or a licence. Site initializers are LCP `kind: Job`,
+# so their expanded folder ships descriptors only and the images travel once,
+# inside the zip (LDM-#2493 fix in v2.26.16-pre.1).
 for banned in \
     '(^|/)data/' \
     '(^|/)osgi/state/' \
     '(^|/)snapshots/' \
     '(^|/)routes/' \
     'activation-key[^/]*\.xml$' \
-    '\.lpkg$'; do
+    '\.lpkg$' \
+    'client-extensions/[^/]*site-initializer/.*\.png$'; do
     if grep -Eq "$banned" <<<"$PAYLOAD"; then
         fail "package contains ${banned}"
     fi

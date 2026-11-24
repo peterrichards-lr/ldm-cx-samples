@@ -1,0 +1,62 @@
+name: E2E Boot Test
+
+# Boots Liferay from the .ldmp and checks that both sample sites come up
+# (tools/run-e2e-boot.sh). Slower than e2e.yml and needs the activation key,
+# so it runs on demand: manually, or on a PR labelled `e2e-boot`.
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [labeled, synchronize]
+
+jobs:
+  boot:
+    name: Boot Liferay from the samples package
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'e2e-boot')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # The DXP image is ~5GB; reclaim toolchains this job never uses first.
+      - name: Reclaim runner disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
+          df -h /
+
+      - name: Build client extensions
+        run: ./gradlew clean build
+
+      # The key is only staged into the throwaway project's deploy/; the
+      # package is built before it exists and LDM strips licences anyway.
+      - name: Boot and check the sites
+        env:
+          LIFERAY_ACTIVATION_KEY_XML: ${{ secrets.LIFERAY_ACTIVATION_KEY_XML }}
+          LDM_DIAG_DIR: ${{ runner.temp }}/ldm-diagnostics
+        run: ./tools/run-e2e-boot.sh
+
+      - name: Upload diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ldm-boot-diagnostics
+          path: ${{ runner.temp }}/ldm-diagnostics
+          if-no-files-found: ignore

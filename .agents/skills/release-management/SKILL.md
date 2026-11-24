@@ -35,6 +35,7 @@ Run the workflow manually (`workflow_dispatch`) with the required `release_tag` 
 ### If you're touching this pipeline
 
 - `tools/run-e2e.sh` builds the package with the same `build-ldmp.sh`, checks its contents (top-level `files.tar.gz` and `meta`, the fragment zips and `.ldm/fragment-overrides.json`, no runtime state or licence), then seeds a project with `ldm init --samples` (via `LDM_SAMPLES_PATH`). CI runs it on every PR and weekly. The seeding step uses Docker, so ask the maintainer before running it locally.
+- `tools/run-e2e-boot.sh` goes further: it boots Liferay from the package as `ldm run --samples` would, waits for LDM to deploy the site initializers, and checks that the EcoPulse site and the Veridian-themed Guest site have their pages and theme. It needs the `LIFERAY_ACTIVATION_KEY_XML` secret (staged into the throwaway project only, never packaged). The `E2E Boot Test` workflow runs it on demand: manually, or on a PR labelled `e2e-boot`. Run it before any release that changes the site initializers or the LDM pin. Locally it takes over the shared Docker daemon, so ask first; `LDMP=<file>` boots an existing package.
 - The LDM pin (`LDM_VERSION`) lives in `tools/lib/ldm.sh` and is shared by both scripts. When LDM releases a version this repo should support, bump it in its own PR.
 - The `.ldmp` and `.ldmp.sha256` files are build output. Never commit them; they're only ever published as release assets.
 - Keep a top-level `files.tar.gz` in the package: LDM v2.26.x reads only that member.

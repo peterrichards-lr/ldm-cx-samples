@@ -54,6 +54,10 @@ sys.exit(0 if ok else 1)
 PY
 
 PAYLOAD="$(tar -tzf "${INSPECT_DIR}/files.tar.gz")"
+echo "📋 Payload layout (entries per top-level path):"
+awk -F/ '{sub(/^\.\//, ""); print $1 "/" $2}' <<<"$PAYLOAD" | sort | uniq -c
+echo "📋 Payload files under scripts/, deploy/, .ldm/ and osgi/client-extensions/:"
+grep -E '^(\./)?(scripts|deploy|\.ldm|osgi/client-extensions)/' <<<"$PAYLOAD" | grep -v '/$' || true
 for want in \
     '\.ldm/fragment-overrides\.json$' \
     '^(\./)?deploy/ecopulse-supplemental-fragments\.zip$' \
@@ -104,6 +108,8 @@ ldm init e2e-test -y --samples --host-name sample.local --no-ssl
 
 echo "🔍 Verifying the seeded project..."
 cd e2e-test
+echo "📋 Seeded project:"
+find . -maxdepth 3 -not -path './data/*' -not -path '*/node_modules/*' | sort | head -150
 # Site initializers may be held back until first boot (LDM-#1779), so accept
 # either location.
 for cx in ecopulse-theme veridian-site-initializer; do

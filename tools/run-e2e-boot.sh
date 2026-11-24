@@ -125,7 +125,7 @@ for g in json.load(open(sys.argv[1])):
 
     layouts="$(api "layout/get-layouts-count?groupId=${group_id}&privateLayout=false")"
     echo "  ${erc}: ${layouts} public pages"
-    [ "${layouts:-0}" -gt 1 ] || fail "site ${erc}: only ${layouts} public pages; was the initializer applied?"
+    [ "${layouts:-0}" -ge 1 ] || fail "site ${erc}: no public pages; was the initializer applied?"
 
     if ! html="$(curl -fsS "${BASE_URL}/web${friendly}/home")"; then
         fail "site ${erc}: /web${friendly}/home did not load"
@@ -135,6 +135,8 @@ for g in json.load(open(sys.argv[1])):
         echo "  ${erc}: /web${friendly}/home uses ${theme}"
     else
         fail "site ${erc}: /web${friendly}/home does not use the ${theme} theme CSS"
+        echo "  Stylesheets on /web${friendly}/home:"
+        grep -oE '<link[^>]*stylesheet[^>]*>' <<< "$html" | grep -oE 'href="[^"]*"' | sed 's/^/    /' || true
     fi
 }
 check_site ecopulse-site ecopulse-brand

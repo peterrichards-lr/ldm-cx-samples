@@ -48,10 +48,21 @@ jobs:
       - name: Build client extensions
         run: ./gradlew clean build
 
-      - name: Compile LDM Package
+      # The DXP image is ~5GB; reclaim toolchains this job never uses first.
+      - name: Reclaim runner disk space
         run: |
-          chmod +x scripts/package-ldmp.sh
-          ./scripts/package-ldmp.sh
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
+          df -h /
+
+      # Builds with `ldm package --stateless` on the LDM release pinned in
+      # scripts/lib/ldm.sh. The activation key is for this CI boot only; LDM
+      # strips licences from the package (LDM-#2443).
+      - name: Build LDM Package
+        env:
+          LIFERAY_ACTIVATION_KEY_XML: ${{ secrets.LIFERAY_ACTIVATION_KEY_XML }}
+        run: |
+          docker network create liferay-net || true
+          ./scripts/build-ldmp.sh
 
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2

@@ -1,92 +1,113 @@
 #!/bin/bash
 # scripts/run-e2e.sh
-# Tests the LDM .ldmp samples packaging and initialization workflow.
-set -e
+# Builds the .ldmp exactly as a release does (scripts/build-ldmp.sh), checks
+# its contents, then seeds a fresh LDM project from it with --samples.
+#
+# Needs Docker and LIFERAY_ACTIVATION_KEY_XML (see build-ldmp.sh). Uses the
+# LDM release pinned in scripts/lib/ldm.sh.
+set -euo pipefail
 
-# Pinned LDM release to test against. Bump it deliberately, as a reviewed
-# change, so an LDM regression can't silently break this repo's CI.
-# Override for a one-off run with: LDM_VERSION=v2.27.0 ./scripts/run-e2e.sh
-LDM_VERSION="${LDM_VERSION:-v2.26.15}"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=scripts/lib/ldm.sh
+source "${REPO_ROOT}/scripts/lib/ldm.sh"
+cd "$REPO_ROOT"
 
-# Liferay tag for the test project, taken from the workspace product so the
-# two can't drift (e.g. dxp-2026.q1.14-lts -> 2026.q1.14-lts).
-LIFERAY_TAG="$(sed -n 's/^liferay\.workspace\.product=dxp-//p' gradle.properties)"
-if [ -z "$LIFERAY_TAG" ]; then
-    echo "❌ ERROR: could not read liferay.workspace.product from gradle.properties"
-    exit 1
-fi
+PACKAGE="ldm-cx-samples.ldmp"
+FAILED=0
+fail() {
+    echo "❌ $*"
+    FAILED=1
+}
 
-echo "🚀 Starting E2E Test for LDM Samples (LDM ${LDM_VERSION}, Liferay ${LIFERAY_TAG})"
+echo "🚀 Starting E2E Test for LDM Samples (LDM ${LDM_VERSION})"
 
-# 1. Build Client Extensions (if not already built)
+# 1. Build the client extensions.
 echo "🔨 Building client extensions..."
 ./gradlew clean build
 
-# 2. Package the .ldmp
-echo "📦 Packaging samples..."
-chmod +x scripts/package-ldmp.sh
-./scripts/package-ldmp.sh
+# 2. Install the pinned LDM and build the package with it.
+LDM_BIN_DIR="$(mktemp -d)"
+install_ldm "$LDM_BIN_DIR"
+./scripts/build-ldmp.sh
 
-# 3. Clone and install LDM CLI locally
-echo "⚙️ Setting up Liferay Docker Manager..."
-LDM_DIR="/tmp/ldm-e2e-repo"
-rm -rf "$LDM_DIR"
-git clone --depth 1 --branch "$LDM_VERSION" https://github.com/peterrichards-lr/liferay-docker-manager.git "$LDM_DIR"
-cd "$LDM_DIR"
+# 3. Check the package statically.
+echo "🔍 Checking package contents..."
+INSPECT_DIR="$(mktemp -d)"
+tar -xzf "$PACKAGE" -C "$INSPECT_DIR"
 
-# We don't control the state of the cloned repo's checked-in tree, so don't
-# assume .venv is absent - a stray tracked file/symlink/dir at that path
-# (e.g. an accidentally-committed local venv symlink upstream) makes
-# `python3 -m venv .venv` fail with [Errno 17] File exists. `rm -rf` on a
-# symlink only removes the link itself, not its target, so this is safe.
-rm -rf .venv
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e .
+# LDM v2.26.x reads only a top-level files.tar.gz, so it must stay there.
+[ -f "${INSPECT_DIR}/files.tar.gz" ] || fail "no top-level files.tar.gz"
+[ -f "${INSPECT_DIR}/meta" ] || fail "no top-level meta"
 
-# Return to original repo dir
-cd - > /dev/null
+python3 - "${INSPECT_DIR}/meta" <<'PY' || FAILED=1
+import json, sys
+meta = json.load(open(sys.argv[1], encoding="utf-8"))
+ok = True
+for key, want in (("package_kind", "stateless"), ("db_type", "postgresql")):
+    if meta.get(key) != want:
+        print(f"❌ meta {key!r} is {meta.get(key)!r}, expected {want!r}")
+        ok = False
+if not meta.get("tag"):
+    print("❌ meta has no 'tag'")
+    ok = False
+sys.exit(0 if ok else 1)
+PY
 
-# 4. Mock the downloaded cache
+PAYLOAD="$(tar -tzf "${INSPECT_DIR}/files.tar.gz")"
+for want in \
+    '\.ldm/fragment-overrides\.json$' \
+    '^(\./)?deploy/ecopulse-supplemental-fragments\.zip$' \
+    '^(\./)?deploy/responsive-menus\.zip$' \
+    '/ecopulse-theme[^/]*\.zip$' \
+    '/ecopulse-site-initializer[^/]*\.zip$' \
+    '/veridian-site-initializer[^/]*\.zip$'; do
+    grep -Eq "$want" <<<"$PAYLOAD" || fail "package is missing ${want}"
+done
+
+# Never ship runtime state or a licence.
+for banned in \
+    '(^|/)data/' \
+    '(^|/)osgi/state/' \
+    '(^|/)snapshots/' \
+    '(^|/)routes/' \
+    'activation-key[^/]*\.xml$' \
+    '\.lpkg$'; do
+    if grep -Eq "$banned" <<<"$PAYLOAD"; then
+        fail "package contains ${banned}"
+    fi
+done
+echo "📏 Package size: $(du -h "$PACKAGE" | cut -f1)"
+
+# 4. Seed a new project from the package, as `ldm run --samples` does.
 echo "📥 Mocking downloaded samples cache..."
 mkdir -p ~/.ldm/references/samples
-cp ldm-cx-samples.ldmp ~/.ldm/references/samples/samples_latest.ldmp
+cp "$PACKAGE" ~/.ldm/references/samples/samples_latest.ldmp
 
-# 5. Initialize a test project using LDM
 echo "🏗️ Initializing test project with --samples..."
-TEST_WORKSPACE="$(pwd)/e2e-workspace"
+TEST_WORKSPACE="${REPO_ROOT}/e2e-workspace"
 sudo rm -rf "$TEST_WORKSPACE"
 mkdir -p "$TEST_WORKSPACE"
 cd "$TEST_WORKSPACE"
-
-# Initialize with the built-in LDM binary from the virtual environment
-# Ensure liferay-net exists for global proxy routing (required by latest LDM architecture)
 docker network create liferay-net || true
-"$LDM_DIR/.venv/bin/ldm" init e2e-test -y --samples --tag "$LIFERAY_TAG" --host-name sample.local --no-ssl
+ldm init e2e-test -y --samples --host-name sample.local --no-ssl
 
-echo "🔍 Verifying extraction in the initialized workspace..."
+echo "🔍 Verifying the seeded project..."
 cd e2e-test
-
-# Check if essential sample ZIPs were successfully extracted into the workspace
-MISSING=0
-if ! ls client-extensions/ecopulse-theme*.zip 1> /dev/null 2>&1; then
-    echo "❌ ERROR: ecopulse-theme ZIP is missing from client-extensions/!"
-    MISSING=1
-fi
-
-if ! ls client-extensions/veridian-site-initializer*.zip 1> /dev/null 2>&1; then
-    echo "❌ ERROR: veridian-site-initializer ZIP is missing from client-extensions/!"
-    MISSING=1
-fi
-
-if [ "$MISSING" -eq 1 ]; then
-    echo "❌ E2E tests failed! Sample assets were not correctly hydrated."
-    exit 1
-fi
-
-echo "✅ All validations passed!"
-echo "🎉 E2E Tests Completed Successfully!"
+# Site initializers may be held back until first boot (LDM-#1779), so accept
+# either location.
+for cx in ecopulse-theme veridian-site-initializer; do
+    if ! ls osgi/client-extensions/"${cx}"*.zip .ldm/deferred-client-extensions/"${cx}"*.zip >/dev/null 2>&1; then
+        fail "${cx} ZIP was not hydrated into the project"
+    fi
+done
+[ -f .ldm/fragment-overrides.json ] || fail ".ldm/fragment-overrides.json was not hydrated"
 
 echo "🧹 Cleaning up test workspace..."
-cd "$TEST_WORKSPACE/.."
-sudo rm -rf "$TEST_WORKSPACE"
+cd "$REPO_ROOT"
+sudo rm -rf "$TEST_WORKSPACE" "$INSPECT_DIR"
+
+if [ "$FAILED" -ne 0 ]; then
+    echo "❌ E2E tests failed."
+    exit 1
+fi
+echo "🎉 E2E Tests Completed Successfully!"

@@ -37,7 +37,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Execute E2E Tests
+      # The DXP image is ~5GB; reclaim toolchains this job never uses first.
+      - name: Reclaim runner disk space
         run: |
-          chmod +x scripts/run-e2e.sh
-          ./scripts/run-e2e.sh
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
+          df -h /
+
+      # Boots Liferay to build the package, so it needs the CI activation key.
+      # Pull requests from forks get no secrets and fail here by design.
+      - name: Execute E2E Tests
+        env:
+          LIFERAY_ACTIVATION_KEY_XML: ${{ secrets.LIFERAY_ACTIVATION_KEY_XML }}
+        run: ./scripts/run-e2e.sh

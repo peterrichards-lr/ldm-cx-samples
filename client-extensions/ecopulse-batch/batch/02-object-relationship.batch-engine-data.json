@@ -1,0 +1,27 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"externalReferenceCode": "ecopulse-energy-sector",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "gi-to-energy-sector",
+			"label": {
+				"en_US": "Target Energy Sector"
+			},
+			"name": "targetEnergySector",
+			"type": "oneToMany",
+			"objectDefinitionExternalReferenceCode1": "ecopulse-energy-sector",
+			"objectDefinitionExternalReferenceCode2": "ecopulse-green-initiative"
+		}
+	]
+}

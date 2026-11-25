@@ -32,15 +32,14 @@ if ! compgen -G "${REPO_ROOT}/client-extensions/*/dist/*.zip" >/dev/null; then
     exit 1
 fi
 
-if ! command -v ldm >/dev/null 2>&1 || [ "${LDM_FORCE_INSTALL:-}" = "1" ]; then
-    install_ldm "${WORK_DIR}/bin"
-fi
+ensure_ldm "${WORK_DIR}/bin"
 
 echo "📦 Packaging ${PROJECT_ID} with LDM ${LDM_VERSION}"
 cd "$WORK_DIR"
 
 # 1. Create the LDM project from the built workspace, without starting it.
-#    The tag and database come from the workspace (gradle.properties).
+#    The tag comes from the workspace (gradle.properties); the database is
+#    pinned here because the package's meta records it (run-e2e.sh checks it).
 ldm -y link "$REPO_ROOT" "$PROJECT_ID" --no-run --no-monitor --db postgresql
 
 # 2. Package the project's assets.

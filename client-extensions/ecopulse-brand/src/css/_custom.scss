@@ -1,0 +1,30 @@
+// Imported by the base theme's main.scss after Clay and Liferay's styles.
+@import 'brand_ecopulse';
+@import 'core';
+
+// Style book tokens (src/frontend-token-definition.json). The style book
+// sets these variables; the fallbacks are the brand defaults.
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	font-family: var(--headings-font-family, inherit);
+	font-weight: var(--headings-font-weight, 600);
+}
+
+h1,
+.h1 {
+	font-size: var(--h1-font-size, 2.5rem);
+}
+
+.btn {
+	border-radius: var(--btn-border-radius, 8px);
+}

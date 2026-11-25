@@ -28,7 +28,8 @@ HOST_NAME="${LDM_HOST_NAME:-sample.local}"
 BASE_URL="${LIFERAY_URL:-http://${HOST_NAME}:8080}"
 AUTH="${LIFERAY_USER:-test@liferay.com}:${LIFERAY_PASSWORD:-test}"
 WORK_DIR="$(mktemp -d)"
-DIAG_DIR="${LDM_DIAG_DIR:-${WORK_DIR}/diagnostics}"
+# Outside WORK_DIR, which is deleted on exit.
+DIAG_DIR="${LDM_DIAG_DIR:-$(dirname "$WORK_DIR")/ldm-boot-diagnostics-$$}"
 
 FAILED=0
 fail() {
@@ -47,9 +48,7 @@ if ! getent hosts "$HOST_NAME" >/dev/null 2>&1 && ! ping -c1 -t1 "$HOST_NAME" >/
     exit 1
 fi
 
-if ! command -v ldm >/dev/null 2>&1 || [ "${LDM_FORCE_INSTALL:-}" = "1" ]; then
-    install_ldm "${WORK_DIR}/bin"
-fi
+ensure_ldm "${WORK_DIR}/bin"
 echo "🚀 Boot E2E for LDM Samples (LDM ${LDM_VERSION})"
 
 # 1. The package.
@@ -84,6 +83,9 @@ cleanup() {
         tail -n 150 "${DIAG_DIR}/liferay.log" || true
     fi
     ldm down "$PROJECT_ID" --non-interactive || true
+    # Never leave the activation key (or the throwaway project) behind.
+    rm -f "${PROJECT_DIR}/deploy/activation-key.xml"
+    rm -rf "$WORK_DIR" 2>/dev/null || echo "⚠️ Could not fully remove ${WORK_DIR}"
     return "$status"
 }
 trap cleanup EXIT
@@ -110,9 +112,11 @@ python3 -c 'import json,sys
 for g in json.load(open(sys.argv[1])):
     print("  %s  %-16s %-24s %s" % (g["groupId"], g["externalReferenceCode"], g["friendlyURL"], g["groupKey"]))' "$GROUPS_JSON"
 
-# check_site <site ERC> <theme CSS client extension ERC>
+# check_site <site ERC> <theme CSS client extension ERC> <favicon client
+#            extension ERC> <fragment keys the home page must render...>
 check_site() {
-    local erc="$1" theme="$2" row group_id friendly layouts html
+    local erc="$1" theme="$2" favicon="$3" row group_id friendly layouts html fragment
+    shift 3
     row="$(python3 -c 'import json,sys
 for g in json.load(open(sys.argv[1])):
     if g["externalReferenceCode"] == sys.argv[2]:
@@ -134,6 +138,31 @@ for g in json.load(open(sys.argv[1])):
     # FreeMarker that did not run, or a configuration the fragment never declared.
     if grep -qE '\[configuration\.|\$\{configuration' <<< "$html"; then
         fail "site ${erc}: unresolved fragment configuration on /web${friendly}/home: $(grep -oE '\[configuration\.[A-Za-z]*\]|\$\{configuration[^}]*\}' <<< "$html" | sort -u | tr '\n' ' ')"
+    fi
+    for fragment in "$@"; do
+        grep -q "$fragment" <<< "$html" || fail "site ${erc}: fragment ${fragment} not rendered on /web${friendly}/home"
+    done
+    grep -q "$favicon" <<< "$html" || fail "site ${erc}: /web${friendly}/home does not use the ${favicon} favicon"
+    # The style book (imported for the brand's token definition) writes its
+    # values into the page head; Georgia headings come only from it.
+    if grep -qE -- '--headings-font-family: *Georgia' <<< "$html"; then
+        echo "  ${erc}: style book applied"
+    else
+        fail "site ${erc}: style book values missing from /web${friendly}/home"
+    fi
+    # A theme CSS client extension replaces Classic's clay.css, so it must be
+    # a full Clay build, not a stub.
+    local clay_href clay_size
+    clay_href="$(grep -oE "href=\"[^\"]*${theme}[^\"]*/clay\.css[^\"]*\"" <<< "$html" | head -1 | sed -E 's/^href="|"$//g; s/&amp;/\&/g')"
+    if [ -n "$clay_href" ]; then
+        clay_size="$(curl -fsS "${BASE_URL}${clay_href#"$BASE_URL"}" | wc -c | tr -d ' ')"
+        if [ "${clay_size:-0}" -gt 100000 ]; then
+            echo "  ${erc}: ${theme} clay.css is ${clay_size} bytes"
+        else
+            fail "site ${erc}: ${theme} clay.css is only ${clay_size:-0} bytes"
+        fi
+    else
+        fail "site ${erc}: no ${theme} clay.css linked from /web${friendly}/home"
     fi
     if grep -q "$theme" <<< "$html"; then
         echo "  ${erc}: /web${friendly}/home uses ${theme}"
@@ -168,8 +197,8 @@ for e in items:
 if not items: print("    (none)")' || true
     fi
 }
-check_site ecopulse-site ecopulse-brand
-check_site L_GUEST veridian-brand
+check_site ecopulse-site ecopulse-brand ecopulse-favicon eco-hero grid-monitor impact-calculator initiative-card impact-slider
+check_site L_GUEST veridian-brand veridian-favicon eco-hero initiative-card
 
 # The impact slider on the EcoPulse home page lists the high-impact initiatives
 # (the GreenInitiative collection provider, filtered by minimum impact).

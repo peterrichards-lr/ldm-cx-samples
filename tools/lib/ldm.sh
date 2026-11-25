@@ -1,7 +1,6 @@
 #!/bin/bash
 # tools/lib/ldm.sh
-# Shared LDM pin and installer for build-ldmp.sh and run-e2e.sh. Source it;
-# don't run it.
+# Shared LDM pin and installer for the tools/ scripts. Source it; don't run it.
 
 # The LDM release that builds and tests the .ldmp. Bump it deliberately, as a
 # reviewed change, so an LDM regression can't silently break this repo.
@@ -47,4 +46,15 @@ install_ldm() {
     chmod +x "${bin_dir}/ldm"
     export PATH="${bin_dir}:$PATH"
     ldm --version
+}
+
+# Uses `ldm` from PATH only if it is the pinned release; otherwise installs the
+# pin into $1. So a local run tests the reviewed version, not whatever LDM the
+# machine happens to have. LDM_FORCE_INSTALL=1 always installs.
+ensure_ldm() {
+    if [ "${LDM_FORCE_INSTALL:-}" != "1" ] && command -v ldm >/dev/null 2>&1 &&
+        [ "$(ldm --version 2>/dev/null | awk '{print $NF}')" = "${LDM_VERSION#v}" ]; then
+        return 0
+    fi
+    install_ldm "$1"
 }

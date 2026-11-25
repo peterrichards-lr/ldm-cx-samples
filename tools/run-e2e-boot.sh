@@ -167,6 +167,73 @@ if not items: print("    (none)")' || true
 check_site ecopulse-site ecopulse-brand
 check_site L_GUEST veridian-brand
 
+# 5. Check the content the initializers and ecopulse-batch should have added.
+#    py <path> <python expression over d, the JSON reply> prints the expression,
+#    or the HTTP error, so each check shows what Liferay actually returned.
+py() {
+    local path="$1" expr="$2" body
+    body="$(curl -sS -u "$AUTH" -w '\n%{http_code}' "${BASE_URL}${path}" 2>&1)" || true
+    python3 -c 'import json,sys
+body, code = sys.argv[1].rsplit("\n", 1)
+if code != "200":
+    print("HTTP %s: %s" % (code, body[:300].replace("\n", " "))); sys.exit()
+d = json.loads(body)
+print(eval(sys.argv[2]))' "$body" "$expr"
+}
+# expect <label> <python condition over d> <path> <python expression shown>
+expect() {
+    local label="$1" cond="$2" path="$3" show="$4" ok
+    ok="$(py "$path" "bool(${cond})")"
+    if [ "$ok" = "True" ]; then
+        echo "  ✅ ${label}: $(py "$path" "$show")"
+    else
+        fail "${label}: $(py "$path" "$show")"
+    fi
+}
+
+echo "🔍 Checking objects..."
+for object in ecopulse-energy-sector:energysectors ecopulse-green-initiative:greeninitiatives; do
+    erc="${object%%:*}" rest="${object#*:}"
+    expect "object ${erc}" 'd.get("status", {}).get("label") == "approved"' \
+        "/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}" \
+        '(d.get("name"), d.get("className"), d.get("status"))'
+    expect "entries /o/c/${rest}" 'd.get("totalCount", 0) >= 5' \
+        "/o/c/${rest}?pageSize=50&fields=externalReferenceCode" \
+        '(d.get("totalCount"), [e.get("externalReferenceCode") for e in d.get("items", [])])'
+done
+expect "workflow definitions" 'len(d.get("items", [])) > 1' \
+    "/o/headless-admin-workflow/v1.0/workflow-definitions?pageSize=50" \
+    '[e.get("name") for e in d.get("items", [])]'
+
+# check_content <site ERC> <navigation menu name>
+check_content() {
+    local erc="$1" menu="$2" group_id
+    group_id="$(python3 -c 'import json,sys
+for g in json.load(open(sys.argv[1])):
+    if g["externalReferenceCode"] == sys.argv[2]: print(g["groupId"])' "$GROUPS_JSON" "$erc")"
+    [ -n "$group_id" ] || return 0
+    echo "🔍 Checking ${erc} content..."
+    expect "${erc} navigation menu '${menu}'" \
+        "any(m.get('name') == '${menu}' and m.get('navigationMenuItems') for m in d.get('items', []))" \
+        "/o/headless-admin-site/v1.0/sites/${erc}/navigation-menus?pageSize=50" \
+        '[(m.get("name"), [i.get("name") for i in m.get("navigationMenuItems") or []]) for m in d.get("items", [])]'
+    expect "${erc} display page template" \
+        'any("Energy Sector" in (t.get("name") or "") for t in d.get("items", []))' \
+        "/o/headless-admin-site/v1.0/sites/${erc}/display-page-templates?pageSize=50" \
+        '[(t.get("name"), (t.get("contentTypeReference") or {}).get("className")) for t in d.get("items", [])]'
+    expect "${erc} asset list high-impact-initiatives" 'd.get("totalCount", 0) >= 1' \
+        "/o/headless-delivery/v1.0/sites/${group_id}/content-sets/by-key/high-impact-initiatives/content-set-elements?pageSize=50" \
+        '(d.get("totalCount"), [e.get("title") for e in d.get("items", [])])'
+}
+check_content ecopulse-site "Main Navigation"
+check_content L_GUEST "Veridian Main Navigation"
+
+echo "🔍 Checking search blueprints..."
+expect "search blueprints" \
+    'all(any(b.get("externalReferenceCode") == e for b in d.get("items", [])) for e in ("ecopulse-gi-finder", "veridian-gi-finder"))' \
+    "/o/search-experiences-rest/v1.0/sxp-blueprints?pageSize=50" \
+    '[(b.get("externalReferenceCode"), b.get("title")) for b in d.get("items", [])]'
+
 if [ "$FAILED" -ne 0 ]; then
     echo "❌ Boot E2E failed."
     exit 1

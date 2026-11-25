@@ -170,7 +170,19 @@
 				"label": "approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "sectorName"
+			"titleObjectFieldName": "sectorName",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "gi-to-energy-sector",
+					"label": {
+						"en_US": "Target Energy Sector"
+					},
+					"name": "targetEnergySector",
+					"type": "oneToMany",
+					"objectDefinitionExternalReferenceCode2": "ecopulse-green-initiative"
+				}
+			]
 		}
 	]
 }

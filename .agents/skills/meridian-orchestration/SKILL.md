@@ -31,13 +31,13 @@ To move beyond static content, the demo environment uses Liferay's discovery and
 ### Objects and Relationships
 
 - **Definitions**: `ecopulse-batch/batch/01-object-definition.batch-engine-data.json` (company-scoped `EnergySector`, `GreenInitiative`).
-- **Relationships**: their own file, `02-object-relationship.batch-engine-data.json`, with `objectDefinitionExternalReferenceCode1` (the "one" side, also the `externalReferenceCode` parameter) and `objectDefinitionExternalReferenceCode2`. `targetEnergySector` puts the sector on each initiative.
+- **Relationships**: declare each one in `objectRelationships` on its "one"-side definition in `01-object-definition.batch-engine-data.json`, with `objectDefinitionExternalReferenceCode2` (the "many" side, listed earlier in the file). Never in a separate file: on re-import (a redeploy, or a new release on an existing project) the definition is updated with a PUT, which deletes any relationship it doesn't list, together with its column and data. `targetEnergySector` puts the sector on each initiative.
 - **Entries**: `ecopulse-site-initializer/site-initializer/object-entries/NN-<name>.json` (`objectDefinitionName` + `object-entries`), not the batch: at first boot a batch reaches its entries before Liferay has registered the new objects' permissions. Reference related entries by ERC: `r_targetEnergySector_c_energySectorERC`.
 - Number batch files (`01-`, `02-`, …): they import in that order.
 
 ### Search Blueprints
 
-- **Location**: `ecopulse-batch/batch/04-sxp-blueprint.batch-engine-data.json` (`com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint`). Site initializers cannot import blueprints on standard DXP.
+- **Location**: `ecopulse-batch/batch/03-sxp-blueprint.batch-engine-data.json` (`com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint`). Site initializers cannot import blueprints on standard DXP.
 - **Configuration**: `configuration.queryConfiguration.queryEntries[].clauses[].query` is Elasticsearch JSON. Object fields are nested: `nestedFieldArray.fieldName` / `nestedFieldArray.value_integer`.
 - **Purpose**: targeted search results (e.g., boosting initiatives with `impactLevel` ≥ 75) without changing the index.
 

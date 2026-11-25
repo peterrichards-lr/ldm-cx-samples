@@ -211,9 +211,10 @@ slider="$(curl -fsS "${BASE_URL}/web/ecopulse-smart-city/home" | slider_state)" 
 if [ "$slider" = "empty" ]; then
     echo "  impact slider as an administrator: $(curl -fsS -u "$AUTH" "${BASE_URL}/web/ecopulse-smart-city/home" | slider_state)"
 fi
+# Seed data: three initiatives have impact >= 75 (the slider's default minimum).
 case "$slider" in
-    *cards) echo "  ✅ impact slider: ${slider}" ;;
-    *) fail "impact slider: ${slider}" ;;
+    "3 cards") echo "  ✅ impact slider: ${slider}" ;;
+    *) fail "impact slider: ${slider} (expected 3 cards)" ;;
 esac
 
 # 5. Check the content the initializers and ecopulse-batch should have added.
@@ -300,6 +301,50 @@ expect "search blueprints" \
     'all(any(b.get("externalReferenceCode") == e for b in d.get("items", [])) for e in ("ecopulse-gi-finder", "veridian-gi-finder"))' \
     "/o/search-experiences-rest/v1.0/sxp-blueprints?pageSize=50" \
     '[(b.get("externalReferenceCode"), b.get("title")) for b in d.get("items", [])]'
+
+# Every initiative is linked to its energy sector.
+check_links() {
+    expect "initiatives linked to sectors$1" \
+        'd.get("totalCount") == 5 and all((e.get("r_targetEnergySector_c_energySectorId") or 0) > 0 for e in d.get("items", []))' \
+        "/o/c/greeninitiatives?pageSize=50" \
+        '[(e.get("externalReferenceCode"), e.get("r_targetEnergySector_c_energySectorERC")) for e in d.get("items", [])]'
+}
+check_links ""
+
+# The Energy Sector display page renders a sector for a visitor, on both sites.
+echo "🔍 Checking display pages..."
+sector_id="$(py "/o/c/energysectors/by-external-reference-code/N-1" 'd.get("id")')"
+separator="$(py "/o/object-admin/v1.0/object-definitions/by-external-reference-code/ecopulse-energy-sector" 'd.get("friendlyURLSeparator")')"
+for site in ecopulse-smart-city guest; do
+    url="${BASE_URL}/web/${site}/${separator}/${sector_id}"
+    if page="$(curl -fsS "$url")" && grep -q "energy-sector-details" <<< "$page" &&
+        grep -q "Veridian North" <<< "$page" && grep -q ">64<" <<< "$page"; then
+        echo "  ✅ display page /web/${site}/${separator}/${sector_id} shows Veridian North"
+    else
+        fail "display page ${url} did not render sector N-1 (Veridian North, load 64)"
+    fi
+done
+
+# Re-importing ecopulse-batch (a redeploy, or a new release on an existing
+# project) updates the object definitions; it must not drop the relationship.
+echo "🔍 Redeploying ecopulse-batch..."
+batch_zip="$(find "$SAMPLES_ROOT" -name 'ecopulse-batch*.zip' | head -1)"
+before="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"
+if [ -n "$batch_zip" ] && docker cp "$batch_zip" "${PROJECT_ID}:/opt/liferay/deploy/ecopulse-batch.zip"; then
+    for _ in $(seq 1 36); do
+        sleep 5
+        after="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"
+        [ "$after" -ge $((before + 3)) ] && break
+    done
+    if [ "${after:-0}" -ge $((before + 3)) ]; then
+        echo "  ecopulse-batch re-imported ($((after - before)) import tasks)"
+        check_links " after re-import"
+    else
+        fail "ecopulse-batch was not re-imported after a redeploy ($((${after:-0} - before)) of 3 import tasks)"
+    fi
+else
+    fail "could not redeploy ecopulse-batch (${batch_zip:-zip not found})"
+fi
 
 if [ "$FAILED" -ne 0 ]; then
     echo "❌ Boot E2E failed."

@@ -4,6 +4,7 @@
 	</h2>
 
 	<div class="row" id="slider-row">
+		[#assign shown = 0 /]
 		[#if collectionObjectList?? && collectionObjectList?has_content]
 			[#list collectionObjectList as item]
 				[#assign values = (item.values)!{} /]
@@ -11,6 +12,7 @@
 				[#if impactLevel < (configuration.minimumImpactLevel)!0]
 					[#continue]
 				[/#if]
+				[#assign shown = shown + 1 /]
 				<div class="col-md-4 mb-4">
 					<div
 						class="card h-100 shadow-sm border-0 border-top border-brand-primary border-3"
@@ -51,7 +53,8 @@
 					</div>
 				</div>
 			[/#list]
-		[#else]
+		[/#if]
+		[#if shown == 0]
 			<p class="col text-center text-muted">
 				No high-impact initiatives to show yet.
 			</p>

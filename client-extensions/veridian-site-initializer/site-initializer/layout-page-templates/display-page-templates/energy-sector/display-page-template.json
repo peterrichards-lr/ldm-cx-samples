@@ -1,0 +1,7 @@
+{
+	"contentType": {
+		"className": "[$OBJECT_DEFINITION_CLASS_NAME:EnergySector$]"
+	},
+	"defaultTemplate": true,
+	"name": "Energy Sector Display Page"
+}

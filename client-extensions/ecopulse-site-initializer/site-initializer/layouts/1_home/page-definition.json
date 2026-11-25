@@ -40,6 +40,23 @@
 					"fragmentFields": []
 				},
 				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "impact-slider"
+					},
+					"fragmentConfig": {
+						"collection": {
+							"itemType": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+							"key": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+							"title": "Green Initiatives",
+							"type": "com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType"
+						}
+					},
+					"fragmentFields": []
+				},
+				"type": "Fragment"
 			}
 		],
 		"type": "Root"

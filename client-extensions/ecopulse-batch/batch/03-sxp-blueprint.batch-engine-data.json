@@ -1,0 +1,116 @@
+{
+	"configuration": {
+		"className": "com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"configuration": {
+				"queryConfiguration": {
+					"applyIndexerClauses": true,
+					"queryEntries": [
+						{
+							"clauses": [
+								{
+									"context": "query",
+									"occur": "should",
+									"query": {
+										"nested": {
+											"boost": 10,
+											"path": "nestedFieldArray",
+											"query": {
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"nestedFieldArray.fieldName": "impactLevel"
+															}
+														},
+														{
+															"range": {
+																"nestedFieldArray.value_integer": {
+																	"gte": 75
+																}
+															}
+														}
+													]
+												}
+											}
+										}
+									}
+								}
+							],
+							"enabled": true
+						}
+					]
+				}
+			},
+			"description": "Prioritize high-impact green initiatives in search results.",
+			"description_i18n": {
+				"en_US": "Prioritize high-impact green initiatives in search results."
+			},
+			"externalReferenceCode": "ecopulse-gi-finder",
+			"title": "Green Initiative Finder",
+			"title_i18n": {
+				"en_US": "Green Initiative Finder"
+			}
+		},
+		{
+			"configuration": {
+				"queryConfiguration": {
+					"applyIndexerClauses": true,
+					"queryEntries": [
+						{
+							"clauses": [
+								{
+									"context": "query",
+									"occur": "should",
+									"query": {
+										"nested": {
+											"boost": 10,
+											"path": "nestedFieldArray",
+											"query": {
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"nestedFieldArray.fieldName": "impactLevel"
+															}
+														},
+														{
+															"range": {
+																"nestedFieldArray.value_integer": {
+																	"gte": 75
+																}
+															}
+														}
+													]
+												}
+											}
+										}
+									}
+								}
+							],
+							"enabled": true
+						}
+					]
+				}
+			},
+			"description": "Prioritize high-impact green initiatives in search results.",
+			"description_i18n": {
+				"en_US": "Prioritize high-impact green initiatives in search results."
+			},
+			"externalReferenceCode": "veridian-gi-finder",
+			"title": "Green Initiative Finder",
+			"title_i18n": {
+				"en_US": "Green Initiative Finder"
+			}
+		}
+	]
+}

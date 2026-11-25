@@ -1,0 +1,34 @@
+[
+	{
+		"assetTagNames": ["high-impact"],
+		"externalReferenceCode": "veridian-high-impact-initiatives",
+		"title": "High Impact Initiatives",
+		"unicodeProperties": {
+			"classNameIds": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+			"orderBy": [
+				{
+					"key": "orderByColumn1",
+					"value": "modifiedDate"
+				},
+				{
+					"key": "orderByType1",
+					"value": "DESC"
+				}
+			],
+			"query": [
+				{
+					"key": "queryAndOperator0",
+					"value": "true"
+				},
+				{
+					"key": "queryContains0",
+					"value": "true"
+				},
+				{
+					"key": "queryName0",
+					"value": "assetTags"
+				}
+			]
+		}
+	}
+]

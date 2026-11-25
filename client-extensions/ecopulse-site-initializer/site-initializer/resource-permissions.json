@@ -1,0 +1,26 @@
+[
+	{
+		"actionIds": ["VIEW"],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:EnergySector$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": ["VIEW"],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:EnergySector$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": ["VIEW"],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": ["VIEW"],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+		"roleName": "User",
+		"scope": 1
+	}
+]

@@ -135,6 +135,10 @@ for g in json.load(open(sys.argv[1])):
         fail "site ${erc}: /web${friendly}/home did not load"
         return
     fi
+    # FreeMarker that did not run, or a configuration the fragment never declared.
+    if grep -qE '\[configuration\.|\$\{configuration' <<< "$html"; then
+        fail "site ${erc}: unresolved fragment configuration on /web${friendly}/home: $(grep -oE '\[configuration\.[A-Za-z]*\]|\$\{configuration[^}]*\}' <<< "$html" | sort -u | tr '\n' ' ')"
+    fi
     for fragment in "$@"; do
         grep -q "$fragment" <<< "$html" || fail "site ${erc}: fragment ${fragment} not rendered on /web${friendly}/home"
     done
@@ -166,7 +170,7 @@ for g in json.load(open(sys.argv[1])):
         fail "site ${erc}: /web${friendly}/home does not use the ${theme} theme CSS"
         echo "  Stylesheets on /web${friendly}/home:"
         grep -oE '<link[^>]*stylesheet[^>]*>' <<< "$html" | grep -oE 'href="[^"]*"' | sed 's/^/    /' || true
-        echo "  Fragments rendered: $(grep -oE 'eco-hero|initiative-card|grid-monitor' <<< "$html" | sort -u | tr '\n' ' ')"
+        echo "  Fragments rendered: $(grep -oE 'eco-hero|initiative-card|grid-monitor|impact-slider' <<< "$html" | sort -u | tr '\n' ' ')"
         echo "  Home page as Liferay sees it (headless-delivery):"
         curl -sS -u "$AUTH" "${BASE_URL}/o/headless-delivery/v1.0/sites/${group_id}/site-pages/home" |
             python3 -c 'import json,sys
@@ -193,8 +197,172 @@ for e in items:
 if not items: print("    (none)")' || true
     fi
 }
-check_site ecopulse-site ecopulse-brand ecopulse-favicon eco-hero grid-monitor impact-calculator initiative-card
+check_site ecopulse-site ecopulse-brand ecopulse-favicon eco-hero grid-monitor impact-calculator initiative-card impact-slider
 check_site L_GUEST veridian-brand veridian-favicon eco-hero initiative-card
+
+# The impact slider on the EcoPulse home page lists the high-impact initiatives
+# (the GreenInitiative collection provider, filtered by minimum impact).
+slider_state() { python3 -c 'import re,sys
+m = re.search(r"<div class=\"impact-slider.*?</div>\s*</div>\s*$|<div class=\"impact-slider.*", sys.stdin.read(), re.S)
+if not m: print("missing"); sys.exit()
+s = m.group(0)
+print("%d cards" % s.count("card-title") if "card-title" in s else ("empty" if "No high-impact" in s else "broken"))'; }
+slider="$(curl -fsS "${BASE_URL}/web/ecopulse-smart-city/home" | slider_state)" || slider="unreachable"
+if [ "$slider" = "empty" ]; then
+    echo "  impact slider as an administrator: $(curl -fsS -u "$AUTH" "${BASE_URL}/web/ecopulse-smart-city/home" | slider_state)"
+fi
+# Seed data: three initiatives have impact >= 75 (the slider's default minimum).
+case "$slider" in
+    "3 cards") echo "  ✅ impact slider: ${slider}" ;;
+    *) fail "impact slider: ${slider} (expected 3 cards)" ;;
+esac
+
+# 5. Check the content the initializers and ecopulse-batch should have added.
+#    py <path> <python expression over d, the JSON reply> prints the expression,
+#    or the HTTP error, so each check shows what Liferay actually returned.
+py() {
+    local path="$1" expr="$2" body
+    body="$(curl -sS -u "$AUTH" -w '\n%{http_code}' "${BASE_URL}${path}" 2>&1)" || true
+    python3 -c 'import json,sys
+body, code = sys.argv[1].rsplit("\n", 1)
+if code != "200":
+    print("HTTP %s: %s" % (code, body[:300].replace("\n", " "))); sys.exit()
+d = json.loads(body)
+print(eval(sys.argv[2]))' "$body" "$expr"
+}
+# expect <label> <python condition over d> <path> <python expression shown>
+expect() {
+    local label="$1" cond="$2" path="$3" show="$4" ok
+    ok="$(py "$path" "bool(${cond})")"
+    if [ "$ok" = "True" ]; then
+        echo "  ✅ ${label}: $(py "$path" "$show")"
+    else
+        fail "${label}: $(py "$path" "$show")"
+    fi
+}
+
+echo "🔍 Checking objects..."
+for object in ecopulse-energy-sector:energysectors ecopulse-green-initiative:greeninitiatives; do
+    erc="${object%%:*}" rest="${object#*:}"
+    expect "object ${erc}" 'd.get("status", {}).get("label") == "approved"' \
+        "/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}" \
+        '(d.get("name"), d.get("className"), d.get("status"))'
+    expect "entries /o/c/${rest}" 'd.get("totalCount", 0) >= 5' \
+        "/o/c/${rest}?pageSize=50&fields=externalReferenceCode" \
+        '(d.get("totalCount"), [e.get("externalReferenceCode") for e in d.get("items", [])])'
+done
+# Visitors see the objects through the custom elements and display pages.
+for rest in energysectors greeninitiatives; do
+    if guest="$(curl -fsS "${BASE_URL}/o/c/${rest}?pageSize=1")" &&
+        [ "$(python3 -c 'import json,sys; print(json.loads(sys.argv[1]).get("totalCount", 0))' "$guest")" -ge 1 ]; then
+        echo "  ✅ guest can read /o/c/${rest}"
+    else
+        fail "guest cannot read /o/c/${rest}: ${guest:0:200}"
+    fi
+done
+expect "workflow definition Machine Approver" 'any(e.get("name") == "Machine Approver" for e in d.get("items", []))' \
+    "/o/headless-admin-workflow/v1.0/workflow-definitions?pageSize=50" \
+    '[e.get("name") for e in d.get("items", [])]'
+expect "high-impact initiatives tagged" 'len([e for e in d.get("items", []) if "high-impact" in (e.get("keywords") or [])]) >= 1' \
+    "/o/c/greeninitiatives?pageSize=50" \
+    '[(e.get("externalReferenceCode"), e.get("impactLevel"), e.get("keywords")) for e in d.get("items", [])]'
+
+# check_content <site ERC> <navigation menu name>
+check_content() {
+    local erc="$1" menu="$2" group_id
+    group_id="$(python3 -c 'import json,sys
+for g in json.load(open(sys.argv[1])):
+    if g["externalReferenceCode"] == sys.argv[2]: print(g["groupId"])' "$GROUPS_JSON" "$erc")"
+    [ -n "$group_id" ] || return 0
+    echo "🔍 Checking ${erc} content..."
+    expect "${erc} navigation menu '${menu}'" \
+        "any(m.get('name') == '${menu}' and m.get('navigationMenuItems') for m in d.get('items', []))" \
+        "/o/headless-admin-site/v1.0/sites/${erc}/navigation-menus?pageSize=50" \
+        '[(m.get("name"), [i.get("name") for i in m.get("navigationMenuItems") or []]) for m in d.get("items", [])]'
+    expect "${erc} display page template" \
+        'any("Energy Sector" in (t.get("name") or "") for t in d.get("items", []))' \
+        "/o/headless-admin-site/v1.0/sites/${erc}/display-page-templates?pageSize=50" \
+        '[(t.get("name"), (t.get("contentTypeReference") or {}).get("className")) for t in d.get("items", [])]'
+    # The list exists once the initializer ran; it only returns entries once its
+    # scope includes the Global site, which an initializer cannot set.
+    expect "${erc} asset list high-impact-initiatives" '"totalCount" in d' \
+        "/o/headless-delivery/v1.0/sites/${group_id}/content-sets/by-key/high-impact-initiatives/content-set-elements?pageSize=50" \
+        '(d.get("totalCount"), [e.get("title") for e in d.get("items", [])])'
+    expect "${erc} news articles" \
+        'd.get("totalCount", 0) >= 7 and "[$" not in json.dumps(d)' \
+        "/o/headless-delivery/v1.0/sites/${group_id}/structured-contents?pageSize=50&fields=title,contentFields" \
+        '(d.get("totalCount"), sorted(set(__import__("re").findall(r"\[\$[A-Z_]+:[^$]*\$\]", json.dumps(d)))))'
+}
+check_content ecopulse-site "Main Navigation"
+check_content L_GUEST "Veridian Main Navigation"
+
+echo "🔍 Checking search blueprints..."
+expect "search blueprints" \
+    'all(any(b.get("externalReferenceCode") == e for b in d.get("items", [])) for e in ("ecopulse-gi-finder", "veridian-gi-finder"))' \
+    "/o/search-experiences-rest/v1.0/sxp-blueprints?pageSize=50" \
+    '[(b.get("externalReferenceCode"), b.get("title")) for b in d.get("items", [])]'
+
+# Every initiative is linked to its energy sector.
+check_links() {
+    expect "initiatives linked to sectors$1" \
+        'd.get("totalCount") == 5 and all((e.get("r_targetEnergySector_c_energySectorId") or 0) > 0 for e in d.get("items", []))' \
+        "/o/c/greeninitiatives?pageSize=50" \
+        '[(e.get("externalReferenceCode"), e.get("r_targetEnergySector_c_energySectorERC")) for e in d.get("items", [])]'
+}
+check_links ""
+
+# The Energy Sector display page renders a sector for a visitor, on both sites.
+echo "🔍 Checking display pages..."
+sector_id="$(py "/o/c/energysectors/by-external-reference-code/N-1" 'd.get("id")')"
+separator="$(py "/o/object-admin/v1.0/object-definitions/by-external-reference-code/ecopulse-energy-sector" 'd.get("friendlyURLSeparator")')"
+for site in ecopulse-smart-city guest; do
+    url="${BASE_URL}/web/${site}/${separator}/${sector_id}"
+    page_file="${WORK_DIR}/display-page.html"
+    code="$(curl -sSL -o "$page_file" -w '%{http_code} %{url_effective}' "$url" || true)"
+    final_url="${code#* }"
+    code="${code%% *}"
+    if [ "$code" = "200" ] && grep -q "energy-sector-details" "$page_file" &&
+        grep -q "Veridian North" "$page_file" && grep -qE '>\s*64\s*<' "$page_file"; then
+        echo "  ✅ display page /web/${site}/${separator}/${sector_id} shows Veridian North"
+    else
+        fail "display page ${url} did not render sector N-1 (Veridian North, load 64): HTTP ${code} at ${final_url}"
+        echo "    title: $(grep -o '<title>[^<]*' "$page_file" | head -1)"
+        echo "    markers: energy-sector-details=$(grep -c energy-sector-details "$page_file") eco-hero=$(grep -c eco-hero "$page_file") 'Veridian North'=$(grep -c 'Veridian North' "$page_file")"
+        grep -oE '<[^>]*data-lfr-editable-id="(sector-name|current-load|status)"[^>]*>[^<]*' "$page_file" | head -5 | sed 's/^/    /' || true
+    fi
+done
+
+# Re-importing ecopulse-batch (a redeploy, or a new release on an existing
+# project) updates the object definitions; it must not drop the relationship.
+echo "🔍 Redeploying ecopulse-batch..."
+batch_zip="$(find "$SAMPLES_ROOT" -name 'ecopulse-batch*.zip' | head -1)"
+before="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"
+# A byte-identical zip is ignored, so add a zip comment: same contents, new file.
+redeploy_zip="${WORK_DIR}/ecopulse-batch.zip"
+if [ -n "$batch_zip" ] && cp "$batch_zip" "$redeploy_zip" &&
+    python3 -c 'import sys,zipfile
+with zipfile.ZipFile(sys.argv[1], "a") as z: z.comment = b"e2e-boot redeploy"' "$redeploy_zip" &&
+    installed_zip="$(find "${PROJECT_DIR}/osgi" -name 'ecopulse-batch*.zip' 2>/dev/null | head -1)" &&
+    [ -n "$installed_zip" ] &&
+    # Replace the installed zip on the host side, as LDM deploys: Liferay's
+    # auto-deploy cannot overwrite it inside the container.
+    { cp "$redeploy_zip" "$installed_zip" 2>/dev/null || sudo -n cp "$redeploy_zip" "$installed_zip"; }; then
+    for _ in $(seq 1 36); do
+        sleep 5
+        after="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"
+        [ "$after" -ge $((before + 3)) ] && break
+    done
+    if [ "${after:-0}" -ge $((before + 3)) ]; then
+        echo "  ecopulse-batch re-imported ($((after - before)) import tasks)"
+        check_links " after re-import"
+    else
+        fail "ecopulse-batch was not re-imported after a redeploy ($((${after:-0} - before)) of 3 import tasks)"
+        echo "    Liferay log since the redeploy:"
+        docker logs --since 4m "$PROJECT_ID" 2>&1 | grep -iE 'ecopulse|batch|deploy|client.?extension' | tail -25 | cut -c1-260 | sed 's/^/    /' || true
+    fi
+else
+    fail "could not redeploy ecopulse-batch (package zip: ${batch_zip:-none}; installed: ${installed_zip:-none})"
+fi
 
 if [ "$FAILED" -ne 0 ]; then
     echo "❌ Boot E2E failed."

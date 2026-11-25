@@ -342,7 +342,11 @@ redeploy_zip="${WORK_DIR}/ecopulse-batch.zip"
 if [ -n "$batch_zip" ] && cp "$batch_zip" "$redeploy_zip" &&
     python3 -c 'import sys,zipfile
 with zipfile.ZipFile(sys.argv[1], "a") as z: z.comment = b"e2e-boot redeploy"' "$redeploy_zip" &&
-    docker cp "$redeploy_zip" "${PROJECT_ID}:/opt/liferay/deploy/ecopulse-batch.zip"; then
+    installed_zip="$(find "${PROJECT_DIR}/osgi" -name 'ecopulse-batch*.zip' 2>/dev/null | head -1)" &&
+    [ -n "$installed_zip" ] &&
+    # Replace the installed zip on the host side, as LDM deploys: Liferay's
+    # auto-deploy cannot overwrite it inside the container.
+    { cp "$redeploy_zip" "$installed_zip" 2>/dev/null || sudo -n cp "$redeploy_zip" "$installed_zip"; }; then
     for _ in $(seq 1 36); do
         sleep 5
         after="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"
@@ -357,7 +361,7 @@ with zipfile.ZipFile(sys.argv[1], "a") as z: z.comment = b"e2e-boot redeploy"' "
         docker logs --since 4m "$PROJECT_ID" 2>&1 | grep -iE 'ecopulse|batch|deploy|client.?extension' | tail -25 | cut -c1-260 | sed 's/^/    /' || true
     fi
 else
-    fail "could not redeploy ecopulse-batch (${batch_zip:-zip not found})"
+    fail "could not redeploy ecopulse-batch (package zip: ${batch_zip:-none}; installed: ${installed_zip:-none})"
 fi
 
 if [ "$FAILED" -ne 0 ]; then

@@ -317,11 +317,16 @@ sector_id="$(py "/o/c/energysectors/by-external-reference-code/N-1" 'd.get("id")
 separator="$(py "/o/object-admin/v1.0/object-definitions/by-external-reference-code/ecopulse-energy-sector" 'd.get("friendlyURLSeparator")')"
 for site in ecopulse-smart-city guest; do
     url="${BASE_URL}/web/${site}/${separator}/${sector_id}"
-    if page="$(curl -fsS "$url")" && grep -q "energy-sector-details" <<< "$page" &&
-        grep -q "Veridian North" <<< "$page" && grep -q ">64<" <<< "$page"; then
+    page_file="${WORK_DIR}/display-page.html"
+    code="$(curl -sS -o "$page_file" -w '%{http_code}' "$url" || true)"
+    if [ "$code" = "200" ] && grep -q "energy-sector-details" "$page_file" &&
+        grep -q "Veridian North" "$page_file" && grep -qE '>\s*64\s*<' "$page_file"; then
         echo "  ✅ display page /web/${site}/${separator}/${sector_id} shows Veridian North"
     else
-        fail "display page ${url} did not render sector N-1 (Veridian North, load 64)"
+        fail "display page ${url} did not render sector N-1 (Veridian North, load 64): HTTP ${code}"
+        echo "    title: $(grep -o '<title>[^<]*' "$page_file" | head -1)"
+        echo "    markers: energy-sector-details=$(grep -c energy-sector-details "$page_file") eco-hero=$(grep -c eco-hero "$page_file") 'Veridian North'=$(grep -c 'Veridian North' "$page_file")"
+        grep -oE '<[^>]*data-lfr-editable-id="(sector-name|current-load|status)"[^>]*>[^<]*' "$page_file" | head -5 | sed 's/^/    /' || true
     fi
 done
 
@@ -330,7 +335,12 @@ done
 echo "🔍 Redeploying ecopulse-batch..."
 batch_zip="$(find "$SAMPLES_ROOT" -name 'ecopulse-batch*.zip' | head -1)"
 before="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"
-if [ -n "$batch_zip" ] && docker cp "$batch_zip" "${PROJECT_ID}:/opt/liferay/deploy/ecopulse-batch.zip"; then
+# A byte-identical zip is ignored, so add a zip comment: same contents, new file.
+redeploy_zip="${WORK_DIR}/ecopulse-batch.zip"
+if [ -n "$batch_zip" ] && cp "$batch_zip" "$redeploy_zip" &&
+    python3 -c 'import sys,zipfile
+with zipfile.ZipFile(sys.argv[1], "a") as z: z.comment = b"e2e-boot redeploy"' "$redeploy_zip" &&
+    docker cp "$redeploy_zip" "${PROJECT_ID}:/opt/liferay/deploy/ecopulse-batch.zip"; then
     for _ in $(seq 1 36); do
         sleep 5
         after="$(docker logs "$PROJECT_ID" 2>&1 | grep -c 'Finished batch engine import task' || true)"

@@ -28,7 +28,8 @@ HOST_NAME="${LDM_HOST_NAME:-sample.local}"
 BASE_URL="${LIFERAY_URL:-http://${HOST_NAME}:8080}"
 AUTH="${LIFERAY_USER:-test@liferay.com}:${LIFERAY_PASSWORD:-test}"
 WORK_DIR="$(mktemp -d)"
-DIAG_DIR="${LDM_DIAG_DIR:-${WORK_DIR}/diagnostics}"
+# Outside WORK_DIR, which is deleted on exit.
+DIAG_DIR="${LDM_DIAG_DIR:-$(dirname "$WORK_DIR")/ldm-boot-diagnostics-$$}"
 
 FAILED=0
 fail() {
@@ -47,9 +48,7 @@ if ! getent hosts "$HOST_NAME" >/dev/null 2>&1 && ! ping -c1 -t1 "$HOST_NAME" >/
     exit 1
 fi
 
-if ! command -v ldm >/dev/null 2>&1 || [ "${LDM_FORCE_INSTALL:-}" = "1" ]; then
-    install_ldm "${WORK_DIR}/bin"
-fi
+ensure_ldm "${WORK_DIR}/bin"
 echo "🚀 Boot E2E for LDM Samples (LDM ${LDM_VERSION})"
 
 # 1. The package.
@@ -84,6 +83,9 @@ cleanup() {
         tail -n 150 "${DIAG_DIR}/liferay.log" || true
     fi
     ldm down "$PROJECT_ID" --non-interactive || true
+    # Never leave the activation key (or the throwaway project) behind.
+    rm -f "${PROJECT_DIR}/deploy/activation-key.xml"
+    rm -rf "$WORK_DIR" 2>/dev/null || echo "⚠️ Could not fully remove ${WORK_DIR}"
     return "$status"
 }
 trap cleanup EXIT

@@ -8,6 +8,15 @@ on:
   pull_request:
     types: [labeled, synchronize]
 
+# The job runs the PR's own code next to the activation key: keep the token
+# read-only. A new push or label cancels the previous 45-minute run.
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-boot-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   boot:
     name: Boot Liferay from the samples package

@@ -25,21 +25,24 @@ Cut a release only with the maintainer's agreement.
 
 3. The tag push triggers the workflow:
     - **Build**: `./gradlew clean build` compiles every client extension.
-    - **Package**: `scripts/package-ldmp.sh` stages the compiled client-extension ZIPs, fragments, OSGi configs and a generated `meta` manifest, then tars them into `ldm-cx-samples.ldmp` with a `.sha256` sidecar.
+    - **Package**: `tools/build-ldmp.sh` installs the LDM release pinned in `tools/lib/ldm.sh` (the verified release binary, not pip), links the built workspace into an LDM project with `ldm link --no-run`, then runs `ldm package --stateless`. Liferay is never started, so no licence is involved, and Liferay's auto-deploy can't empty `deploy/` before packaging. The result is an assets-only package (`package_kind: stateless`, LDM-#2493) that LDM deploys onto a vanilla instance, with the site initializers held in `.ldm/deferred-client-extensions/` until Liferay is healthy.
+    - **Check**: `tools/check-ldmp.sh` checks the package statically (layout, `meta`, required assets, and no licence, runtime state or `scripts/` tree) and stops the release if anything is wrong, even on a tag pushed on a commit E2E never ran on.
     - **Publish**: `softprops/action-gh-release` creates a GitHub Release on the tag and uploads `ldm-cx-samples.ldmp` and `ldm-cx-samples.ldmp.sha256` as release assets.
 
 ### Re-attaching a package to an existing tag
 
-Run the workflow manually (`workflow_dispatch`) with the required `release_tag` input. This checks out that tag, rebuilds the `.ldmp` and re-uploads it to the tag's release. Use it to fix a bad package without minting a new version.
+Run the workflow manually (`workflow_dispatch`) with the required `release_tag` input. This checks out that tag, rebuilds the `.ldmp` and re-uploads it to the tag's release. Use it to fix a bad package without minting a new version. It only works for tags from v1.4.0 on: older tags have no `tools/build-ldmp.sh`, and the workflow stops with an error. To fix an older release, cut a new one.
 
 ### If you're touching this pipeline
 
-- `scripts/run-e2e.sh` runs the same `package-ldmp.sh` against a pinned LDM release (`LDM_VERSION`, default set in the script), to catch packaging regressions before they reach a release. Its Liferay tag comes from `liferay.workspace.product` in `gradle.properties`. CI also runs it weekly. When LDM releases a version this repo should support, bump `LDM_VERSION` in its own PR. Run it (or rely on CI's `E2E Tests` workflow) before changing `package-ldmp.sh`'s staging logic. It uses Docker, so ask the maintainer before running it locally.
+- `tools/run-e2e.sh` builds the package with the same `build-ldmp.sh`, checks it with `tools/check-ldmp.sh` (top-level `files.tar.gz` and `meta`, the fragment zips and `.ldm/fragment-overrides.json`, no runtime state or licence; the release job runs the same check), then seeds a project with `ldm init --samples` (via `LDM_SAMPLES_PATH`). CI runs it on every PR and weekly. The seeding step uses Docker, so ask the maintainer before running it locally.
+- `tools/run-e2e-boot.sh` goes further: it boots Liferay from the package as `ldm run --samples` would, waits for LDM to deploy the site initializers, and checks that the EcoPulse site and the Veridian-themed Guest site have their pages and theme. It needs the `LIFERAY_ACTIVATION_KEY_XML` secret (staged into the throwaway project only, never packaged). The `E2E Boot Test` workflow runs it on demand: manually, or on a PR labelled `e2e-boot`. Run it before any release that changes the site initializers or the LDM pin. Locally it takes over the shared Docker daemon, so ask first; `LDMP=<file>` boots an existing package.
+- The LDM pin (`LDM_VERSION`) lives in `tools/lib/ldm.sh` and is shared by the scripts. They use an `ldm` already on PATH only if it is that exact version; otherwise they install the pin. The boot test deletes its throwaway project, including the staged key, on exit. When LDM releases a version this repo should support, bump it in its own PR.
 - The `.ldmp` and `.ldmp.sha256` files are build output. Never commit them; they're only ever published as release assets.
-- The plan is to replace `package-ldmp.sh` with `ldm package --stateless` once LDM supports it (#17, LDM #2493). Until then, keep the current package layout: LDM v2.26.x reads a top-level `files.tar.gz`.
+- Keep a top-level `files.tar.gz` in the package: LDM v2.26.x reads only that member.
 
 <!-- markdownlint-disable MD049 -->
 
 ---
 
-_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_
+_Last Updated: 2026-11-25_ | _Last Reviewed: 2026-11-25_

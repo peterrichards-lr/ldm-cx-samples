@@ -7,6 +7,7 @@
 - **What**: the EcoPulse "Smart City" and City of Veridian sample assets (client extensions, fragments, site initializers) bundled with [Liferay Docker Manager (LDM)](https://github.com/peterrichards-lr/liferay-docker-manager).
 - **Consumers**: LDM downloads this repo's `releases/latest/download/ldm-cx-samples.ldmp` for `ldm run --samples`, so every release reaches LDM users. See the Release Management skill before tagging.
 - **Stack**: Liferay Workspace (`gradle.properties` → `liferay.workspace.product`), built with `blade gw build`.
+- **Repo tooling lives in `tools/`, never `scripts/`**: LDM copies a workspace's `scripts/` into the project, Liferay runs every script there before the portal starts, and `ldm package` ships it to every user.
 
 ## Liferay workspace fundamentals (always apply)
 
@@ -110,4 +111,4 @@ After implementing any code change, the agent MUST review the project documentat
 
 ---
 
-_Last Updated: 2026-11-23_ | _Last Reviewed: 2026-11-23_
+_Last Updated: 2026-11-24_ | _Last Reviewed: 2026-11-24_

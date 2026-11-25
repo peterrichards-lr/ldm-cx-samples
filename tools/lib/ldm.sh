@@ -5,7 +5,7 @@
 # The LDM release that builds and tests the .ldmp. Bump it deliberately, as a
 # reviewed change, so an LDM regression can't silently break this repo.
 # Override for a one-off run with: LDM_VERSION=v2.27.0 ./tools/run-e2e.sh
-LDM_VERSION="${LDM_VERSION:-v2.26.16-pre.2}"
+LDM_VERSION="${LDM_VERSION:-v2.26.16}"
 LDM_REPO="peterrichards-lr/liferay-docker-manager"
 
 # Installs the pinned LDM release binary into $1 (default ./.ldm-bin) and puts

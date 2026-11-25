@@ -318,12 +318,14 @@ separator="$(py "/o/object-admin/v1.0/object-definitions/by-external-reference-c
 for site in ecopulse-smart-city guest; do
     url="${BASE_URL}/web/${site}/${separator}/${sector_id}"
     page_file="${WORK_DIR}/display-page.html"
-    code="$(curl -sS -o "$page_file" -w '%{http_code}' "$url" || true)"
+    code="$(curl -sSL -o "$page_file" -w '%{http_code} %{url_effective}' "$url" || true)"
+    final_url="${code#* }"
+    code="${code%% *}"
     if [ "$code" = "200" ] && grep -q "energy-sector-details" "$page_file" &&
         grep -q "Veridian North" "$page_file" && grep -qE '>\s*64\s*<' "$page_file"; then
         echo "  ✅ display page /web/${site}/${separator}/${sector_id} shows Veridian North"
     else
-        fail "display page ${url} did not render sector N-1 (Veridian North, load 64): HTTP ${code}"
+        fail "display page ${url} did not render sector N-1 (Veridian North, load 64): HTTP ${code} at ${final_url}"
         echo "    title: $(grep -o '<title>[^<]*' "$page_file" | head -1)"
         echo "    markers: energy-sector-details=$(grep -c energy-sector-details "$page_file") eco-hero=$(grep -c eco-hero "$page_file") 'Veridian North'=$(grep -c 'Veridian North' "$page_file")"
         grep -oE '<[^>]*data-lfr-editable-id="(sector-name|current-load|status)"[^>]*>[^<]*' "$page_file" | head -5 | sed 's/^/    /' || true
@@ -351,6 +353,8 @@ with zipfile.ZipFile(sys.argv[1], "a") as z: z.comment = b"e2e-boot redeploy"' "
         check_links " after re-import"
     else
         fail "ecopulse-batch was not re-imported after a redeploy ($((${after:-0} - before)) of 3 import tasks)"
+        echo "    Liferay log since the redeploy:"
+        docker logs --since 4m "$PROJECT_ID" 2>&1 | grep -iE 'ecopulse|batch|deploy|client.?extension' | tail -25 | cut -c1-260 | sed 's/^/    /' || true
     fi
 else
     fail "could not redeploy ecopulse-batch (${batch_zip:-zip not found})"

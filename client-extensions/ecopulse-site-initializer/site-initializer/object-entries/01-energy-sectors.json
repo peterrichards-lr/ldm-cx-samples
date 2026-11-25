@@ -1,0 +1,35 @@
+{
+	"objectDefinitionName": "EnergySector",
+	"object-entries": [
+		{
+			"externalReferenceCode": "N-1",
+			"sectorName": "Veridian North",
+			"operationalStatus": "operational",
+			"load": 64
+		},
+		{
+			"externalReferenceCode": "E-2",
+			"sectorName": "East Harbor",
+			"operationalStatus": "maintenance",
+			"load": 12
+		},
+		{
+			"externalReferenceCode": "S-3",
+			"sectorName": "Industrial South",
+			"operationalStatus": "operational",
+			"load": 88
+		},
+		{
+			"externalReferenceCode": "W-4",
+			"sectorName": "West Residential",
+			"operationalStatus": "warning",
+			"load": 92
+		},
+		{
+			"externalReferenceCode": "C-0",
+			"sectorName": "City Center",
+			"operationalStatus": "operational",
+			"load": 45
+		}
+	]
+}

@@ -3,5 +3,6 @@ veridian-brand:
     type: themeCSS
     clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css
+    frontendTokenDefinitionJSON: src/frontend-token-definition.json
     mainRTLURL: css/main_rtl.css
     mainURL: css/main.css

@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: 'Existing Git tag to rebuild and re-attach the .ldmp to (e.g. v1.3.4)'
+        description: 'Existing Git tag (v1.4.0 or later) to rebuild and re-attach the .ldmp to'
         required: true
         type: string
 
@@ -51,7 +51,16 @@ jobs:
       # Builds with `ldm package --stateless` on the LDM release pinned in
       # tools/lib/ldm.sh. Liferay is never started, so no licence is needed.
       - name: Build LDM Package
-        run: ./tools/build-ldmp.sh
+        run: |
+          if [ ! -x tools/build-ldmp.sh ]; then
+            echo "::error::This tag predates tools/build-ldmp.sh (added in v1.4.0); its package can't be rebuilt by this workflow. Cut a new release instead."
+            exit 1
+          fi
+          ./tools/build-ldmp.sh
+
+      # Every release is checked, even a tag pushed on a commit E2E never ran on.
+      - name: Check LDM Package
+        run: ./tools/check-ldmp.sh ldm-cx-samples.ldmp
 
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2

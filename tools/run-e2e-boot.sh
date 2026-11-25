@@ -245,6 +245,10 @@ for g in json.load(open(sys.argv[1])):
     expect "${erc} asset list high-impact-initiatives" '"totalCount" in d' \
         "/o/headless-delivery/v1.0/sites/${group_id}/content-sets/by-key/high-impact-initiatives/content-set-elements?pageSize=50" \
         '(d.get("totalCount"), [e.get("title") for e in d.get("items", [])])'
+    expect "${erc} news articles" \
+        'd.get("totalCount", 0) >= 7 and "[$" not in json.dumps(d)' \
+        "/o/headless-delivery/v1.0/sites/${group_id}/structured-contents?pageSize=50&fields=title,contentFields" \
+        '(d.get("totalCount"), sorted(set(__import__("re").findall(r"\[\$[A-Z_]+:[^$]*\$\]", json.dumps(d)))))'
 }
 check_content ecopulse-site "Main Navigation"
 check_content L_GUEST "Veridian Main Navigation"

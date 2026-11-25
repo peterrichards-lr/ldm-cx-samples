@@ -173,11 +173,15 @@ check_site L_GUEST veridian-brand
 
 # The impact slider on the EcoPulse home page lists the high-impact initiatives
 # (the GreenInitiative collection provider, filtered by minimum impact).
-slider="$(curl -fsS "${BASE_URL}/web/ecopulse-smart-city/home" | python3 -c 'import re,sys
+slider_state() { python3 -c 'import re,sys
 m = re.search(r"<div class=\"impact-slider.*?</div>\s*</div>\s*$|<div class=\"impact-slider.*", sys.stdin.read(), re.S)
 if not m: print("missing"); sys.exit()
 s = m.group(0)
-print("%d cards" % s.count("card-title") if "card-title" in s else ("empty" if "No high-impact" in s else "broken"))')" || slider="unreachable"
+print("%d cards" % s.count("card-title") if "card-title" in s else ("empty" if "No high-impact" in s else "broken"))'; }
+slider="$(curl -fsS "${BASE_URL}/web/ecopulse-smart-city/home" | slider_state)" || slider="unreachable"
+if [ "$slider" = "empty" ]; then
+    echo "  impact slider as an administrator: $(curl -fsS -u "$AUTH" "${BASE_URL}/web/ecopulse-smart-city/home" | slider_state)"
+fi
 case "$slider" in
     *cards) echo "  ✅ impact slider: ${slider}" ;;
     *) fail "impact slider: ${slider}" ;;
@@ -216,6 +220,15 @@ for object in ecopulse-energy-sector:energysectors ecopulse-green-initiative:gre
     expect "entries /o/c/${rest}" 'd.get("totalCount", 0) >= 5' \
         "/o/c/${rest}?pageSize=50&fields=externalReferenceCode" \
         '(d.get("totalCount"), [e.get("externalReferenceCode") for e in d.get("items", [])])'
+done
+# Visitors see the objects through the custom elements and display pages.
+for rest in energysectors greeninitiatives; do
+    if guest="$(curl -fsS "${BASE_URL}/o/c/${rest}?pageSize=1")" &&
+        [ "$(python3 -c 'import json,sys; print(json.loads(sys.argv[1]).get("totalCount", 0))' "$guest")" -ge 1 ]; then
+        echo "  ✅ guest can read /o/c/${rest}"
+    else
+        fail "guest cannot read /o/c/${rest}: ${guest:0:200}"
+    fi
 done
 expect "workflow definition Machine Approver" 'any(e.get("name") == "Machine Approver" for e in d.get("items", []))' \
     "/o/headless-admin-workflow/v1.0/workflow-definitions?pageSize=50" \

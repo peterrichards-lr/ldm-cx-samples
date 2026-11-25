@@ -1,0 +1,38 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "High Impact Initiatives",
+					"label": "Title",
+					"name": "title",
+					"type": "text"
+				},
+				{
+					"defaultValue": {
+						"externalReferenceCode": "ecopulse-high-impact-initiatives",
+						"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+					},
+					"label": "Initiatives",
+					"name": "collection",
+					"type": "collectionSelector"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "75",
+					"label": "Minimum Impact Level",
+					"name": "minimumImpactLevel",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"max": 100,
+							"min": 0,
+							"type": "number"
+						}
+					}
+				}
+			]
+		}
+	]
+}

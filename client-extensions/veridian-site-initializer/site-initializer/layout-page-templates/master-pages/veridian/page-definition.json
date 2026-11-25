@@ -1,0 +1,33 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": []
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"favIcon": {
+			"externalReferenceCode": "LXC:veridian-favicon",
+			"name": "Veridian Civic Favicon"
+		},
+		"themeCSSClientExtension": {
+			"externalReferenceCode": "LXC:veridian-brand",
+			"name": "Veridian Civic Brand Theme"
+		},
+		"themeSpritemapClientExtension": {
+			"externalReferenceCode": "LXC:ecopulse-spritemap",
+			"name": "EcoPulse Spritemap"
+		},
+		"styleBook": {
+			"key": "veridian-style-book"
+		}
+	},
+	"version": 1.1
+}

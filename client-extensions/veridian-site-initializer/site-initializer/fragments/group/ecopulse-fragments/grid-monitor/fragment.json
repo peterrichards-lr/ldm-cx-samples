@@ -1,7 +1,8 @@
 {
+	"configurationPath": "configuration.json",
 	"cssPath": "index.css",
+	"externalReferenceCode": "grid-monitor",
 	"htmlPath": "index.html",
 	"name": "Grid Monitor",
-	"externalReferenceCode": "grid-monitor",
 	"type": "component"
 }

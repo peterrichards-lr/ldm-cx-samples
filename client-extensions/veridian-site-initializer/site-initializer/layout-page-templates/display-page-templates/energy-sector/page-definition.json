@@ -1,0 +1,113 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "eco-hero"
+					},
+					"fragmentConfig": {},
+					"fragmentFields": [
+						{
+							"id": "title",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_sectorName",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						}
+					]
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "energy-sector-details"
+					},
+					"fragmentConfig": {},
+					"fragmentFields": [
+						{
+							"id": "sector-name",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_sectorName",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "sector-name-inline",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_sectorName",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "status",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_operationalStatus",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "current-load",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_load",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "current-load-indicator",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_load",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						}
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "veridian"
+		}
+	},
+	"version": 1.1
+}

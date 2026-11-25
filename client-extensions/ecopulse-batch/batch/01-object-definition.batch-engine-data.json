@@ -1,0 +1,188 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "ecopulse-green-initiative",
+			"label": {
+				"de_DE": "Grüne Initiative",
+				"en_US": "Green Initiative",
+				"es_ES": "Iniciativa Verde",
+				"fr_FR": "Initiative Verte"
+			},
+			"name": "GreenInitiative",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "gi-title",
+					"indexed": true,
+					"label": {
+						"de_DE": "Titel",
+						"en_US": "Title",
+						"es_ES": "Título",
+						"fr_FR": "Titre"
+					},
+					"name": "title",
+					"required": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "LongText",
+					"externalReferenceCode": "gi-description",
+					"indexed": false,
+					"label": {
+						"de_DE": "Beschreibung",
+						"en_US": "Description",
+						"es_ES": "Descripción",
+						"fr_FR": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "gi-impact-level",
+					"indexed": true,
+					"label": {
+						"de_DE": "Einfluss-Level",
+						"en_US": "Impact Level",
+						"es_ES": "Nivel de Impacto",
+						"fr_FR": "Niveau d'Impact"
+					},
+					"name": "impactLevel",
+					"required": false,
+					"system": false,
+					"type": "Integer"
+				}
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"de_DE": "Grüne Initiativen",
+				"en_US": "Green Initiatives",
+				"es_ES": "Iniciativas Verdes",
+				"fr_FR": "Initiatives Vertes"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/greeninitiatives",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "title"
+		},
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "ecopulse-energy-sector",
+			"label": {
+				"de_DE": "Energiesektor",
+				"en_US": "Energy Sector",
+				"es_ES": "Sector de Energía",
+				"fr_FR": "Secteur Énergétique"
+			},
+			"name": "EnergySector",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ecopulse-es-name",
+					"indexed": true,
+					"label": {
+						"de_DE": "Sektor-Name",
+						"en_US": "Sector Name",
+						"es_ES": "Nombre del Sector",
+						"fr_FR": "Nom du Secteur"
+					},
+					"name": "sectorName",
+					"required": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ecopulse-es-operational-status",
+					"indexed": true,
+					"label": {
+						"de_DE": "Betriebsstatus",
+						"en_US": "Operational Status",
+						"es_ES": "Estado Operativo",
+						"fr_FR": "État Opérationnel"
+					},
+					"name": "operationalStatus",
+					"required": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "ecopulse-es-load",
+					"indexed": true,
+					"label": {
+						"de_DE": "Aktuelle Last",
+						"en_US": "Current Load",
+						"es_ES": "Carga Actual",
+						"fr_FR": "Charge Actuelle"
+					},
+					"name": "load",
+					"required": false,
+					"system": false,
+					"type": "Integer"
+				}
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"de_DE": "Energiesektoren",
+				"en_US": "Energy Sectors",
+				"es_ES": "Sectores de Energía",
+				"fr_FR": "Secteurs Énergétiques"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/energysectors",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "sectorName",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "gi-to-energy-sector",
+					"label": {
+						"en_US": "Target Energy Sector"
+					},
+					"name": "targetEnergySector",
+					"type": "oneToMany",
+					"objectDefinitionExternalReferenceCode2": "ecopulse-green-initiative"
+				}
+			]
+		}
+	]
+}

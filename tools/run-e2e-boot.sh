@@ -171,7 +171,8 @@ if not items: print("    (none)")' || true
 check_site ecopulse-site ecopulse-brand
 check_site L_GUEST veridian-brand
 
-# The impact slider renders the High Impact Initiatives asset list.
+# The impact slider on the EcoPulse home page lists the high-impact initiatives
+# (the GreenInitiative collection provider, filtered by minimum impact).
 slider="$(curl -fsS "${BASE_URL}/web/ecopulse-smart-city/home" | python3 -c 'import re,sys
 m = re.search(r"<div class=\"impact-slider.*?</div>\s*</div>\s*$|<div class=\"impact-slider.*", sys.stdin.read(), re.S)
 if not m: print("missing"); sys.exit()
@@ -179,7 +180,6 @@ s = m.group(0)
 print("%d cards" % s.count("card-title") if "card-title" in s else ("empty" if "No high-impact" in s else "broken"))')" || slider="unreachable"
 case "$slider" in
     *cards) echo "  ✅ impact slider: ${slider}" ;;
-    empty) echo "  ⚠️ impact slider renders but the asset list is empty" ;;
     *) fail "impact slider: ${slider}" ;;
 esac
 

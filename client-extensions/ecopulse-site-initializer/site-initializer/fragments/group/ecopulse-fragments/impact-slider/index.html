@@ -8,6 +8,9 @@
 			[#list collectionObjectList as item]
 				[#assign values = (item.values)!{} /]
 				[#assign impactLevel = (values.impactLevel)!0 /]
+				[#if impactLevel < (configuration.minimumImpactLevel)!0]
+					[#continue]
+				[/#if]
 				<div class="col-md-4 mb-4">
 					<div
 						class="card h-100 shadow-sm border-0 border-top border-brand-primary border-3"

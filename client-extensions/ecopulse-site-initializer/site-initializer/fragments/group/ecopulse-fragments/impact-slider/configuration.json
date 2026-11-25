@@ -17,6 +17,20 @@
 					"label": "Initiatives",
 					"name": "collection",
 					"type": "collectionSelector"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "75",
+					"label": "Minimum Impact Level",
+					"name": "minimumImpactLevel",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"max": 100,
+							"min": 0,
+							"type": "number"
+						}
+					}
 				}
 			]
 		}

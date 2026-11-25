@@ -46,7 +46,14 @@
 					"fragment": {
 						"key": "impact-slider"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+						"collection": {
+							"itemType": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+							"key": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
+							"title": "Green Initiatives",
+							"type": "com.liferay.item.selector.criteria.InfoListProviderItemSelectorReturnType"
+						}
+					},
 					"fragmentFields": []
 				},
 				"type": "Fragment"

@@ -1,15 +1,28 @@
-{
-	"name": "Veridian Main Navigation",
-	"navigationMenuItems": [
-		{
-			"label": "Home",
-			"type": "URL",
-			"url": "/"
-		},
-		{
-			"label": "Liferay Official",
-			"type": "URL",
-			"url": "https://www.liferay.com"
-		}
-	]
-}
+[
+	{
+		"externalReferenceCode": "veridian-main-navigation",
+		"menuItems": [
+			{
+				"externalReferenceCode": "veridian-main-navigation-home",
+				"friendlyURL": "/home",
+				"name_i18n": {
+					"en_US": "Home"
+				},
+				"privateLayout": false,
+				"type": "layout",
+				"useCustomName": true
+			},
+			{
+				"externalReferenceCode": "veridian-main-navigation-external",
+				"name_i18n": {
+					"en_US": "Liferay Official"
+				},
+				"type": "url",
+				"url": "https://www.liferay.com",
+				"useNewTab": "true"
+			}
+		],
+		"name": "Veridian Main Navigation",
+		"typeSite": 1
+	}
+]

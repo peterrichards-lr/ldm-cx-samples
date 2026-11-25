@@ -1,15 +1,28 @@
-{
-	"name": "Main Navigation",
-	"navigationMenuItems": [
-		{
-			"label": "Home",
-			"type": "URL",
-			"url": "/"
-		},
-		{
-			"label": "Liferay Docker Manager",
-			"type": "URL",
-			"url": "https://github.com/peterrichards-lr/liferay-docker-manager"
-		}
-	]
-}
+[
+	{
+		"externalReferenceCode": "ecopulse-main-navigation",
+		"menuItems": [
+			{
+				"externalReferenceCode": "ecopulse-main-navigation-home",
+				"friendlyURL": "/home",
+				"name_i18n": {
+					"en_US": "Home"
+				},
+				"privateLayout": false,
+				"type": "layout",
+				"useCustomName": true
+			},
+			{
+				"externalReferenceCode": "ecopulse-main-navigation-external",
+				"name_i18n": {
+					"en_US": "Liferay Docker Manager"
+				},
+				"type": "url",
+				"url": "https://github.com/peterrichards-lr/liferay-docker-manager",
+				"useNewTab": "true"
+			}
+		],
+		"name": "Main Navigation",
+		"typeSite": 1
+	}
+]

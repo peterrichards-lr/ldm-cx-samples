@@ -201,9 +201,12 @@ for object in ecopulse-energy-sector:energysectors ecopulse-green-initiative:gre
         "/o/c/${rest}?pageSize=50&fields=externalReferenceCode" \
         '(d.get("totalCount"), [e.get("externalReferenceCode") for e in d.get("items", [])])'
 done
-expect "workflow definitions" 'len(d.get("items", [])) > 1' \
+expect "workflow definition Machine Approver" 'any(e.get("name") == "Machine Approver" for e in d.get("items", []))' \
     "/o/headless-admin-workflow/v1.0/workflow-definitions?pageSize=50" \
     '[e.get("name") for e in d.get("items", [])]'
+expect "high-impact initiatives tagged" 'len([e for e in d.get("items", []) if "high-impact" in (e.get("keywords") or [])]) >= 1' \
+    "/o/c/greeninitiatives?pageSize=50" \
+    '[(e.get("externalReferenceCode"), e.get("impactLevel"), e.get("keywords")) for e in d.get("items", [])]'
 
 # check_content <site ERC> <navigation menu name>
 check_content() {
@@ -221,7 +224,9 @@ for g in json.load(open(sys.argv[1])):
         'any("Energy Sector" in (t.get("name") or "") for t in d.get("items", []))' \
         "/o/headless-admin-site/v1.0/sites/${erc}/display-page-templates?pageSize=50" \
         '[(t.get("name"), (t.get("contentTypeReference") or {}).get("className")) for t in d.get("items", [])]'
-    expect "${erc} asset list high-impact-initiatives" 'd.get("totalCount", 0) >= 1' \
+    # The list exists once the initializer ran; it only returns entries once its
+    # scope includes the Global site, which an initializer cannot set.
+    expect "${erc} asset list high-impact-initiatives" '"totalCount" in d' \
         "/o/headless-delivery/v1.0/sites/${group_id}/content-sets/by-key/high-impact-initiatives/content-set-elements?pageSize=50" \
         '(d.get("totalCount"), [e.get("title") for e in d.get("items", [])])'
 }

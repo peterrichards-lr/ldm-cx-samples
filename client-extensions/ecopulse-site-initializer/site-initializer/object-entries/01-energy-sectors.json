@@ -1,16 +1,6 @@
 {
-	"configuration": {
-		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
-		"parameters": {
-			"containsHeaders": "true",
-			"createStrategy": "UPSERT",
-			"importStrategy": "ON_ERROR_FAIL",
-			"taskItemDelegateName": "C_EnergySector",
-			"updateStrategy": "UPDATE"
-		},
-		"taskItemDelegateName": "C_EnergySector"
-	},
-	"items": [
+	"objectDefinitionName": "EnergySector",
+	"object-entries": [
 		{
 			"externalReferenceCode": "N-1",
 			"sectorName": "Veridian North",

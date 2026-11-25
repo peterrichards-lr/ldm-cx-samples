@@ -40,6 +40,16 @@
 					"fragmentFields": []
 				},
 				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "impact-slider"
+					},
+					"fragmentConfig": {},
+					"fragmentFields": []
+				},
+				"type": "Fragment"
 			}
 		],
 		"type": "Root"

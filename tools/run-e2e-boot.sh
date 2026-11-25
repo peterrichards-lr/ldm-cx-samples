@@ -131,13 +131,17 @@ for g in json.load(open(sys.argv[1])):
         fail "site ${erc}: /web${friendly}/home did not load"
         return
     fi
+    # FreeMarker that did not run, or a configuration the fragment never declared.
+    if grep -qE '\[configuration\.|\$\{configuration' <<< "$html"; then
+        fail "site ${erc}: unresolved fragment configuration on /web${friendly}/home: $(grep -oE '\[configuration\.[A-Za-z]*\]|\$\{configuration[^}]*\}' <<< "$html" | sort -u | tr '\n' ' ')"
+    fi
     if grep -q "$theme" <<< "$html"; then
         echo "  ${erc}: /web${friendly}/home uses ${theme}"
     else
         fail "site ${erc}: /web${friendly}/home does not use the ${theme} theme CSS"
         echo "  Stylesheets on /web${friendly}/home:"
         grep -oE '<link[^>]*stylesheet[^>]*>' <<< "$html" | grep -oE 'href="[^"]*"' | sed 's/^/    /' || true
-        echo "  Fragments rendered: $(grep -oE 'eco-hero|initiative-card|grid-monitor' <<< "$html" | sort -u | tr '\n' ' ')"
+        echo "  Fragments rendered: $(grep -oE 'eco-hero|initiative-card|grid-monitor|impact-slider' <<< "$html" | sort -u | tr '\n' ' ')"
         echo "  Home page as Liferay sees it (headless-delivery):"
         curl -sS -u "$AUTH" "${BASE_URL}/o/headless-delivery/v1.0/sites/${group_id}/site-pages/home" |
             python3 -c 'import json,sys
@@ -166,6 +170,18 @@ if not items: print("    (none)")' || true
 }
 check_site ecopulse-site ecopulse-brand
 check_site L_GUEST veridian-brand
+
+# The impact slider renders the High Impact Initiatives asset list.
+slider="$(curl -fsS "${BASE_URL}/web/ecopulse-smart-city/home" | python3 -c 'import re,sys
+m = re.search(r"<div class=\"impact-slider.*?</div>\s*</div>\s*$|<div class=\"impact-slider.*", sys.stdin.read(), re.S)
+if not m: print("missing"); sys.exit()
+s = m.group(0)
+print("%d cards" % s.count("card-title") if "card-title" in s else ("empty" if "No high-impact" in s else "broken"))')" || slider="unreachable"
+case "$slider" in
+    *cards) echo "  ✅ impact slider: ${slider}" ;;
+    empty) echo "  ⚠️ impact slider renders but the asset list is empty" ;;
+    *) fail "impact slider: ${slider}" ;;
+esac
 
 # 5. Check the content the initializers and ecopulse-batch should have added.
 #    py <path> <python expression over d, the JSON reply> prints the expression,

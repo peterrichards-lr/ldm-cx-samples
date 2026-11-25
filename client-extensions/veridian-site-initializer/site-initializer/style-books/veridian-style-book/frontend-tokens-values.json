@@ -1,14 +1,22 @@
 {
-	"h1FontSize": {
-		"cssVariableMapping": "h1-font-size",
-		"value": "4.5rem"
-	},
-	"primaryColor": {
+	"colorBrandPrimary": {
 		"cssVariableMapping": "primary",
 		"value": "#1A237E"
 	},
-	"secondaryColor": {
+	"colorBrandSecondary": {
 		"cssVariableMapping": "secondary",
 		"value": "#78909C"
+	},
+	"fontFamilyHeadings": {
+		"cssVariableMapping": "headings-font-family",
+		"value": "Georgia, 'Times New Roman', serif"
+	},
+	"fontSizeH1": {
+		"cssVariableMapping": "h1-font-size",
+		"value": "4.5rem"
+	},
+	"fontWeightHeadings": {
+		"cssVariableMapping": "headings-font-weight",
+		"value": "700"
 	}
 }

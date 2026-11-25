@@ -1,0 +1,116 @@
+{
+	"frontendTokenCategories": [
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#00C853",
+							"editorType": "ColorPicker",
+							"label": "primary",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary"
+								}
+							],
+							"name": "colorBrandPrimary",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#1A237E",
+							"editorType": "ColorPicker",
+							"label": "secondary",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary"
+								}
+							],
+							"name": "colorBrandSecondary",
+							"type": "String"
+						}
+					],
+					"label": "brand-colors",
+					"name": "brandColors"
+				}
+			],
+			"label": "colors",
+			"name": "colors"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "2.5rem",
+							"editorType": "Length",
+							"label": "h1-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h1-font-size"
+								}
+							],
+							"name": "fontSizeH1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "system-ui, -apple-system, sans-serif",
+							"label": "headings-font-family",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "headings-font-family"
+								}
+							],
+							"name": "fontFamilyHeadings",
+							"type": "String"
+						},
+						{
+							"defaultValue": "600",
+							"label": "headings-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "headings-font-weight"
+								}
+							],
+							"name": "fontWeightHeadings",
+							"type": "String"
+						}
+					],
+					"label": "typography-base",
+					"name": "typographyBase"
+				}
+			],
+			"label": "typography",
+			"name": "typography"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "8px",
+							"editorType": "Length",
+							"label": "border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-border-radius"
+								}
+							],
+							"name": "btnBorderRadius",
+							"type": "String"
+						}
+					],
+					"label": "buttons-base",
+					"name": "buttonsBase"
+				}
+			],
+			"label": "buttons",
+			"name": "buttons"
+		}
+	]
+}

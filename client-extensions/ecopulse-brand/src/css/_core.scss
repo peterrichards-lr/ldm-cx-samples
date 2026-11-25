@@ -2,8 +2,8 @@
 
 /* Core EcoPulse Layout & Components (Shared) */
 :root {
-	--brand-primary: #{$brand-primary};
-	--brand-secondary: #{$brand-secondary};
+	--brand-primary: var(--primary, #{$brand-primary});
+	--brand-secondary: var(--secondary, #{$brand-secondary});
 	--brand-accent: #{$brand-accent};
 }
 

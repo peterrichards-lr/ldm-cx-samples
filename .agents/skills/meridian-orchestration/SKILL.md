@@ -2,6 +2,7 @@
 name: meridian-orchestration
 description: Activate this skill whenever developing fragments, search blueprints, collections, or object relationships.
 ---
+
 # Liferay Meridian (Low-Code) Standards
 
 To ensure fragments and site content are modular and maintainable, all site initializers must follow the Meridian "Low-Code" patterns.
@@ -48,5 +49,7 @@ To move beyond static content, the demo environment utilizes Liferay's advanced 
 - **Dynamic Wiring**: Templates must map Object fields to fragment slots (e.g., mapping `Energy Sector: name` to a heading fragment).
 
 <!-- markdownlint-disable MD049 -->
+
 ---
-*Last Updated: 2026-07-20* | *Last Reviewed: 2026-07-20*
+
+_Last Updated: 2026-07-20_ | _Last Reviewed: 2026-11-24_

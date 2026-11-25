@@ -1,6 +1,6 @@
 {
-	"description": "The official typography and styling for EcoPulse data and monitoring systems.",
-	"externalReferenceCode": "ecopulse-style-book",
+	"defaultStyleBookEntry": true,
+	"frontendTokensValuesPath": "frontend-tokens-values.json",
 	"name": "EcoPulse Official",
-	"themeCSSCETExternalReferenceCode": "ecopulse-brand"
+	"themeId": "LXC:ecopulse-brand"
 }

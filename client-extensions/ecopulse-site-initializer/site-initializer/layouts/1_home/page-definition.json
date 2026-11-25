@@ -51,7 +51,7 @@
 							"itemType": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
 							"key": "[$OBJECT_DEFINITION_CLASS_NAME:GreenInitiative$]",
 							"title": "Green Initiatives",
-							"type": "com.liferay.item.selector.criteria.InfoListProviderItemSelectorReturnType"
+							"type": "com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType"
 						}
 					},
 					"fragmentFields": []
